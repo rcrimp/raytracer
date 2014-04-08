@@ -1,0 +1,128 @@
+Herein lies:
+
+1) the prototype skeleton code for the second assignment.
+
+2) some sample scenes (in the scenes directory), it has:
+     the Blender file;
+     the exported text file that can be read by the raytracer.
+
+   0: test00     -- is an empty scene, useful if using the added 'circle test'
+                    (appears at the bottom of main.c)
+
+                    There is an image of what you should see once you have
+                    correctly created the Primary ray, and call ray_test,
+                    rather than ray_trace for *testing*.
+		    (I converted the PPM to a PNG file test00-check.png)
+
+   1: test01     -- is a simple scene: default camera, single lamp and
+                    translated unit sphere.
+
+   2: test02     -- is a scene with four spheres, each using a different
+                    texture. test02-check.png shows a presumed-good output
+                    although do not assume that your result will need to 
+                    come out the same, pixel by pixel!
+
+   8: test08     -- is a scene made up of four different types of spheres:
+                    a UV mesh; and ico mesh sphere; a meta sphere; and a
+                    subsurface sphere.  Only the two mesh spheres are
+                    exported!
+
+   9: test09     -- is the same scene as test08, except the two non-meshes
+                    have been converted to meshes, so they will be exported.
+
+3) a file to add to the Blender scripts that will export a Blender scene 
+   in a format that can be read by the raytracer.
+
+   -- You need to copy the scene_export2014.py script into your
+      Blender start-up files somehow: Blender looks in a number of
+      places for such files. Just create the "scripts" directory and
+      its parents if necessary.
+      -- on Linux, try copying it to ~/.blender/scripts/addons
+      -- on MacOS, I used ~/Library/Application\ Support/Blender/2.69/scripts/addons
+
+   -- You then need to start Blender, go to File -> User preferences...
+      Go to the "Addons" tab. I then entered 342 into the search box and see:
+      Import-Export: COSC342 export
+      Click the top-right checkbox, and the module should load itself.
+      As indicated, it registers at View 3D -> File -> Export
+      (The alert symbol appears to reinforce just how bad the exporter is)
+      (It's not a "proper" addon, so there's no documentation! :-) )
+
+   Once this has been done, you will be able to export "any" Blender scene
+   to the raytracer format, ... except ...
+   -- all lights are 'converted' to point lights.
+   -- it only exports one material per object.
+   -- it will only export meshes - not other object types, and *any* mesh in
+      your scene will be turned into a sphere.
+
+  ****
+  Note: you do *not* need to use Blender to create your scenes.
+  ****
+
+
+NOTES ON SKELETON CODE:
+=======================
+
+  The skeleton code reads in the camera, lights, and object information.
+
+  The default camera is positioned at the origin (0, 0, 0, 1); and it
+  is looking at a viewplane with top left corner at (-16, 16, -lens, 1),
+  and bottom right corner (16, -16, -lens, 1)
+    (In fact Blender uses (16, -12, -lens, 1)  and  (-16, 12, -lens, 1);
+     but I think it's easier to code for a square image.  It will mean we
+     see a little more of the scene than Blender generates).
+  This information is needed for creating the primary rays.
+
+  Use the Makefile to compile the program.
+
+  The easiest way to run the program is, e.g.:
+    ./raytracer scenes/test01.txt
+
+  -- when you run the program, it should open a window on your screen,
+     although some versions of the lab Linux environments have been
+     known to create this window hidden behind other windows.
+
+  -- the program *also* creates a file called 'out.ppm' that you can open
+     using "display out.ppm" (or with tools other than ImageMagick). If you
+     create a picture that you think you'd like to keep then you can move
+     it to the images directory, e.g. "mv out.ppm images/amazing-pic14.ppm"
+
+
+NOTES ON THE BLENDER SCENE:
+===========================
+
+  For a reasonable comparison between the Blender scene and the raytraced
+  version it is good to set up the lights as in the sample scenes.
+  -- set the radius to maximum (5000)
+  -- set the attenuation values (linear and quad) both to 0
+  -- keep the energy at 1.0
+
+  Note -- Blender scenes can produce shadows, if you tell it to do Raytracing,
+  and that the light and object can have shadows.
+  (i.e. - there are a few buttons to make sure you have selected).
+
+
+  There are several settings that affect the object's colour.
+  -- there are the three colour setters
+            RGB for  'Col', 'Spe', and 'Mir'
+  -- in shaders there are settings for
+           'Amb', 'Ref', 'Spec', 'Hard', and 'RayMir'
+  -- these should map through at least approximately
+
+  The scene exporter outputs the same blender 'ambient' value for the three
+  ambient coefficients. It also outputs the Phong coefficient, and tries to 
+  grab the three colour coefficients for diffuse, specular, and mirror.
+
+  Note -- Blender can produce mirror surfaces, if all the correct buttons
+  have been selected, and sliders set (cf, shadows).
+
+
+  The Blender scene has no 'background' colour, so its 'horizon' value
+  was used (but its zenith was ignored).
+
+
+-- Let me (Dave dme@cs.otago.ac.nz) know of any problems!
+
+Originally written by Raymond.
+Updated and extended by David.
+31/03/14
