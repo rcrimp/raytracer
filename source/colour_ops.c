@@ -24,6 +24,19 @@ const RGBColour colour_black = {0.0f, 0.0f, 0.0f};
 
 /* ---- FUNCTIONS ---------------------------------------------------------- */
 
+RGBColour mix_colours(RGBColour *colours, int colour_count){
+   int i;
+   RGBColour result;
+   result.red = result.green = result.blue = 0;
+   for(i = 0; i < colour_count; i++){
+      result.red += colours[i].red;
+      result.green += colours[i].green;
+      result.blue += colours[i].blue;
+   }
+   result = colour_scale(1.0f / (colour_count), result);
+   return result;
+}
+
 void colour_display(RGBColour colour) {
 
   printf("Colour (%1.3lf, %1.3lf, %1.3lf)",

@@ -122,27 +122,35 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          double rv =  vector_dot(r, ToCamera);
          rv = pow(rv, object[i].material.phong);
 
-         RGBColour *tmp;
-         //tmp = &object[i].material.specular_colour;tmp->red = tmp->blue = tmp->green = 0.0f;
-         //tmp = &object[i].material.diffuse_colour;tmp->red = tmp->blue = tmp->green = 0.0f;
-         
          /*texture */
-         //RGBColour texc = texture_diffuse(object[i].material.diffuse_colour, object[i].material.texture, SurfaceNormal);
+         colour = texture_diffuse(object[i].material.diffuse_colour, object[i].material.texture, SurfaceNormal);
          /* no texture */
          colour.red = ambient_light.red*object[i].material.ambient_colour.red
             + light_source[0].colour.red*
-            (object[i].material.diffuse_colour.red*nl//*texc.red
+            (object[i].material.diffuse_colour.red*nl
              + object[i].material.specular_colour.red*rv );
 
          colour.blue = ambient_light.blue*object[i].material.ambient_colour.blue
             + light_source[0].colour.blue*
-            (object[i].material.diffuse_colour.blue*nl//*texc.blue
+            (object[i].material.diffuse_colour.blue*nl
              + object[i].material.specular_colour.blue*rv );
 
          colour.green = ambient_light.green*object[i].material.ambient_colour.green
             + light_source[0].colour.green*
-            (object[i].material.diffuse_colour.green*nl//*texc.green
+            (object[i].material.diffuse_colour.green*nl
              + object[i].material.specular_colour.green*rv );
+         
+         
+         /*colour.red = colour.blue = colour.green = 1;       
+                 
+           colour.red *= object[0].material.diffuse_colour.red * light_source[0].colour.red * nl;
+           colour.green *= object[0].material.diffuse_colour.green * light_source[0].colour.green * nl;
+           colour.blue *= object[0].material.diffuse_colour.blue * light_source[0].colour.blue * nl;
+         
+           colour.red += object[0].material.specular_colour.red * light_source[0].colour.red * rv;
+           colour.green += object[0].material.specular_colour.green * light_source[0].colour.green * rv;
+           colour.blue += object[0].material.specular_colour.blue * light_source[0].colour.blue * rv;
+         */
       }
    }
    return colour;
@@ -201,6 +209,7 @@ RGBColour super_sample_grid(){}
  *  is obscured.
  */
 void renderImage(void) {
+   
    int row, col;
    RayDef ray;
    RGBColour pixelColour;
@@ -222,15 +231,23 @@ void renderImage(void) {
    /* Calculate the step size */
    pixel_size = camera.view_size/image_size;
    
+   /*printf("%d %3.1f %3.1f %3.1f \n", image_size, camera.view_size, step_size, image_size/camera.view_size);*/
+   
    /* create the start point for the primary ray */
-   ray.start.x = ray.start.y = ray.start.z = 0.0;
+   ray.start.x = 0.0;
+   ray.start.y = 0.0;
+   ray.start.z = 0.0;
    ray.start.w = 1.0;
 
    /* create the direction of the primary ray */
-   ray.direction.x = ray.direction.y = ray.direction.w = 0.0f;
+   ray.direction.x = 0;
+   ray.direction.y = 0;
    ray.direction.z = -camera.lens;
+   ray.direction.w = 0.0f;
+
    
    /* super samples */
+
    int i, j, grid_size;
    grid_size = sqrt(SUPER_SAMPLES);
    
@@ -241,19 +258,20 @@ void renderImage(void) {
          for(i = 0; i < grid_size; i++){
             for(j = 0; j < grid_size; j++){
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
-               ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
+               ray.direction.y = -camera.view_size/2 + pixel_size*(row + (double)j/grid_size);
                samples[j + i*grid_size] = ray_trace(ray, 0);
             }
          }
          pixelColour = mix_colours(samples, SUPER_SAMPLES);
          
          /* no super sampling */
-         /*
-           ray.direction.x = -camera.view_size/2 + pixel_size*(0.5 + col);
+         
+         /*ray.direction.x = -camera.view_size/2 + pixel_size*(0.5 + col);
            ray.direction.y = -camera.view_size/2 + pixel_size*(0.5 + row);
            pixelColour = ray_trace(ray, 0);
          */
-         drawPixel(col+1, image_size-row-1, pixelColour);
+
+         drawPixel(col, row, pixelColour);
          writePPM(pixelColour, picfile);
       }
    }

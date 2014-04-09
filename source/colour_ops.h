@@ -27,5 +27,6 @@ extern const RGBColour colour_black;
 
 void colour_display(RGBColour colour);
 RGBColour colour_scale(double s, RGBColour b);
+RGBColour mix_colours(RGBColour *colours, int colour_count);
 
 #endif  /* _COLOUR_OPS_H_ */

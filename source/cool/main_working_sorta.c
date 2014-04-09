@@ -21,8 +21,6 @@
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
 
-#define SUPER_SAMPLES 25 /* needs to be a square number when using grid super sample */
-
 int             MAX_RECURSE_DEPTH;
 
 CameraDef       camera;
@@ -60,46 +58,30 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    Vector obj_translation;
    double object_r;
 
-   double A, B, C, det, t1, t2, t; //quadratic variables
+   double A, B, C, det, t1, t2, t;
 
-   Vector SurfaceNormal, ToLight, ToCamera;
+   Vector SurfacePoint, SurfaceNormal,ToLight, ToCamera;
 
    RayDef newray;
-
-   /* setup */
-   colour = background_colour;
-
-   /* copy the ray, we don't want to modify the original */
    newray.start = ray.start;
    newray.direction = vector_normalise(ray.direction);
 
-   Vector cam;
+   colour = background_colour;
+
    
    object_r = 1.0f;
    
    for(i = 0; i < num_objs; i++){
-
       obj_translation.x = obj_translation.y = obj_translation.z = 0.0f; obj_translation.w = 1.0f;
       obj_translation = vector_transform(object[i].transform, obj_translation);
-      cam.x = cam.y = cam.z = 0; cam.w = 1;
-      cam = vector_transform(camera.transform, cam);
+      
 
-      //light_source[0].position = vector_transform(object[i].transform, light_source[0].position);
-      cam = vector_subtract(cam, obj_translation);
+      /*printf("%f %f %f %f\n", point.x, point.y, point.z, point.w);*/
+
+      /*ray.start = vector_add(ray.start, point);*/
       newray.start = vector_subtract(ray.start, obj_translation);
-      //light_source[0].position = vector_subtract(light_source[0].position, obj_translation);
-      
-      //cam = vector_transform(object[i].transform, cam);
-      //newray.start = vector_transform(object[i].transform, newray.start);
-      //light_source[0].position = vector_transform(object[i].transform, light_source[0].position);
-
-      
-      
-      
-
-      //light_source[0].position = vector_transform(object[i].transform, light_source[0].position);
-      
       /*ray.start = vector_transform(object[0].transform, ray.start);*/
+   
       
       A = vector_dot(newray.direction, newray.direction);/* v.v */
       B = 2 * vector_dot(newray.direction, newray.start );/* 2 u.v */
@@ -111,38 +93,42 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          t = min(t1, t2);
 
          /* everything below needs to be checked double checked and fixed */
-
-         SurfaceNormal = vector_normalise(vector_add(newray.start, vector_scale(newray.direction, t)));
-         ToLight = vector_normalise(vector_subtract(light_source[0].position, SurfaceNormal));
-
-         ToCamera = vector_normalise(vector_subtract(cam, SurfaceNormal));
+         SurfaceNormal = vector_add(newray.start, vector_scale(newray.direction, t));
+         SurfacePoint = vector_transform(object[i].transform, SurfaceNormal);
+         printf("%3.1f ", vector_length(SurfacePoint));
          
-         double nl = vector_dot(SurfaceNormal, ToLight);
-         Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
-         double rv =  vector_dot(r, ToCamera);
-         rv = pow(rv, object[i].material.phong);
+         //SurfaceNormal = vector_normalise(vector_subtract(SurfacePoint, obj_translation));
+         //printf("%3.1f ", vector_length(SurfaceNormal));
 
-         RGBColour *tmp;
-         //tmp = &object[i].material.specular_colour;tmp->red = tmp->blue = tmp->green = 0.0f;
-         //tmp = &object[i].material.diffuse_colour;tmp->red = tmp->blue = tmp->green = 0.0f;
+
+         ToLight = vector_normalise(vector_subtract(light_source[0].position, SurfacePoint));
+         Vector camtrans; camtrans.x = camtrans.y = camtrans.z = 0; camtrans.w = 1;
+         camtrans = vector_transform(camera.transform, camtrans);
+         ToCamera = vector_normalise(vector_subtract(camtrans, SurfacePoint));
          
-         /*texture */
-         //RGBColour texc = texture_diffuse(object[i].material.diffuse_colour, object[i].material.texture, SurfaceNormal);
-         /* no texture */
-         colour.red = ambient_light.red*object[i].material.ambient_colour.red
-            + light_source[0].colour.red*
-            (object[i].material.diffuse_colour.red*nl//*texc.red
-             + object[i].material.specular_colour.red*rv );
-
-         colour.blue = ambient_light.blue*object[i].material.ambient_colour.blue
-            + light_source[0].colour.blue*
-            (object[i].material.diffuse_colour.blue*nl//*texc.blue
-             + object[i].material.specular_colour.blue*rv );
-
-         colour.green = ambient_light.green*object[i].material.ambient_colour.green
-            + light_source[0].colour.green*
-            (object[i].material.diffuse_colour.green*nl//*texc.green
-             + object[i].material.specular_colour.green*rv );
+         double nl = vector_dot(SurfacePoint, ToLight);
+         double ve =  vector_dot(ToLight, ToCamera);
+         double tmp = ve;
+         for(j = 0; j < object[i].material.phong; j++){
+            ve *= tmp;
+         }
+         
+         //colour = texture_diffuse(object[i].material.diffuse_colour, object[i].material.texture, SurfaceNormal);
+         colour.red = colour.blue = colour.green = 1;       
+                 
+         colour.red *= object[0].material.diffuse_colour.red * light_source[0].colour.red * nl;
+         colour.green *= object[0].material.diffuse_colour.green * light_source[0].colour.green * nl;
+         colour.blue *= object[0].material.diffuse_colour.blue * light_source[0].colour.blue * nl;
+         
+         colour.red -= object[0].material.specular_colour.red * light_source[0].colour.red * ve;
+         colour.green -= object[0].material.specular_colour.green * light_source[0].colour.green * ve;
+         colour.blue -= object[0].material.specular_colour.blue * light_source[0].colour.blue * ve;
+         
+         /*colour.blue = colour.green = colour.red = 5-t;
+         
+           colour.red *= (5-t);
+           colour.blue *= (5-t);
+           colour.green *= (5-t);*/
       }
    }
    return colour;
@@ -191,9 +177,6 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    return diffuse_colour;
 }
 
-RGBColour super_sample_random(){}
-RGBColour super_sample_grid(){}
-
 /*
  *  The main drawing routine.
  *
@@ -201,12 +184,12 @@ RGBColour super_sample_grid(){}
  *  is obscured.
  */
 void renderImage(void) {
+   
    int row, col;
+   double step_size;
    RayDef ray;
    RGBColour pixelColour;
    FILE  *picfile;
-   double pixel_size;
-   RGBColour samples[SUPER_SAMPLES];
 
    /* avoid redrawing it if the window is obscured */
    static bool alreadyDrawn = false;
@@ -220,40 +203,32 @@ void renderImage(void) {
    initPPM(image_size, image_size, picfile); 
 
    /* Calculate the step size */
-   pixel_size = camera.view_size/image_size;
+   step_size = camera.view_size / image_size;/* pixel width */
+   step_size = step_size + 0;
+
+   /*printf("%d %3.1f %3.1f %3.1f \n", image_size, camera.view_size, step_size, image_size/camera.view_size);*/
    
    /* create the start point for the primary ray */
-   ray.start.x = ray.start.y = ray.start.z = 0.0;
+   ray.start.x = 0.0;
+   ray.start.y = 0.0;
+   ray.start.z = 0.0;
    ray.start.w = 1.0;
 
    /* create the direction of the primary ray */
-   ray.direction.x = ray.direction.y = ray.direction.w = 0.0f;
+   ray.direction.x = 0;
+   ray.direction.y = 0;
    ray.direction.z = -camera.lens;
-   
-   /* super samples */
-   int i, j, grid_size;
-   grid_size = sqrt(SUPER_SAMPLES);
-   
+   ray.direction.w = 0.0f;
+  
    for (row = 0; row < image_size; row++) {
+      ray.direction.y = 3.2*(-image_size/camera.view_size/2 + row/camera.view_size);
+      //ray.direction.y = -camera.view_size/6.5 + row/camera.view_size;
       for (col = 0; col < image_size; col++) {
+         ray.direction.x = 3.2*(-image_size/camera.view_size/2 + col/camera.view_size);
+         //ray.direction.x = -camera.view_size/6.5 + col/camera.view_size;
 
-         /* super sampling */
-         for(i = 0; i < grid_size; i++){
-            for(j = 0; j < grid_size; j++){
-               ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
-               ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
-               samples[j + i*grid_size] = ray_trace(ray, 0);
-            }
-         }
-         pixelColour = mix_colours(samples, SUPER_SAMPLES);
-         
-         /* no super sampling */
-         /*
-           ray.direction.x = -camera.view_size/2 + pixel_size*(0.5 + col);
-           ray.direction.y = -camera.view_size/2 + pixel_size*(0.5 + row);
-           pixelColour = ray_trace(ray, 0);
-         */
-         drawPixel(col+1, image_size-row-1, pixelColour);
+         pixelColour = ray_trace(ray, 0);
+         drawPixel(col, row, pixelColour);
          writePPM(pixelColour, picfile);
       }
    }
@@ -285,6 +260,9 @@ void renderImage(void) {
 /* ------------------------------------------------------------------------- */
 /* Main */
 int main (int argc,  char** argv) {
+
+
+   
    /* read the scene file */
    fileio_readfile(argv[1]);
    fileio_printscene();
