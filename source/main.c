@@ -150,12 +150,13 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          }
       }
 
-      obj_translation.x = obj_translation.y = obj_translation.z = 0.0f; obj_translation.w = 1.0f;
+      obj_translation = vector_new(0,0,0,1);
       obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
       newray.start = vector_subtract(ray.start, obj_translation);
       light_source[0].position = vector_subtract(light_source[0].position, obj_translation);
 
+      vector_display(obj_translation);
       vector_display(light_source[0].position);
       
       /* everything below needs to be checked double checked and fixed */
