@@ -97,6 +97,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    Vector SurfaceNormal, ToLight, ToCamera;
 
    RayDef newray;
+   Vector newLightPos;
 
    /* setup */
    colour = background_colour;
@@ -153,16 +154,20 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       newray.start = vector_subtract(ray.start, obj_translation);
 
-      vector_display(obj_translation); printf("\n");
-      vector_display(light_source[0].position); printf("\n");
+      //newlight.x = light_source[0].position.x;
+      //newlight.y = light_source[0].position.y;
+      //newlight.z = light_source[0].position.z;
+      //newlight.w = light_source[0].position.w;
       
-      light_source[0].position = vector_subtract(light_source[0].position, obj_translation);
+      newLightPos = vector_subtract(light_source[0].position, obj_translation);
 
-      vector_display(light_source[0].position); printf("\n");
+      vector_display(obj_translation); printf("<-- obj \n");
+      vector_display(light_source[0].position); printf("<-- light 0\n");
+      vector_display(newLightPos); printf("<-- curr_light \n");
       
       /* everything below needs to be checked double checked and fixed */
       SurfaceNormal = (vector_add(newray.start, vector_scale(newray.direction, t)));
-      ToLight = vector_normalise(vector_subtract(light_source[0].position, SurfaceNormal));
+      ToLight = vector_normalise(vector_subtract(newLightPos, SurfaceNormal));
 
       ToCamera = vector_normalise(vector_subtract(newray.start, SurfaceNormal));
 
