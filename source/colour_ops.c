@@ -24,7 +24,30 @@ const RGBColour colour_black = {0.0f, 0.0f, 0.0f};
 
 /* ---- FUNCTIONS ---------------------------------------------------------- */
 
-RGBColour mix_colours(RGBColour *colours, int colour_count){
+RGBColour colour_scale(double s, RGBColour b){
+   RGBColour result;
+   result.red   = s * b.red;
+   result.green = s * b.green;
+   result.blue  = s * b.blue;
+   return result;
+}
+
+RGBColour colour_add(RGBColour a, RGBColour b){
+   RGBColour result;
+   result.red = a.red + b.red;
+   result.green = a.green + b.green;
+   result.blue = a.blue + b.blue;
+   return result;
+}
+RGBColour colour_multiply(RGBColour a, RGBColour b){
+   RGBColour result;
+   result.red = a.red * b.red;
+   result.green = a.green * b.green;
+   result.blue = a.blue * b.blue;
+   return result;
+}
+
+RGBColour colour_blend(RGBColour *colours, int colour_count){
    int i;
    RGBColour result;
    result.red = result.green = result.blue = 0;
@@ -42,12 +65,4 @@ void colour_display(RGBColour colour) {
   printf("Colour (%1.3lf, %1.3lf, %1.3lf)",
 	 colour.red, colour.green, colour.blue);
 
-}
-
-RGBColour colour_scale(double s, RGBColour b){
-  RGBColour result;
-  result.red   = s * b.red;
-  result.green = s * b.green;
-  result.blue  = s * b.blue;
-  return result;
 }

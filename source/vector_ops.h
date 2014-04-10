@@ -25,6 +25,7 @@ typedef struct Vector {
 
 /* ---- FUNCTION HEADERS --------------------------------------------------- */
 
+Vector vector_new(double x, double y, double z, double w);
 Vector vector_subtract(Vector a, Vector b);
 Vector vector_add(Vector a, Vector b);
 Vector vector_scale(Vector a, double s);

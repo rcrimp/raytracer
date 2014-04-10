@@ -19,7 +19,7 @@ endif
 # The list of code files, object files, and the compiler to use
 
 # Define our source code (change)
-CFILES = colour_ops.c matrix_ops.c vector_ops.c \
+CFILES = colour_ops.c matrix_ops.c vector_ops.c polygon_ops.c \
          mygl.c ppm.c \
          fileio.c main.c
 

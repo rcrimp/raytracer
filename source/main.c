@@ -4,11 +4,10 @@
  *
  * Description: Contains the main routine plus the ray-tracing function.
  */
-
-/* ----- INCLUDES ---------------------------------------------------------- */
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <limits.h>
 
 #include "typedefs.h"
 #include "vector_ops.h"
@@ -20,8 +19,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-
-#define SUPER_SAMPLES 25 /* needs to be a square number when using grid super sample */
+#define SUPER_SAMPLES 16 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
@@ -45,116 +43,9 @@ int main (int argc,  char** argv);
 
 /* ----- Functions --------------------------------------------------------- */
 
-/* Geoff's code that may be used for testing Primary rays;
- * it is not part of the final solution. The code appears after main().
- */
-bool circle(Vector v);
-RGBColour ray_test(RayDef ray);
-
-/* the main ray tracing procedure */
-RGBColour ray_trace(RayDef ray, int recurse_depth) {
-   int i, j;
-   
-   RGBColour colour;
-
-   Vector obj_translation;
-   double object_r;
-
-   double A, B, C, det, t1, t2, t; //quadratic variables
-
-   Vector SurfaceNormal, ToLight, ToCamera;
-
-   RayDef newray;
-
-   /* setup */
-   colour = background_colour;
-
-   /* copy the ray, we don't want to modify the original */
-   newray.start = ray.start;
-   newray.direction = vector_normalise(ray.direction);
-
-   Vector cam;
-   
-   object_r = 1.0f;
-   
-   for(i = 0; i < num_objs; i++){
-
-      obj_translation.x = obj_translation.y = obj_translation.z = 0.0f; obj_translation.w = 1.0f;
-      obj_translation = vector_transform(object[i].transform, obj_translation);
-      cam.x = cam.y = cam.z = 0; cam.w = 1;
-      cam = vector_transform(camera.transform, cam);
-
-      //light_source[0].position = vector_transform(object[i].transform, light_source[0].position);
-      cam = vector_subtract(cam, obj_translation);
-      newray.start = vector_subtract(ray.start, obj_translation);
-      //light_source[0].position = vector_subtract(light_source[0].position, obj_translation);
-      
-      //cam = vector_transform(object[i].transform, cam);
-      //newray.start = vector_transform(object[i].transform, newray.start);
-      //light_source[0].position = vector_transform(object[i].transform, light_source[0].position);
-
-      
-      
-      
-
-      //light_source[0].position = vector_transform(object[i].transform, light_source[0].position);
-      
-      /*ray.start = vector_transform(object[0].transform, ray.start);*/
-      
-      A = vector_dot(newray.direction, newray.direction);/* v.v */
-      B = 2 * vector_dot(newray.direction, newray.start );/* 2 u.v */
-      C = vector_dot(newray.start, newray.start) - object_r; /* u.u -r */
-      det = (B*B) - (4*A*C);
-      if (det > 0) {
-         t1 = (-B + sqrt(det)) / 2*A;
-         t2 = (-B - sqrt(det)) / 2*A;
-         t = min(t1, t2);
-
-         /* everything below needs to be checked double checked and fixed */
-
-         SurfaceNormal = vector_normalise(vector_add(newray.start, vector_scale(newray.direction, t)));
-         ToLight = vector_normalise(vector_subtract(light_source[0].position, SurfaceNormal));
-
-         ToCamera = vector_normalise(vector_subtract(cam, SurfaceNormal));
-         
-         double nl = vector_dot(SurfaceNormal, ToLight);
-         Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
-         double rv =  vector_dot(r, ToCamera);
-         rv = pow(rv, object[i].material.phong);
-
-         RGBColour *tmp;
-         //tmp = &object[i].material.specular_colour;tmp->red = tmp->blue = tmp->green = 0.0f;
-         //tmp = &object[i].material.diffuse_colour;tmp->red = tmp->blue = tmp->green = 0.0f;
-         
-         /*texture */
-         //RGBColour texc = texture_diffuse(object[i].material.diffuse_colour, object[i].material.texture, SurfaceNormal);
-         /* no texture */
-         colour.red = ambient_light.red*object[i].material.ambient_colour.red
-            + light_source[0].colour.red*
-            (object[i].material.diffuse_colour.red*nl//*texc.red
-             + object[i].material.specular_colour.red*rv );
-
-         colour.blue = ambient_light.blue*object[i].material.ambient_colour.blue
-            + light_source[0].colour.blue*
-            (object[i].material.diffuse_colour.blue*nl//*texc.blue
-             + object[i].material.specular_colour.blue*rv );
-
-         colour.green = ambient_light.green*object[i].material.ambient_colour.green
-            + light_source[0].colour.green*
-            (object[i].material.diffuse_colour.green*nl//*texc.green
-             + object[i].material.specular_colour.green*rv );
-      }
-   }
-   return colour;
-}
-
 /* A function to modify the diffuse colour if a material's property
    requests this. Note that when texture==0 diffuse_colour is returned
-   unmodified. 
-
-   Feel free to merge this code into your own ray_trace function: it's
-   presented like this so I can give you the texturing code without
-   having to try to position them in the ray_trace skeleton code. */
+   unmodified. */
 RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_point){
    /* used in "random noise" texture */
    static int rseed; 
@@ -191,14 +82,103 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    return diffuse_colour;
 }
 
-RGBColour super_sample_random(){}
-RGBColour super_sample_grid(){}
+
+/* the main ray tracing procedure */
+RGBColour ray_trace(RayDef ray, int recurse_depth) {
+   int cur_obj, j;
+   
+   RGBColour colour;
+
+   Vector obj_translation;
+   double object_r;
+
+   double A, B, C, det, t1, t2, t; //quadratic variables
+
+   Vector SurfaceNormal, ToLight, ToCamera;
+
+   RayDef newray;
+
+   /* setup */
+   colour = background_colour;
+
+   /* copy the ray, we don't want to modify the original */
+   newray.start = ray.start;
+   newray.direction = vector_normalise(ray.direction);
+
+   Vector cam;
+   
+   object_r = 1.0f;
+   
+   for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
+
+      obj_translation.x = obj_translation.y = obj_translation.z = 0.0f; obj_translation.w = 1.0f;
+      obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
+      cam.x = cam.y = cam.z = 0; cam.w = 1;
+      cam = vector_transform(camera.transform, cam);
+
+
+      cam = vector_subtract(cam, obj_translation);
+      newray.start = vector_subtract(ray.start, obj_translation);
+
+      
+      //double intersection[num_objs];
+      //for(i = 0; i < num_objs; i++){
+      //   intersection[i] = INT_MAX;
+      //}
+      
+      A = vector_dot(newray.direction, newray.direction);/* v.v */
+      B = 2 * vector_dot(newray.direction, newray.start );/* 2 u.v */
+      C = vector_dot(newray.start, newray.start) - object_r; /* u.u -r */
+      det = (B*B) - (4*A*C);
+      if (det > 0) {
+         if ( B > 0 )
+            t1 = (-B - sqrt(det)) / 2*A;
+         else
+            t1 = (-B + sqrt(det)) / 2*A;
+         
+         t2 = C / (A*t1);
+
+         t = min(t1, t2);
+
+         /* everything below needs to be checked double checked and fixed */
+         SurfaceNormal = (vector_add(newray.start, vector_scale(newray.direction, t)));
+         ToLight = vector_normalise(vector_subtract(light_source[0].position, SurfaceNormal));
+
+         ToCamera = vector_normalise(vector_subtract(cam, SurfaceNormal));
+
+         //printf("%f %f %f\n", vector_length(SurfaceNormal), vector_length(ToLight), vector_length(ToCamera));
+         
+         double nl = vector_dot(SurfaceNormal, ToLight);
+         Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
+         double rv =  vector_dot(r, ToCamera);
+         rv = pow(rv, object[cur_obj].material.phong);
+
+         /* lol grescale light */
+         colour.red = colour.blue = colour.green =
+            object[cur_obj].material.ambient_colour.red * ambient_light.red +
+            object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * nl + 
+            object[cur_obj].material.specular_colour.red * light_source[0].colour.red * rv;
+         
+         /*colour.red = ambient_light.red*object[i].material.ambient_colour.red
+            + light_source[0].colour.red*(object[i].material.diffuse_colour.red*nl
+             + object[i].material.specular_colour.red*rv );
+
+         colour.blue = ambient_light.blue*object[i].material.ambient_colour.blue
+            + light_source[0].colour.blue*
+            (object[i].material.diffuse_colour.blue*nl
+             + object[i].material.specular_colour.blue*rv );
+
+         colour.green = ambient_light.green*object[i].material.ambient_colour.green
+            + light_source[0].colour.green*
+            (object[i].material.diffuse_colour.green*nl
+             + object[i].material.specular_colour.green*rv );*/
+      }
+   }
+   return colour;
+}
 
 /*
  *  The main drawing routine.
- *
- *  Use 'alreadyDrawn' to disable redrawing it when part of the picture
- *  is obscured.
  */
 void renderImage(void) {
    int row, col;
@@ -223,13 +203,12 @@ void renderImage(void) {
    pixel_size = camera.view_size/image_size;
    
    /* create the start point for the primary ray */
-   ray.start.x = ray.start.y = ray.start.z = 0.0;
-   ray.start.w = 1.0;
+   ray.start = vector_new(0,0,0,1);
 
-   /* create the direction of the primary ray */
-   ray.direction.x = ray.direction.y = ray.direction.w = 0.0f;
-   ray.direction.z = -camera.lens;
    
+   /* create the direction of the primary ray */
+   ray.direction = vector_new(0,0,-camera.lens,0);
+      
    /* super samples */
    int i, j, grid_size;
    grid_size = sqrt(SUPER_SAMPLES);
@@ -245,7 +224,7 @@ void renderImage(void) {
                samples[j + i*grid_size] = ray_trace(ray, 0);
             }
          }
-         pixelColour = mix_colours(samples, SUPER_SAMPLES);
+         pixelColour = colour_blend(samples, SUPER_SAMPLES);
          
          /* no super sampling */
          /*
@@ -257,18 +236,6 @@ void renderImage(void) {
          writePPM(pixelColour, picfile);
       }
    }
-   /*for (row = 0; row < image_size; row++) {
-     ray.direction.y = 3.2*(-image_size/camera.view_size/2 + row/camera.view_size);
-     //ray.direction.y = -camera.view_size/6.5 + row/camera.view_size;
-     for (col = 0; col < image_size; col++) {
-     ray.direction.x = 3.2*(-image_size/camera.view_size/2 + col/camera.view_size);
-     //ray.direction.x = -camera.view_size/6.5 + col/camera.view_size;
-
-     pixelColour = ray_trace(ray, 0);
-     drawPixel(col, row, pixelColour);
-     writePPM(pixelColour, picfile);
-     }
-     }*/
 
    /* make sure all of the picture is displayed */
    showScreen();
@@ -276,9 +243,7 @@ void renderImage(void) {
    /* close the ppm file */
    fclose(picfile);
 
-   /* finished */
    printf("\nDone\n");
-
 }
 
 
@@ -295,42 +260,4 @@ int main (int argc,  char** argv) {
    mygl_mainLoop();
 
    return EXIT_SUCCESS;
-}
-
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* function that could be useful for testing the early part of the raytracer */
-/* ------------------------------------------------------------------------- */
-/* circle:
- *
- * will test the ray for intersections with a 'standard' circle
- */
-
-bool circle(Vector v) {
-   return (v.z < 0) && (1225 * ((v.x*v.x) + (v.y*v.y)) < 256 * (v.z * v.z));
-}
-
-/* ray_test:
- *  Maybe useful for testing the Primary ray, before any sphere intersections
- *  are written
- *
- * For testing purposes,
- *     replace  ray_trace(ray, 0);
- *     with     ray_test(ray);
- *     in the renderImage() double loop.
- *
- * When the camera is in the default position (no transformations) 
- * it should produce a circle
- *
- */
-RGBColour ray_test(RayDef ray) {
-
-   static RGBColour black = {0.0, 0.0, 0.0};
-   static RGBColour white = {1.0, 1.0, 1.0};
-
-   if (circle(ray.direction)) {
-      return white;
-   } else {
-      return black;
-   }
 }

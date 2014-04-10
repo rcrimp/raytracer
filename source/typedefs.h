@@ -35,7 +35,6 @@
 
 /* ----- TYPE DECLARATIONS ------------------------------------------------- */
 
-
 /* ray is defined by a point and a direction */
 typedef struct RayDef {
   Vector start;
