@@ -163,9 +163,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       ToLight = vector_normalise(vector_subtract(newLightPos, SurfaceNormal));
       ToCamera = vector_normalise(vector_subtract(newray.start, SurfaceNormal));
          
-      double nl = max(0, vector_dot(SurfaceNormal, ToLight));
+      double nl = vector_dot(SurfaceNormal, ToLight);
       Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
-      double rv =  max(0, vector_dot(r, ToCamera));
+      double rv =  vector_dot(r, ToCamera);
       rv = pow(rv, object[cur_obj].material.phong);
 
       /* calculate RGB */
