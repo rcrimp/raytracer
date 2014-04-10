@@ -35,11 +35,11 @@ TARGET = raytracer
 
 # Makefile terminal commands:  make == make default
 
-default: clean go
+default: clean git go
 
 git:
 	git add -A
-	git commit -m "$m"
+	git commit -m "compiled build"
 
 .c.o: $(CFILES) 
 	$(CC) -c $< $(COPTS)
