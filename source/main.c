@@ -85,7 +85,7 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
 
 /* the main ray tracing procedure */
 RGBColour ray_trace(RayDef ray, int recurse_depth) {
-   int cur_obj, j;
+   int cur_obj, i;
    
    RGBColour colour;
 
@@ -108,23 +108,22 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    Vector cam;
    
    object_r = 1.0f;
+
+   int ray_intersected = 0;
+   double intersection[num_objs];
+   for(i = 0; i < num_objs; i++){
+      intersection[i] = 100000;
+   }
    
-   for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
+   for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
 
       obj_translation.x = obj_translation.y = obj_translation.z = 0.0f; obj_translation.w = 1.0f;
       obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
       cam.x = cam.y = cam.z = 0; cam.w = 1;
       cam = vector_transform(camera.transform, cam);
 
-
       cam = vector_subtract(cam, obj_translation);
       newray.start = vector_subtract(ray.start, obj_translation);
-
-      
-      //double intersection[num_objs];
-      //for(i = 0; i < num_objs; i++){
-      //   intersection[i] = INT_MAX;
-      //}
       
       A = vector_dot(newray.direction, newray.direction);/* v.v */
       B = 2 * vector_dot(newray.direction, newray.start );/* 2 u.v */
@@ -138,41 +137,62 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
          t2 = C / (A*t1);
 
-         t = min(t1, t2);
-
-         /* everything below needs to be checked double checked and fixed */
-         SurfaceNormal = (vector_add(newray.start, vector_scale(newray.direction, t)));
-         ToLight = vector_normalise(vector_subtract(light_source[0].position, SurfaceNormal));
-
-         ToCamera = vector_normalise(vector_subtract(cam, SurfaceNormal));
-
-         //printf("%f %f %f\n", vector_length(SurfaceNormal), vector_length(ToLight), vector_length(ToCamera));
-         
-         double nl = vector_dot(SurfaceNormal, ToLight);
-         Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
-         double rv =  vector_dot(r, ToCamera);
-         rv = pow(rv, object[cur_obj].material.phong);
-
-         /* lol grescale light */
-         colour.red = colour.blue = colour.green =
-            object[cur_obj].material.ambient_colour.red * ambient_light.red +
-            object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * nl + 
-            object[cur_obj].material.specular_colour.red * light_source[0].colour.red * rv;
-         
-         /*colour.red = ambient_light.red*object[i].material.ambient_colour.red
-            + light_source[0].colour.red*(object[i].material.diffuse_colour.red*nl
-             + object[i].material.specular_colour.red*rv );
-
-         colour.blue = ambient_light.blue*object[i].material.ambient_colour.blue
-            + light_source[0].colour.blue*
-            (object[i].material.diffuse_colour.blue*nl
-             + object[i].material.specular_colour.blue*rv );
-
-         colour.green = ambient_light.green*object[i].material.ambient_colour.green
-            + light_source[0].colour.green*
-            (object[i].material.diffuse_colour.green*nl
-             + object[i].material.specular_colour.green*rv );*/
+         intersection[cur_obj] = min(t1, t2);
+         ray_intersected = 1;
       }
+   }
+
+   if(ray_intersected){
+      cur_obj = 0;
+      t = intersection[0];
+      
+      for(i = 0; i < num_objs; i++){
+         if (intersection[i] < t){
+            t = intersection[i];
+            cur_obj = i;
+         }
+      }
+
+      obj_translation.x = obj_translation.y = obj_translation.z = 0.0f; obj_translation.w = 1.0f;
+      obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
+      cam.x = cam.y = cam.z = 0; cam.w = 1;
+      cam = vector_transform(camera.transform, cam);
+
+      cam = vector_subtract(cam, obj_translation);
+      newray.start = vector_subtract(ray.start, obj_translation);
+      
+      /* everything below needs to be checked double checked and fixed */
+      SurfaceNormal = (vector_add(newray.start, vector_scale(newray.direction, t)));
+      ToLight = vector_normalise(vector_subtract(light_source[0].position, SurfaceNormal));
+
+      ToCamera = vector_normalise(vector_subtract(cam, SurfaceNormal));
+
+      //printf("%f %f %f\n", vector_length(SurfaceNormal), vector_length(ToLight), vector_length(ToCamera));
+         
+      double nl = vector_dot(SurfaceNormal, ToLight);
+      Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
+      double rv =  vector_dot(r, ToCamera);
+      rv = pow(rv, object[cur_obj].material.phong);
+
+      /* lol grescale light */
+      colour.red = colour.blue = colour.green =
+         object[cur_obj].material.ambient_colour.red * ambient_light.red +
+         object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * nl + 
+         object[cur_obj].material.specular_colour.red * light_source[0].colour.red * rv;
+         
+      /*colour.red = ambient_light.red*object[i].material.ambient_colour.red
+        + light_source[0].colour.red*(object[i].material.diffuse_colour.red*nl
+        + object[i].material.specular_colour.red*rv );
+
+        colour.blue = ambient_light.blue*object[i].material.ambient_colour.blue
+        + light_source[0].colour.blue*
+        (object[i].material.diffuse_colour.blue*nl
+        + object[i].material.specular_colour.blue*rv );
+
+        colour.green = ambient_light.green*object[i].material.ambient_colour.green
+        + light_source[0].colour.green*
+        (object[i].material.diffuse_colour.green*nl
+        + object[i].material.specular_colour.green*rv );*/
    }
    return colour;
 }
