@@ -156,8 +156,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       newray.start = vector_subtract(ray.start, obj_translation);
       light_source[0].position = vector_subtract(light_source[0].position, obj_translation);
 
-      vector_display(obj_translation);
-      vector_display(light_source[0].position);
+      vector_display(obj_translation); printf("\n");
+      vector_display(light_source[0].position); printf("\n");
       
       /* everything below needs to be checked double checked and fixed */
       SurfaceNormal = (vector_add(newray.start, vector_scale(newray.direction, t)));
