@@ -3,7 +3,7 @@ background    0.050 0.250 0.400
 ambient       0.3 0.3 0.3
 lens  35.000
 
-light   0.000 15.000 0.000   1.000 1.000 1.000
+light   0.000 0.000 -20.000   1.000 1.000 1.000
  
 sphere
 ambient   0.500 0.500 0.500
@@ -11,7 +11,7 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-translate  0.000 0.000 -5.000
+translate  0.000 0.000 -10.000
 
 sphere
 ambient   0.500 0.500 0.500
@@ -19,7 +19,7 @@ diffuse   1.000 0.000 0.000
 specular  0.500 0.500 0.500  3.00
 mirror    0.000 0.000 0.000
 texture   0
-translate  2.000 0.000 -5.000
+translate  2.000 0.000 -10.000
 
 sphere
 ambient   0.500 0.500 0.500
@@ -27,7 +27,7 @@ diffuse   1.000 0.000 1.000
 specular  0.500 0.500 0.500  40.00
 mirror    0.000 0.000 0.000
 texture   0
-translate  -2.000 0.000 -5.000
+translate  -2.000 0.000 -10.000
 
 sphere
 ambient   0.500 0.500 0.500
@@ -35,7 +35,7 @@ diffuse   0.000 0.000 1.000
 specular  0.500 0.500 0.500  40.00
 mirror    0.000 0.000 0.000
 texture   0
-translate  0.000 2.000 -5.000
+translate  0.000 2.000 -10.000
 
 sphere
 ambient   0.500 0.500 0.500
@@ -43,6 +43,6 @@ diffuse   0.000 1.000 0.000
 specular  0 0 0   0.00
 mirror    0.000 0.000 0.000
 texture   0
-translate  0.000 -2.000 -5.000
+translate  0.000 -2.000 -10.000
 
 endview
