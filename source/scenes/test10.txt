@@ -1,6 +1,6 @@
 imagesize     640 
 background    0.050 0.250 0.400
-ambient       0.200 0.200 0.200
+ambient       1 0.200 0.200
 lens  20.000
 light   -5.000 0.000 5.000   1.000 1.000 1.000
  
