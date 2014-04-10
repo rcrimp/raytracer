@@ -35,7 +35,7 @@ TARGET = raytracer
 
 # Makefile terminal commands:  make == make default
 
-default: clean git go
+default: clean go git
 
 git:
 	git add -A
