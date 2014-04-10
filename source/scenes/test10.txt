@@ -1,8 +1,8 @@
-imagesize     320 
+imagesize     640 
 background    0.050 0.250 0.400
 ambient       0.200 0.200 0.200
-lens  35.000
-light   -5.000 0.000 5.000   1.000 1.000 1.000
+lens  20.000
+light   50.000 0.000 -50.000   1.000 1.000 1.000
  
 sphere
 ambient   0.500 0.500 0.500
@@ -15,9 +15,33 @@ translate  0.000 0.000 -5.000
 sphere
 ambient   0.500 0.500 0.500
 diffuse   1.000 0.000 0.000
+specular  0.500 0.500 0.500  3.00
+mirror    0.000 0.000 0.000
+texture   0
+translate  2.000 0.000 -5.000
+
+sphere
+ambient   0.500 0.500 0.500
+diffuse   1.000 0.000 1.000
 specular  0.500 0.500 0.500  40.00
 mirror    0.000 0.000 0.000
 texture   0
-translate  1.000 0.000 -5.000
+translate  -2.000 0.000 -5.000
+
+sphere
+ambient   0.500 0.500 0.500
+diffuse   0.000 0.000 1.000
+specular  0.500 0.500 0.500  40.00
+mirror    0.000 0.000 0.000
+texture   0
+translate  0.000 2.000 -5.000
+
+sphere
+ambient   0.500 0.500 0.500
+diffuse   0.000 1.000 0.000
+specular  0 0 0   0.00
+mirror    0.000 0.000 0.000
+texture   0
+translate  0.000 -2.000 -5.000
 
 endview

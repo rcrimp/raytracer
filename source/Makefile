@@ -12,7 +12,7 @@ LOPTS =  -g3 -L/usr/lib -lglut -lGLU -lGL -lm $(XLIBS) #-fullwarn
 UNAME := $(shell uname)
 ifeq ($(UNAME),Darwin)
 XLIBS =  -L/usr/X11R6/lib
-COPTS =  -g3 -Wall -ansi -pedantic -I/usr/include
+COPTS =  -g3 -I/usr/include #-Wall -ansi -pedantic
 LOPTS = -framework Carbon -framework OpenGL -framework GLUT
 endif
 
@@ -36,6 +36,10 @@ TARGET = raytracer
 # Makefile terminal commands:  make == make default
 
 default: clean go
+
+git:
+	git add -A
+	git commit -m "$m"
 
 .c.o: $(CFILES) 
 	$(CC) -c $< $(COPTS)
