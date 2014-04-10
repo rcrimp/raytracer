@@ -141,7 +141,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    if(ray_intersected){
       cur_obj = 0;
       t = intersection[0];
-      
+
+      /* find closest object */
       for(i = 0; i < num_objs; i++){
          if (intersection[i] < t){
             t = intersection[i];
@@ -149,36 +150,25 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          }
       }
 
+      /* get object translation */
       obj_translation = vector_new(0,0,0,1);
       obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
+      /* translate light and objects */
       newray.start = vector_subtract(ray.start, obj_translation);
-
-      //newlight.x = light_source[0].position.x;
-      //newlight.y = light_source[0].position.y;
-      //newlight.z = light_source[0].position.z;
-      //newlight.w = light_source[0].position.w;
-      
       newLightPos = vector_subtract(light_source[0].position, obj_translation);
-
-      //vector_display(obj_translation); printf("<-- obj \n");
-      //vector_display(light_source[0].position); printf("<-- light 0\n");
-      //vector_display(newLightPos); printf("<-- curr_light \n");
       
       /* everything below needs to be checked double checked and fixed */
       SurfaceNormal = (vector_add(newray.start, vector_scale(newray.direction, t)));
       ToLight = vector_normalise(vector_subtract(newLightPos, SurfaceNormal));
-
       ToCamera = vector_normalise(vector_subtract(newray.start, SurfaceNormal));
-
-      //printf("%f %f %f\n", vector_length(SurfaceNormal), vector_length(ToLight), vector_length(ToCamera));
          
       double nl = max(0, vector_dot(SurfaceNormal, ToLight));
       Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
       double rv =  max(0, vector_dot(r, ToCamera));
       rv = pow(rv, object[cur_obj].material.phong);
 
-      /* lol grescale light */
+      /* calculate RGB */
       colour.red =
          object[cur_obj].material.ambient_colour.red * ambient_light.red +
          object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * nl + 
@@ -193,20 +183,6 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          object[cur_obj].material.ambient_colour.blue * ambient_light.blue +
          object[cur_obj].material.diffuse_colour.blue * light_source[0].colour.blue * nl + 
          object[cur_obj].material.specular_colour.blue * light_source[0].colour.blue * rv;
-         
-      /*colour.red = ambient_light.red*object[i].material.ambient_colour.red
-        + light_source[0].colour.red*(object[i].material.diffuse_colour.red*nl
-        + object[i].material.specular_colour.red*rv );
-
-        colour.blue = ambient_light.blue*object[i].material.ambient_colour.blue
-        + light_source[0].colour.blue*
-        (object[i].material.diffuse_colour.blue*nl
-        + object[i].material.specular_colour.blue*rv );
-
-        colour.green = ambient_light.green*object[i].material.ambient_colour.green
-        + light_source[0].colour.green*
-        (object[i].material.diffuse_colour.green*nl
-        + object[i].material.specular_colour.green*rv );*/
    }
    return colour;
 }
