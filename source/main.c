@@ -158,7 +158,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       //cur_ray_start = vector_subtract(ray.start, obj_translation);
       //cur_light_pos = vector_subtract(light_source[0].position, obj_translation);
       cur_ray_start = vector_transform_inv(object[cur_obj].transform, ray.start);
-      cur_light_pos = vector_transform(object[cur_obj].transform, light_source[0].position);
+      cur_light_pos = vector_transform_inv(object[cur_obj].transform, light_source[0].position);
 
       
       //cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
@@ -179,6 +179,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
       rv = pow(rv, object[cur_obj].material.phong);
 
+      RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour, object[cur_obj].material.texture, SurfaceNormal);
+      
       /* calculate RGB */
       colour.red =
          object[cur_obj].material.ambient_colour.red * ambient_light.red +
