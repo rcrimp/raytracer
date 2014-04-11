@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include <limits.h>
+#include <float.h>
 
 #include "typedefs.h"
 #include "vector_ops.h"
@@ -110,7 +110,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    int ray_intersected = 0;
    double intersection[num_objs];
    for(i = 0; i < num_objs; i++){
-      intersection[i] = -1.0f;
+      intersection[i] = DBL_MAX;
    }
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
@@ -143,8 +143,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       t = intersection[0];
 
       /* find closest object */
-      for(i = 0; i < num_objs; i++){
-         if (intersection[i] > t){
+      for(i = 1; i < num_objs; i++){
+         if (intersection[i] < t){
             t = intersection[i];
             cur_obj = i;
          }
