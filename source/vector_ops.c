@@ -79,11 +79,16 @@ Vector vector_normalise(Vector a){
 Vector vector_transform(Matrix m, Vector v){
    Vector result;
 
-   Vector r1 = vector_new(m.element[0][0], m.element[0][1], m.element[0][2], m.element[0][3]);
+   /*Vector r1 = vector_new(m.element[0][0], m.element[0][1], m.element[0][2], m.element[0][3]);
    Vector r2 = vector_new(m.element[1][0], m.element[1][1], m.element[1][2], m.element[1][3]);
    Vector r3 = vector_new(m.element[2][0], m.element[2][1], m.element[2][2], m.element[2][3]);
    Vector r4 = vector_new(m.element[3][0], m.element[3][1], m.element[3][2], m.element[3][3]);
-
+   */
+   Vector r1 = vector_new(m.element[0][0], m.element[1][0], m.element[2][0], m.element[3][0]);
+   Vector r2 = vector_new(m.element[0][1], m.element[1][1], m.element[2][1], m.element[3][1]);
+   Vector r3 = vector_new(m.element[0][2], m.element[1][2], m.element[2][2], m.element[3][2]);
+   Vector r4 = vector_new(m.element[0][3], m.element[1][3], m.element[2][3], m.element[3][3]);
+   
    result.x = vector_dot(r1, v);
    result.y = vector_dot(r2, v);
    result.z = vector_dot(r3, v);
