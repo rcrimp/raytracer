@@ -144,7 +144,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       /* find closest object */
       for(i = 0; i < num_objs; i++){
-         if (intersection[i] < t){
+         if (intersection[i] > t){
             t = intersection[i];
             cur_obj = i;
          }
