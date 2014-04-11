@@ -33,7 +33,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  67.500
 translate  -0.541 1.307 -7.000
 
 # Exported Object : "Sphere.071" 
@@ -43,7 +42,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  67.500
 translate  -1.624 3.920 -11.000
 
 # Exported Object : "Sphere.070" 
@@ -53,7 +51,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  67.500
 translate  -1.082 2.613 -9.000
 
 # Exported Object : "Sphere.069" 
@@ -63,7 +60,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  157.500
 translate  -2.613 -1.082 -9.000
 
 # Exported Object : "Sphere.068" 
@@ -73,7 +69,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  157.500
 translate  -3.920 -1.624 -11.000
 
 # Exported Object : "Sphere.067" 
@@ -83,7 +78,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  157.500
 translate  -1.307 -0.541 -7.000
 
 # Exported Object : "Sphere.066" 
@@ -93,7 +87,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  247.500
 translate  0.541 -1.307 -7.000
 
 # Exported Object : "Sphere.065" 
@@ -103,7 +96,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  247.500
 translate  1.624 -3.920 -11.000
 
 # Exported Object : "Sphere.064" 
@@ -113,7 +105,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  247.500
 translate  1.082 -2.613 -9.000
 
 # Exported Object : "Sphere.063" 
@@ -123,7 +114,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  337.500
 translate  2.613 1.082 -9.000
 
 # Exported Object : "Sphere.062" 
@@ -133,7 +123,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  337.500
 translate  3.920 1.624 -11.000
 
 # Exported Object : "Sphere.061" 
@@ -143,7 +132,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  337.500
 translate  1.307 0.541 -7.000
 
 # Exported Object : "Sphere.060" 
@@ -153,7 +141,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  292.500
 translate  1.307 -0.541 -7.000
 
 # Exported Object : "Sphere.059" 
@@ -163,7 +150,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  292.500
 translate  3.920 -1.624 -11.000
 
 # Exported Object : "Sphere.058" 
@@ -173,7 +159,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  292.500
 translate  2.613 -1.082 -9.000
 
 # Exported Object : "Sphere.057" 
@@ -183,7 +168,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  202.500
 translate  -1.082 -2.613 -9.000
 
 # Exported Object : "Sphere.056" 
@@ -193,7 +177,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  202.500
 translate  -1.624 -3.920 -11.000
 
 # Exported Object : "Sphere.055" 
@@ -203,7 +186,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  202.500
 translate  -0.541 -1.307 -7.000
 
 # Exported Object : "Sphere.054" 
@@ -213,7 +195,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  112.500
 translate  -1.307 0.541 -7.000
 
 # Exported Object : "Sphere.053" 
@@ -223,7 +204,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  112.500
 translate  -3.920 1.624 -11.000
 
 # Exported Object : "Sphere.052" 
@@ -233,7 +213,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  112.500
 translate  -2.613 1.082 -9.000
 
 # Exported Object : "Sphere.051" 
@@ -243,7 +222,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  22.500
 translate  1.082 2.613 -9.000
 
 # Exported Object : "Sphere.050" 
@@ -253,7 +231,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  22.500
 translate  1.624 3.920 -11.000
 
 # Exported Object : "Sphere.049" 
@@ -263,7 +240,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  22.500
 translate  0.541 1.307 -7.000
 
 # Exported Object : "Sphere.048" 
@@ -300,7 +276,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  90.000
 translate  -2.000 2.000 -9.000
 
 # Exported Object : "Sphere.044" 
@@ -310,7 +285,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  90.000
 translate  -3.000 3.000 -11.000
 
 # Exported Object : "Sphere.043" 
@@ -320,7 +294,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  90.000
 translate  -1.000 1.000 -7.000
 
 # Exported Object : "Sphere.042" 
@@ -330,7 +303,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  180.000
 translate  -1.000 -1.000 -7.000
 
 # Exported Object : "Sphere.041" 
@@ -340,7 +312,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  180.000
 translate  -3.000 -3.000 -11.000
 
 # Exported Object : "Sphere.040" 
@@ -350,7 +321,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  180.000
 translate  -2.000 -2.000 -9.000
 
 # Exported Object : "Sphere.039" 
@@ -360,7 +330,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  270.000
 translate  2.000 -2.000 -9.000
 
 # Exported Object : "Sphere.038" 
@@ -370,7 +339,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  270.000
 translate  3.000 -3.000 -11.000
 
 # Exported Object : "Sphere.037" 
@@ -380,7 +348,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  270.000
 translate  1.000 -1.000 -7.000
 
 # Exported Object : "Sphere.036" 
@@ -390,7 +357,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  315.000
 translate  1.414 -0.000 -7.000
 
 # Exported Object : "Sphere.035" 
@@ -400,7 +366,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  315.000
 translate  4.243 -0.000 -11.000
 
 # Exported Object : "Sphere.034" 
@@ -410,7 +375,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  315.000
 translate  2.828 -0.000 -9.000
 
 # Exported Object : "Sphere.033" 
@@ -420,7 +384,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  225.000
 translate  -0.000 -2.828 -9.000
 
 # Exported Object : "Sphere.032" 
@@ -430,7 +393,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  225.000
 translate  -0.000 -4.243 -11.000
 
 # Exported Object : "Sphere.031" 
@@ -440,7 +402,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  225.000
 translate  -0.000 -1.414 -7.000
 
 # Exported Object : "Sphere.030" 
@@ -450,7 +411,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  135.000
 translate  -1.414 -0.000 -7.000
 
 # Exported Object : "Sphere.029" 
@@ -460,7 +420,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  135.000
 translate  -4.243 -0.000 -11.000
 
 # Exported Object : "Sphere.028" 
@@ -470,7 +429,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  135.000
 translate  -2.828 -0.000 -9.000
 
 # Exported Object : "Sphere.027" 
@@ -480,7 +438,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  45.000
 translate  -0.000 2.828 -9.000
 
 # Exported Object : "Sphere.026" 
@@ -490,7 +447,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  45.000
 translate  -0.000 4.243 -11.000
 
 # Exported Object : "Sphere.025" 
@@ -500,7 +456,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  45.000
 translate  -0.000 1.414 -7.000
 
 # Exported Object : "Sphere.024" 
@@ -510,7 +465,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  45.000
 translate  -0.000 1.414 -7.000
 
 # Exported Object : "Sphere.023" 
@@ -520,7 +474,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  45.000
 translate  -0.000 4.243 -11.000
 
 # Exported Object : "Sphere.022" 
@@ -530,7 +483,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  45.000
 translate  -0.000 2.828 -9.000
 
 # Exported Object : "Sphere.021" 
@@ -540,7 +492,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  135.000
 translate  -2.828 -0.000 -9.000
 
 # Exported Object : "Sphere.020" 
@@ -550,7 +501,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  135.000
 translate  -4.243 -0.000 -11.000
 
 # Exported Object : "Sphere.019" 
@@ -560,7 +510,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  135.000
 translate  -1.414 -0.000 -7.000
 
 # Exported Object : "Sphere.018" 
@@ -570,7 +519,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  225.000
 translate  -0.000 -1.414 -7.000
 
 # Exported Object : "Sphere.017" 
@@ -580,7 +528,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  225.000
 translate  -0.000 -4.243 -11.000
 
 # Exported Object : "Sphere.016" 
@@ -590,7 +537,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  225.000
 translate  -0.000 -2.828 -9.000
 
 # Exported Object : "Sphere.015" 
@@ -600,7 +546,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  315.000
 translate  2.828 -0.000 -9.000
 
 # Exported Object : "Sphere.014" 
@@ -610,7 +555,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  315.000
 translate  4.243 -0.000 -11.000
 
 # Exported Object : "Sphere.013" 
@@ -620,7 +564,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  315.000
 translate  1.414 -0.000 -7.000
 
 # Exported Object : "Sphere.012" 
@@ -630,7 +573,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  270.000
 translate  1.000 -1.000 -7.000
 
 # Exported Object : "Sphere.011" 
@@ -640,7 +582,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  270.000
 translate  3.000 -3.000 -11.000
 
 # Exported Object : "Sphere.010" 
@@ -650,7 +591,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  270.000
 translate  2.000 -2.000 -9.000
 
 # Exported Object : "Sphere.009" 
@@ -660,7 +600,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  180.000
 translate  -2.000 -2.000 -9.000
 
 # Exported Object : "Sphere.008" 
@@ -670,7 +609,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  180.000
 translate  -3.000 -3.000 -11.000
 
 # Exported Object : "Sphere.007" 
@@ -680,7 +618,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  180.000
 translate  -1.000 -1.000 -7.000
 
 # Exported Object : "Sphere.006" 
@@ -690,7 +627,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  90.000
 translate  -1.000 1.000 -7.000
 
 # Exported Object : "Sphere.005" 
@@ -700,7 +636,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  90.000
 translate  -3.000 3.000 -11.000
 
 # Exported Object : "Sphere.004" 
@@ -710,7 +645,6 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
-rotate     z  90.000
 translate  -2.000 2.000 -9.000
 
 # Exported Object : "Sphere.003" 

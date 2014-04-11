@@ -105,8 +105,6 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    /* copy the ray, we don't want to modify the original */
    newray.start = ray.start;
    newray.direction = vector_normalise(ray.direction);
-   
-   object_r = 1.0f;
 
    int ray_intersected = 0;
    double intersection[num_objs];
@@ -123,7 +121,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       
       A = vector_dot(newray.direction, newray.direction);/* v.v */
       B = 2 * vector_dot(newray.direction, newray.start );/* 2 u.v */
-      C = vector_dot(newray.start, newray.start) - object_r; /* u.u -r */
+      C = vector_dot(newray.start, newray.start) - 1; /* u.u -r */
       det = (B*B) - (4*A*C);
       if (det > 0) {
          if ( B > 0 )
