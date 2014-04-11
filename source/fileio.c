@@ -250,13 +250,12 @@ void fileio_readfile(char *fname) {
          fscanf(description_file, "%lf", &y);
          fscanf(description_file, "%lf", &z);
 
-
          /* should I subtract the identity matrix to &translate,
             and change the matrix_multiply to matrix add */
          matrix_make(&transformation,
-                     1.0, 0.0, 0.0, -x,
-                     0.0, 1.0, 0.0, -y,
-                     0.0, 0.0, 1.0, -z,
+                     1.0, 0.0, 0.0, (-1.0f) * x,
+                     0.0, 1.0, 0.0, (-1.0f) * y,
+                     0.0, 0.0, 1.0, (-1.0f) * z,
                      0.0, 0.0, 0.0, 1.0);
          if(num_objs == 0){ //translate the camera
             matrix_multiply(&camera.transform, transformation);
