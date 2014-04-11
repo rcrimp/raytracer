@@ -110,7 +110,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    int ray_intersected = 0;
    double intersection[num_objs];
    for(i = 0; i < num_objs; i++){
-      intersection[i] = -1;
+      intersection[i] = -1.0f;
    }
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
