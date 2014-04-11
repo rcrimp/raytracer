@@ -127,7 +127,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
          t2 = C / (A*t1);
 
-         intersection[cur_obj] = max(t1, t2);
+         intersection[cur_obj] = min(t1, t2);
          ray_intersected = 1;
       }
    }
