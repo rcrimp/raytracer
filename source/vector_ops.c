@@ -102,6 +102,12 @@ Vector vector_transform(Matrix m, Vector v){
    return result;
 }
 
+Vector vector_transform_inv(Matrix m, Vector v){
+   Vector result = vector_transform(m,v);
+   result = vector_scale(result, -1);
+   return result;
+}
+
 /* display a vector
  *
  *  States if the vector is a  POINT   (w == 1.0)

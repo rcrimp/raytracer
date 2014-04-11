@@ -34,6 +34,7 @@ Vector vector_cross(Vector a, Vector b);
 double vector_length(Vector a);
 Vector vector_normalise(Vector a);
 Vector vector_transform(Matrix m, Vector v);
+Vector vector_transform_inv(Matrix m, Vector v);
 void vector_display(Vector v);
 
 #endif /* _VECTOR_OPS_H_ */
