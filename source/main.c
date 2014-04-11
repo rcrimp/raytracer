@@ -169,7 +169,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
       rv = pow(rv, object[cur_obj].material.phong);
 
-      object[cur_obj].material.diffuse_colour = texture_diffuse(object[cur_obj].material.diffuse_colour, object[cur_obj].material.texture, SurfaceNormal);
+      object[cur_obj].material.diffuse_colour = texture_diffuse(object[cur_obj].material.diffuse_colour, 3, SurfaceNormal);
 
       colour = object[cur_obj].material.diffuse_colour;
       
