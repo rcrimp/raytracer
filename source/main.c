@@ -166,8 +166,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       double rv =  vector_dot(r, ToCamera);
 
       /* we don't want negative values */
-      nl = abs(nl);
-      rv = abs(rv);
+      nl = max(0, nl);
+      rv = max(0, rv);
          
       rv = pow(rv, object[cur_obj].material.phong);
 
