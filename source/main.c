@@ -153,8 +153,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
       /* translate light and objects */
-      newray.start = vector_subtract(ray.start, obj_translation);
-      newLightPos = vector_subtract(light_source[0].position, obj_translation);
+      //newray.start = vector_subtract(ray.start, obj_translation);
+      //newLightPos = vector_subtract(light_source[0].position, obj_translation);
+      newray.start = vector_transform(object[cur_obj].transform, newray.start);
+      newLightPos = vector_transform(object[cur_obj].transform, newLightPos);
       
       /* everything below needs to be checked double checked and fixed */
       SurfaceNormal = (vector_add(newray.start, vector_scale(newray.direction, t)));
