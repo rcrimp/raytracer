@@ -182,12 +182,12 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       colour.green =
          object[cur_obj].material.ambient_colour.green * ambient_light.green +
-         object[cur_obj].material.diffuse_colour.green * light_source[0].colour.green * nl + 
+         object[cur_obj].material.diffuse_colour.green * light_source[0].colour.green * texc.green * nl + 
          object[cur_obj].material.specular_colour.green * light_source[0].colour.green * rv;
 
       colour.blue =
          object[cur_obj].material.ambient_colour.blue * ambient_light.blue +
-         object[cur_obj].material.diffuse_colour.blue * light_source[0].colour.blue * nl + 
+         object[cur_obj].material.diffuse_colour.blue * light_source[0].colour.blue * texc.blue * nl + 
          object[cur_obj].material.specular_colour.blue * light_source[0].colour.blue * rv;
       
    }
