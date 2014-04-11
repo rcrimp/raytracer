@@ -103,8 +103,12 @@ Vector vector_transform(Matrix m, Vector v){
 }
 
 Vector vector_transform_inv(Matrix m, Vector v){
+   m.element[0][3] *= -1;
+   m.element[1][3] *= -1;
+   m.element[2][3] *= -1;
+
    Vector result = vector_transform(m,v);
-   result = vector_scale(result, -1);
+   
    return result;
 }
 
