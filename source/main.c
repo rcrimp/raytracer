@@ -110,7 +110,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    int ray_intersected = 0;
    double intersection[num_objs];
    for(i = 0; i < num_objs; i++){
-      intersection[i] = 100000;
+      intersection[i] = -1;
    }
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
@@ -119,7 +119,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       //obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
       //cur_ray_start = vector_subtract(ray.start, obj_translation);
-      cur_ray_start = vector_transform_inv(object[cur_obj].transform, ray.start);
+      cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
       
       A = vector_dot(cur_ray_dir, cur_ray_dir);/* v.v */
       B = 2 * vector_dot(cur_ray_dir, cur_ray_start );/* 2 u.v */
@@ -133,7 +133,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
          t2 = C / (A*t1);
 
-         intersection[cur_obj] = min(t1, t2);
+         intersection[cur_obj] = max(t1, t2);
          ray_intersected = 1;
       }
    }
