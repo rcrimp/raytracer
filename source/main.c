@@ -165,7 +165,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
       double rv =  vector_dot(r, ToCamera);
 
-      /* we don't want negative values */
+      /* range: 0-1 */
       nl = max(0, nl);
       rv = max(0, rv);
          
