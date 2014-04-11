@@ -118,7 +118,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
       //newray.start = vector_subtract(ray.start, obj_translation);
-      newray.start = vector_transform(object[cur_obj].transform, newray.start);
+      newray.start = vector_transform(object[cur_obj].transform, ray.start);
       
       A = vector_dot(newray.direction, newray.direction);/* v.v */
       B = 2 * vector_dot(newray.direction, newray.start );/* 2 u.v */
@@ -155,7 +155,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       /* translate light and objects */
       //newray.start = vector_subtract(ray.start, obj_translation);
-      newray.start = vector_transform(object[cur_obj].transform, newray.start);
+      newray.start = vector_transform(object[cur_obj].transform, ray.start);
       newLightPos = vector_subtract(light_source[0].position, obj_translation);
 
       //newray.start = vector_transform(object[cur_obj].transform, ray.start);
