@@ -89,7 +89,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    
    RGBColour colour;
 
-   //Vector obj_translation;
+   Vector obj_translation;
    
    double A, B, C, det, t1, t2, t; //quadratic variables
 
@@ -115,11 +115,11 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
 
-      //obj_translation = vector_new(0,0,0,1);
-      //obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
+      obj_translation = vector_new(0,0,0,1);
+      obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
-      //cur_ray_start = vector_subtract(ray.start, obj_translation);
-      cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
+      cur_ray_start = vector_subtract(ray.start, obj_translation);
+      //cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
       
       A = vector_dot(cur_ray_dir, cur_ray_dir);/* v.v */
       B = 2 * vector_dot(cur_ray_dir, cur_ray_start );/* 2 u.v */
@@ -151,14 +151,14 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       }
 
       /* get object translation */
-      //obj_translation = vector_new(0,0,0,1);
-      //obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
+      obj_translation = vector_new(0,0,0,1);
+      obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
       /* translate light and objects */
-      //cur_ray_start = vector_subtract(ray.start, obj_translation);
-      //cur_light_pos = vector_subtract(light_source[0].position, obj_translation);
-      cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
-      cur_light_pos = vector_transform(object[cur_obj].transform, light_source[0].position);
+      cur_ray_start = vector_subtract(ray.start, obj_translation);
+      cur_light_pos = vector_subtract(light_source[0].position, obj_translation);
+      //cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
+      //cur_light_pos = vector_transform(object[cur_obj].transform, light_source[0].position);
 
       
       //cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
