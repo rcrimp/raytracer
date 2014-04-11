@@ -85,20 +85,14 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
 
 /* the main ray tracing procedure */
 RGBColour ray_trace(RayDef ray, int recurse_depth) {
-   int cur_obj, i;
-   
+   int cur_obj, i;   
    RGBColour colour;
-
    Vector obj_translation;
-   
    double A, B, C, det, t1, t2, t; //quadratic variables
-
    Vector SurfaceNormal, ToLight, ToCamera;
-
    Vector cur_ray_start;
    Vector cur_ray_dir;
    Vector cur_light_pos;
-
    
    /* setup */
    colour = background_colour;
