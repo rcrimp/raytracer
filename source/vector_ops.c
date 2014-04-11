@@ -103,6 +103,11 @@ Vector vector_transform(Matrix m, Vector v){
 }
 
 Vector vector_transform_inv(Matrix m, Vector v){
+   int i, j;
+   for(i = 0; i < 4; i++)
+      for(j = 0; j < 4; j++)
+         m.element[i][j] = -m.element[i][j];
+
    m.element[0][3] *= -1;
    m.element[1][3] *= -1;
    m.element[2][3] *= -1;
