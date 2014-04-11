@@ -253,9 +253,9 @@ void fileio_readfile(char *fname) {
          /* should I subtract the identity matrix to &translate,
             and change the matrix_multiply to matrix add */
          matrix_make(&transformation,
-                     1.0, 0.0, 0.0, (-1.0f) * x,
-                     0.0, 1.0, 0.0, (-1.0f) * y,
-                     0.0, 0.0, 1.0, (-1.0f) * z,
+                     1.0, 0.0, 0.0, (1.0f) * x,
+                     0.0, 1.0, 0.0, (1.0f) * y,
+                     0.0, 0.0, 1.0, (1.0f) * z,
                      0.0, 0.0, 0.0, 1.0);
          if(num_objs == 0){ //translate the camera
             matrix_multiply(&camera.transform, transformation);
