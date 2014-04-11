@@ -90,21 +90,22 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    RGBColour colour;
 
    Vector obj_translation;
-   double object_r;
-
+   
    double A, B, C, det, t1, t2, t; //quadratic variables
 
    Vector SurfaceNormal, ToLight, ToCamera;
 
-   RayDef newray;
-   Vector newLightPos;
+   Vector cur_ray_start;
+   Vector cur_ray_dir;
+   Vector cur_light_pos;
 
+   
    /* setup */
    colour = background_colour;
 
    /* copy the ray, we don't want to modify the original */
-   newray.start = ray.start;
-   newray.direction = vector_normalise(ray.direction);
+   //cur_ray_start = ray.start;
+   cur_ray_dir = vector_normalise(ray.direction);
 
    int ray_intersected = 0;
    double intersection[num_objs];
@@ -117,12 +118,12 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       obj_translation = vector_new(0,0,0,1);
       obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
-      //newray.start = vector_subtract(ray.start, obj_translation);
-      newray.start = vector_transform(object[cur_obj].transform, ray.start);
+      //cur_ray_start = vector_subtract(ray.start, obj_translation);
+      cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
       
-      A = vector_dot(newray.direction, newray.direction);/* v.v */
-      B = 2 * vector_dot(newray.direction, newray.start );/* 2 u.v */
-      C = vector_dot(newray.start, newray.start) - 1; /* u.u -r */
+      A = vector_dot(cur_ray_dir, cur_ray_dir);/* v.v */
+      B = 2 * vector_dot(cur_ray_dir, cur_ray_start );/* 2 u.v */
+      C = vector_dot(cur_ray_start, cur_ray_start) - 1; /* u.u -r */
       det = (B*B) - (4*A*C);
       if (det > 0) {
          if ( B > 0 )
@@ -154,17 +155,17 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
       /* translate light and objects */
-      //newray.start = vector_subtract(ray.start, obj_translation);
-      newray.start = vector_transform(object[cur_obj].transform, ray.start);
-      newLightPos = vector_subtract(light_source[0].position, obj_translation);
+      //cur_ray_start = vector_subtract(ray.start, obj_translation);
+      cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
+      cur_light_pos = vector_subtract(light_source[0].position, obj_translation);
 
-      //newray.start = vector_transform(object[cur_obj].transform, ray.start);
-      //newLightPos = vector_transform(object[cur_obj].transform, light_source[0].position);
+      //cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
+      //cur_light_pos = vector_transform(object[cur_obj].transform, light_source[0].position);
       
       /* everything below needs to be checked double checked and fixed */
-      SurfaceNormal = (vector_add(newray.start, vector_scale(newray.direction, t)));
-      ToLight = vector_normalise(vector_subtract(newLightPos, SurfaceNormal));
-      ToCamera = vector_normalise(vector_subtract(newray.start, SurfaceNormal));
+      SurfaceNormal = (vector_add(cur_ray_start, vector_scale(cur_ray_dir, t)));
+      ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
+      ToCamera = vector_normalise(vector_subtract(cur_ray_start, SurfaceNormal));
          
       double nl = vector_dot(SurfaceNormal, ToLight);
       Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
