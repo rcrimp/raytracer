@@ -169,15 +169,15 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
       rv = pow(rv, object[cur_obj].material.phong);
 
-      object[cur_obj].material.diffuse_colour = texture_diffuse(object[cur_obj].material.diffuse_colour, 4, SurfaceNormal);
+      RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour, object[cur_obj].material.texture, SurfaceNormal);
 
-      colour = object[cur_obj].material.diffuse_colour;
+      //colour = object[cur_obj].material.diffuse_colour;
       
       /* calculate RGB */
-      /*
+      
         colour.red =
          object[cur_obj].material.ambient_colour.red * ambient_light.red +
-         object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * nl + 
+         object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * texc.red * nl + 
          object[cur_obj].material.specular_colour.red * light_source[0].colour.red * rv;
 
       colour.green =
@@ -189,7 +189,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          object[cur_obj].material.ambient_colour.blue * ambient_light.blue +
          object[cur_obj].material.diffuse_colour.blue * light_source[0].colour.blue * nl + 
          object[cur_obj].material.specular_colour.blue * light_source[0].colour.blue * rv;
-      */
+      
    }
    return colour;
 }
