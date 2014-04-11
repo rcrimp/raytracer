@@ -114,7 +114,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
 
-      obj_translation.x = obj_translation.y = obj_translation.z = 0.0f; obj_translation.w = 1.0f;
+      obj_translation = vector_new(0,0,0,1);
       obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
       newray.start = vector_subtract(ray.start, obj_translation);
