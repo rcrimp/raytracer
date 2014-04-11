@@ -174,7 +174,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       /* calculate RGB */
       colour.red =
          object[cur_obj].material.ambient_colour.red * ambient_light.red +
-         object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * nl + 
+         object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * 1 /*nl*/ + 
          object[cur_obj].material.specular_colour.red * light_source[0].colour.red * rv;
 
       colour.green =
