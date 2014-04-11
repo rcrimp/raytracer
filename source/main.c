@@ -119,7 +119,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       //obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
 
       //cur_ray_start = vector_subtract(ray.start, obj_translation);
-      cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
+      cur_ray_start = vector_transform_inv(object[cur_obj].transform, ray.start);
       
       A = vector_dot(cur_ray_dir, cur_ray_dir);/* v.v */
       B = 2 * vector_dot(cur_ray_dir, cur_ray_start );/* 2 u.v */
