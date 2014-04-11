@@ -171,7 +171,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour, object[cur_obj].material.texture, SurfaceNormal);
 
-      //object[cur_obj].material.diffuse_colour = texc;
+      object[cur_obj].material.diffuse_colour = texc;
       
       /* calculate RGB */
       colour.red =
@@ -219,7 +219,6 @@ void renderImage(void) {
    
    /* create the start point for the primary ray */
    ray.start = vector_new(0,0,0,1);
-
    
    /* create the direction of the primary ray */
    ray.direction = vector_new(0,0,-camera.lens,0);
