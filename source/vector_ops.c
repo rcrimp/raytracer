@@ -102,21 +102,6 @@ Vector vector_transform(Matrix m, Vector v){
    return result;
 }
 
-Vector vector_transform_inv(Matrix m, Vector v){
-   int i, j;
-   for(i = 0; i < 4; i++)
-      for(j = 0; j < 4; j++)
-         m.element[i][j] = -m.element[i][j];
-
-   m.element[0][3] *= -1;
-   m.element[1][3] *= -1;
-   m.element[2][3] *= -1;
-
-   Vector result = vector_transform(m,v);
-   
-   return result;
-}
-
 /* display a vector
  *
  *  States if the vector is a  POINT   (w == 1.0)

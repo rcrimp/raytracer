@@ -254,9 +254,9 @@ void fileio_readfile(char *fname) {
          /* should I subtract the identity matrix to &translate,
             and change the matrix_multiply to matrix add */
          matrix_make(&transformation,
-                     1.0, 0.0, 0.0, x,
-                     0.0, 1.0, 0.0, y,
-                     0.0, 0.0, 1.0, z,
+                     1.0, 0.0, 0.0, -x,
+                     0.0, 1.0, 0.0, -y,
+                     0.0, 0.0, 1.0, -z,
                      0.0, 0.0, 0.0, 1.0);
          if(num_objs == 0){ //translate the camera
             matrix_multiply(&camera.transform, transformation);
@@ -270,9 +270,9 @@ void fileio_readfile(char *fname) {
          fscanf(description_file, "%lf", &z);
 
          matrix_make(&transformation,
-                     x, 0.0, 0.0, 0.0,
-                     0.0, y, 0.0, 0.0,
-                     0.0, 0.0, z, 0.0,
+                     -x, 0.0, 0.0, 0.0,
+                     0.0, -y, 0.0, 0.0,
+                     0.0, 0.0, -z, 0.0,
                      0.0, 0.0, 0.0, 1.0);
          /* must stretch either the camera or most recent sphere */
          if(num_objs == 0){
@@ -294,21 +294,21 @@ void fileio_readfile(char *fname) {
          case 'x':
             matrix_make(&transformation,
                         1.0, 0.0, 0.0, 0.0,
-                        0.0, cos(angle), -sin(angle), 0.0,
-                        0.0, sin(angle), cos(angle), 0.0,
+                        0.0, cos(angle), sin(angle), 0.0,
+                        0.0, -sin(angle), cos(angle), 0.0,
                         0.0, 0.0, 0.0, 1.0);
             break;
          case 'y':
             matrix_make(&transformation,
-                        cos(angle), 0.0, sin(angle), 0.0,
+                        cos(angle), 0.0, -sin(angle), 0.0,
                         0.0, 1.0, 0.0, 0.0,
-                        -sin(angle), 0.0, cos(angle), 0.0,
+                        sin(angle), 0.0, cos(angle), 0.0,
                         0.0, 0.0, 0.0, 1.0);
             break;
          case 'z':
             matrix_make(&transformation,
-                        cos(angle), -sin(angle), 0.0, 0.0,
-                        sin(angle), cos(angle), 0.0, 0.0,
+                        cos(angle), sin(angle), 0.0, 0.0,
+                        -sin(angle), cos(angle), 0.0, 0.0,
                         0.0, 0.0, 1.0, 0.0,
                         0.0, 0.0, 0.0, 1.0);
             break;
