@@ -157,8 +157,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       /* translate light and objects */
       //cur_ray_start = vector_subtract(ray.start, obj_translation);
       //cur_light_pos = vector_subtract(light_source[0].position, obj_translation);
-      cur_ray_start = vector_transform_inv(object[cur_obj].transform, vector_scale(ray.start, -1));
-      cur_light_pos = vector_transform_inv(object[cur_obj].transform, vector_scale(light_source[0].position, -1));
+      cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
+      cur_light_pos = vector_transform(object[cur_obj].transform, light_source[0].position);
 
       
       //cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
