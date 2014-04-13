@@ -101,6 +101,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       intersection[i] = DBL_MAX;
    }
    colour = background_colour;
+
+   ray.direction = vector_normalise(ray.direction);
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
       
