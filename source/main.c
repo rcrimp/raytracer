@@ -137,6 +137,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          }
       }
 
+      object[cur_obj].material.diffuse_colour = texture_diffuse(object[cur_obj].material.diffuse_colour,
+                                                                object[cur_obj].material.texture, SurfaceNormal);
+
       /* ambient light */
       colour.red   = object[cur_obj].material.ambient_colour.red   * ambient_light.red;
       colour.green = object[cur_obj].material.ambient_colour.green * ambient_light.green;
@@ -153,9 +156,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       ToCamera = vector_normalise(vector_subtract(cur_ray_start, SurfaceNormal));
 
       /* for each light */
-      for(cur_light = 0; cur_light < num_lights; cur_light++)
-         //cur_light = 0;
-      {
+      for(cur_light = 0; cur_light < num_lights; cur_light++) {
          cur_light_pos = vector_transform(object[cur_obj].transform, light_source[cur_light].position);
          ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
          
