@@ -88,6 +88,7 @@ RGBColour ray_trace2(RayDef ray, int rec){
 
    colour = background_colour;
 
+   ray.start.z += 5;
    ray.direction = vector_normalise(ray.direction);
 
    A = vector_dot(ray.direction, ray.direction);/* v.v */
