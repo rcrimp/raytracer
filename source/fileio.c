@@ -289,7 +289,7 @@ void fileio_readfile(char *fname) {
          }
          fscanf(description_file, "%lf", &angle);
 
-         angle = (3.1415926535*angle)/180;
+         angle = (3.1415926535*-angle)/180;
          
          switch(axis){
          case 'x':

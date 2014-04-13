@@ -33,6 +33,7 @@ diffuse   0.127 0.800 0.245
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
 texture   0
+rotate     z  180.000
 translate  0.000 0.000 -6.945
 
 # Exported Object : "Sphere.001" 
@@ -54,6 +55,7 @@ specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
 texture   0
 stretch    5.028 1.380 1.380
+rotate     z  21.344
 translate  -1.749 0.740 -17.327
 
 endview
