@@ -216,6 +216,7 @@ void renderImage(void) {
             for(j = 0; j < grid_size; j++){
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
+               ray.direction = vector_normalise(ray.direction);
                samples[j + i*grid_size] = ray_trace(ray, 0);
             }
          }
