@@ -299,14 +299,14 @@ void fileio_readfile(char *fname) {
                         0.0, sin(angle), cos(angle), 0.0,
                         0.0, 0.0, 0.0, 1.0);
             break;
-         case 'x':
+         case 'z':
             matrix_make(&transformation,
                         cos(angle), 0.0, sin(angle), 0.0,
                         0.0, 1.0, 0.0, 0.0,
                         -sin(angle), 0.0, cos(angle), 0.0,
                         0.0, 0.0, 0.0, 1.0);
             break;
-         case 'z':
+         case 'x':
             matrix_make(&transformation,
                         cos(angle), sin(angle), 0.0, 0.0,
                         -sin(angle), cos(angle), 0.0, 0.0,
