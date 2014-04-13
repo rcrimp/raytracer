@@ -142,7 +142,6 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       colour.green = object[cur_obj].material.ambient_colour.green * ambient_light.green;
       colour.blue  = object[cur_obj].material.ambient_colour.blue  * ambient_light.blue;
       
-      
       /* translate light and objects */
       cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
       cur_ray_dir = vector_normalise(ray.direction);
