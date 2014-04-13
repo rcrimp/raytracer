@@ -26,6 +26,26 @@ light   4.071 0.000 0.000   1.000 1.000 1.000
 # Outputting the objects in the scene
 # NOTE: Converted all Meshes as spheres
 
+# Exported Object : "Sphere.002" 
+sphere
+ambient   1.000 1.000 1.000
+diffuse   0.127 0.800 0.245
+specular  0.500 0.500 0.500  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    1.539 1.539 1.539
+translate  -0.032 0.725 -7.000
+
+# Exported Object : "Sphere.001" 
+sphere
+ambient   1.000 1.000 1.000
+diffuse   0.233 0.416 0.640
+specular  0.500 0.500 0.500  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    1.000 6.741 1.000
+translate  0.898 -0.819 -7.000
+
 # Exported Object : "Sphere" 
 sphere
 ambient   1.000 1.000 1.000
@@ -33,7 +53,7 @@ diffuse   0.640 0.000 0.013
 specular  0.500 0.500 0.500  50.000
 mirror    0.000 0.000 0.000
 texture   0
-stretch    2.000 2.000 1.000
-translate  0.000 0.000 -7.000
+stretch    5.028 1.380 1.380
+translate  -1.749 0.740 -7.000
 
 endview
