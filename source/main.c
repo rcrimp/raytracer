@@ -85,7 +85,7 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
 
 /* the main ray tracing procedure */
 RGBColour ray_trace(RayDef ray, int recurse_depth) {
-   int cur_obj, i;   
+   int cur_obj, cur_light, i;   
    RGBColour colour;
    Vector obj_translation;
    double A, B, C, det, t1, t2, t; //quadratic variables
@@ -159,29 +159,31 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
 
       /* for each light */
-      cur_light_pos = vector_transform(object[cur_obj].transform, light_source[0].position);
+      for(cur_light = 0; cur_light < num_lights; cur_light++){
+         cur_light_pos = vector_transform(object[cur_obj].transform, light_source[0].position);
       
-      double nl = vector_dot(SurfaceNormal, ToLight);
-      Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
-      double rv =  vector_dot(r, ToCamera);
+         double nl = vector_dot(SurfaceNormal, ToLight);
+         Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
+         double rv =  vector_dot(r, ToCamera);
 
-      /* range: 0-1 */
-      nl = max(0, nl);
-      rv = pow( max(0, rv) , object[cur_obj].material.phong);
+         /* range: 0-1 */
+         nl = max(0, nl);
+         rv = pow( max(0, rv) , object[cur_obj].material.phong);
 
       
-      RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour,
-                                       object[cur_obj].material.texture, SurfaceNormal);      
-      /* calculate RGB */
-      colour.red +=
-         object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * texc.red * nl + 
-         object[cur_obj].material.specular_colour.red * light_source[0].colour.red * rv;
-      colour.green +=
-         object[cur_obj].material.diffuse_colour.green * light_source[0].colour.green * texc.green * nl + 
-         object[cur_obj].material.specular_colour.green * light_source[0].colour.green * rv;
-      colour.blue +=
-         object[cur_obj].material.diffuse_colour.blue * light_source[0].colour.blue * texc.blue * nl + 
-         object[cur_obj].material.specular_colour.blue * light_source[0].colour.blue * rv;
+         RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour,
+                                          object[cur_obj].material.texture, SurfaceNormal);      
+         /* calculate RGB */
+         colour.red +=
+            object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * texc.red * nl + 
+            object[cur_obj].material.specular_colour.red * light_source[0].colour.red * rv;
+         colour.green +=
+            object[cur_obj].material.diffuse_colour.green * light_source[0].colour.green * texc.green * nl + 
+            object[cur_obj].material.specular_colour.green * light_source[0].colour.green * rv;
+         colour.blue +=
+            object[cur_obj].material.diffuse_colour.blue * light_source[0].colour.blue * texc.blue * nl + 
+            object[cur_obj].material.specular_colour.blue * light_source[0].colour.blue * rv;
+      }
    }
    return colour;
 }
