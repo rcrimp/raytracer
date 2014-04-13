@@ -166,16 +166,20 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          /* range: 0-1 */
          nl = max(0, nl);
          rv = pow( max(0, rv) , object[cur_obj].material.phong);
-      
-         RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour,
-                                          object[cur_obj].material.texture, SurfaceNormal);      
-         /* calculate RGB */
+
+#define obj_diff object[cur_obj].material.diffuse_colour
 #define obj_spec object[cur_obj].material.specular_colour
+#define obj_tex object[cur_obj].material.texture
 #define light_col light_source[cur_light].colour
+         
+         RGBColour texc = texture_diffuse(obj_diff, obj_tex, SurfaceNormal);
          colour.red += light_col.red * ( texc.red * nl + obj_spec.red * rv);
          colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
          colour.blue += light_col.blue * ( texc.blue * nl + obj_spec.blue * rv);
+
+#undef obj_diff
 #undef obj_spec
+#undef obj_tex
 #undef light_col
       }
    }
