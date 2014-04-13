@@ -95,24 +95,15 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    Vector cur_light_pos;
    
    /* setup */
-   colour = background_colour;
-
-   /* copy the ray, we don't want to modify the original */
-   //cur_ray_start = ray.start;
-   cur_ray_dir = vector_normalise(ray.direction);
-
    int ray_intersected = 0;
    double intersection[num_objs];
    for(i = 0; i < num_objs; i++){
       intersection[i] = DBL_MAX;
    }
+   colour = background_colour;
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
-
-      obj_translation = vector_new(0,0,0,1);
-      obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
-
-      //cur_ray_start = vector_subtract(ray.start, obj_translation);
+      
       cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
       cur_ray_dir = vector_transform(object[cur_obj].transform, ray.direction);
       
@@ -145,13 +136,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          }
       }
 
-      /* get object translation */
-      //obj_translation = vector_new(0,0,0,1);
-      //obj_translation = vector_transform(object[cur_obj].transform, obj_translation);
-
       /* translate light and objects */
-      //cur_ray_start = vector_subtract(ray.start, obj_translation);
-      //cur_light_pos = vector_subtract(light_source[0].position, obj_translation);
       cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
       cur_light_pos = vector_transform(object[cur_obj].transform, light_source[0].position);
       
@@ -166,31 +151,23 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       /* range: 0-1 */
       nl = max(0, nl);
-      rv = max(0, rv);
-         
-      rv = pow(rv, object[cur_obj].material.phong);
+      rv = pow( max(0, rv) , object[cur_obj].material.phong);
 
-      RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour, object[cur_obj].material.texture, SurfaceNormal);
-
-      //colour = object[cur_obj].material.diffuse_colour;
-      
+      RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour,
+                                       object[cur_obj].material.texture, SurfaceNormal);      
       /* calculate RGB */
-      
-        colour.red =
+      colour.red =
          object[cur_obj].material.ambient_colour.red * ambient_light.red +
          object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * texc.red * nl + 
          object[cur_obj].material.specular_colour.red * light_source[0].colour.red * rv;
-
       colour.green =
          object[cur_obj].material.ambient_colour.green * ambient_light.green +
          object[cur_obj].material.diffuse_colour.green * light_source[0].colour.green * texc.green * nl + 
          object[cur_obj].material.specular_colour.green * light_source[0].colour.green * rv;
-
       colour.blue =
          object[cur_obj].material.ambient_colour.blue * ambient_light.blue +
          object[cur_obj].material.diffuse_colour.blue * light_source[0].colour.blue * texc.blue * nl + 
          object[cur_obj].material.specular_colour.blue * light_source[0].colour.blue * rv;
-      
    }
    return colour;
 }
