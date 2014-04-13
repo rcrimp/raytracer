@@ -82,25 +82,6 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    return diffuse_colour;
 }
 
-RGBColour ray_trace2(RayDef ray, int rec){
-   double A, B, C, det;
-   RGBColour colour;
-   colour = background_colour;
-
-   ray.start.z += 5;
-   //ray.direction = vector_normalise(ray.direction);
-
-   A = vector_dot(ray.direction, ray.direction);/* v.v */
-   B = 2 * vector_dot(ray.direction, ray.start );/* 2 * u.v */
-   C = vector_dot(ray.start, ray.start) - 1; /* u.u -r */
-   det = (B*B) - (4*A*C);
-
-   if (det > 0) /* hits the sphere */
-      colour.red = colour.green = colour.blue = 1;
-
-   return colour;
-}
-
 /* the main ray tracing procedure */
 RGBColour ray_trace(RayDef ray, int recurse_depth) {
    int cur_obj, cur_light, i;   
@@ -251,7 +232,7 @@ void renderImage(void) {
             for(j = 0; j < grid_size; j++){
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
-               samples[j + i*grid_size] = ray_trace2(ray, 0);
+               samples[j + i*grid_size] = ray_trace(ray, 0);
             }
          }
          pixelColour = colour_blend(samples, SUPER_SAMPLES);
@@ -290,4 +271,18 @@ int main (int argc,  char** argv) {
    mygl_mainLoop();
 
    return EXIT_SUCCESS;
+}
+
+RGBColour ray_trace_test(RayDef ray, int rec){
+   double A, B, C, det;
+   RGBColour colour;
+   ray.start.z += 5;
+   
+   A = vector_dot(ray.direction, ray.direction); //v.v
+   B = 2 * vector_dot(ray.direction, ray.start ); //2*u.v
+   C = vector_dot(ray.start, ray.start) - 1; //u.u -r;
+   det = (B*B) - (4*A*C);
+   if (det > 0) //hits sphere
+      colour.red = colour.green = colour.blue = 1;
+   return background_colour;
 }

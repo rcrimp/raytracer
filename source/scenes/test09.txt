@@ -15,7 +15,7 @@ ambient       0.200 0.200 0.200
 # --  bottom right: ( 16, -16, -lens) 
 # ((Actually, Blender uses a 32*24 viewplane))
 # 
-lens  2.000
+lens  30.000
 rotate     x  -60.000
 rotate     y  45.000
 rotate     z  45.000
