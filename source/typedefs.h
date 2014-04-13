@@ -30,8 +30,8 @@
 #define true  1
 #define false 0
 
-#define MAX_NUM_LIGHTS     8
-#define MAX_NUM_OBJS      100
+#define MAX_NUM_LIGHTS     16
+#define MAX_NUM_OBJS      64
 
 /* ----- TYPE DECLARATIONS ------------------------------------------------- */
 
