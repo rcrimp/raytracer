@@ -47,7 +47,6 @@ void matrix_subtract(Matrix *m, Matrix n);
 void matrix_scale(Matrix *m, double s);
 void matrix_multiply(Matrix *m, Matrix n);
 void matrix_display(Matrix m);
-
 Matrix matrix_transpose(Matrix m);
 
 
