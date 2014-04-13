@@ -82,6 +82,22 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    return diffuse_colour;
 }
 
+ray_trace2(RayDef ray, int rec){
+   double A, B, C, det;
+   RGBColour colour;
+
+   ray.direction = vector_normalise(ray.direction);
+
+   A = vector_dot(ray.direction, ray.direction);/* v.v */
+   B = 2 * vector_dot(ray.direction, ray.start );/* 2 * u.v */
+   C = vector_dot(ray.start, ray.start) - 1; /* u.u -r */
+   det = (B*B) - (4*A*C);
+
+   if (det > 0) /* hits the sphere */
+      colour.red = colour.green = colour.blue = 1;
+   else
+      colour.red = colour.green = colour.blue = 0;
+}
 
 /* the main ray tracing procedure */
 RGBColour ray_trace(RayDef ray, int recurse_depth) {
