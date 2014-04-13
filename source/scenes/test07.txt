@@ -20,7 +20,10 @@ lens  60.000
 # Outputting the lights in the scene
 # NOTE: Converted all blender light sources to point lights
 
-light   0.000 0.000 0.000   1.000 1.000 1.000
+light   4.000 -4.000 0.000   1.000 1.000 1.000
+light   -4.000 -4.000 0.000   1.000 1.000 1.000
+light   -4.000 4.000 0.000   1.000 1.000 1.000
+light   4.000 4.000 0.000   1.000 1.000 1.000
 
 
 # Outputting the objects in the scene
