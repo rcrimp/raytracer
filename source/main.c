@@ -19,7 +19,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-#define SUPER_SAMPLES 16 /* needs to be a square number */
+#define SUPER_SAMPLES 1 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
@@ -82,7 +82,7 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    return diffuse_colour;
 }
 
-ray_trace2(RayDef ray, int rec){
+RGBColour ray_trace2(RayDef ray, int rec){
    double A, B, C, det;
    RGBColour colour;
 
@@ -249,7 +249,7 @@ void renderImage(void) {
             for(j = 0; j < grid_size; j++){
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
-               samples[j + i*grid_size] = ray_trace(ray, 0);
+               samples[j + i*grid_size] = ray_trace2(ray, 0);
             }
          }
          pixelColour = colour_blend(samples, SUPER_SAMPLES);
