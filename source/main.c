@@ -159,7 +159,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
 
       /* for each light */
-      for(cur_light = 0; cur_light < num_lights; cur_light++){
+      for(cur_light = 0; cur_light < 4; cur_light++){
          cur_light_pos = vector_transform(object[cur_obj].transform, light_source[cur_light].position);
       
          double nl = vector_dot(SurfaceNormal, ToLight);
