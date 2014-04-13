@@ -4,7 +4,7 @@
 
 # Paths for libraries and includes for linking (don't change!)
 
-XLIBS =  -L/usr/X11R6/lib -lXext -lXmu -lXt -lXi -lSM -lICE -lpthread
+XLIBS =  -L/usr/X11R6/lib #-lXext -lXmu -lXt -lXi -lSM -lICE -lpthread
 COPTS =  -g3 -I/usr/include #-Wall -Werror
 LOPTS =  -g3 -L/usr/lib -lglut -lGLU -lGL -lm $(XLIBS) #-fullwarn
 
