@@ -19,7 +19,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-#define SUPER_SAMPLES 1 /* needs to be a square number */
+#define SUPER_SAMPLES 16 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
@@ -145,7 +145,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       
       /* Lighting calculations */
       SurfaceNormal = (vector_add(cur_ray_start, vector_scale(cur_ray_dir, t)));
-      //SurfaceNormal = vector_transform( matrix_transpose(object[cur_obj].transform) , SurfaceNormal);
+      SurfaceNormal = vector_transform( matrix_transpose(object[cur_obj].transform) , SurfaceNormal);
       ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
       ToCamera = vector_normalise(vector_subtract(cur_ray_start, SurfaceNormal));
          
