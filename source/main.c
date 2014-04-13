@@ -150,12 +150,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
       cur_ray_dir = vector_normalise(ray.direction);
       
-      
       /* Lighting calculations */
       SurfaceNormal = (vector_add(cur_ray_start, vector_scale(cur_ray_dir, t)));
       //SurfaceNormal = vector_transform( matrix_transpose(object[cur_obj].transform) , SurfaceNormal);
       ToCamera = vector_normalise(vector_subtract(cur_ray_start, SurfaceNormal));
-      
 
       /* for each light */
       for(cur_light = 0; cur_light < num_lights; cur_light++)
@@ -172,17 +170,17 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          nl = max(0, nl);
          rv = pow( max(0, rv) , object[cur_obj].material.phong);
       
-         RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour,
-                                          object[cur_obj].material.texture, SurfaceNormal);      
+         /*RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour,
+           object[cur_obj].material.texture, SurfaceNormal); */     
          /* calculate RGB */
          colour.red += light_source[cur_light].colour.red * (
-            object[cur_obj].material.diffuse_colour.red * texc.red * nl + 
+            object[cur_obj].material.diffuse_colour.red * nl + 
             object[cur_obj].material.specular_colour.red * rv);
          colour.green += light_source[cur_light].colour.green * (
-            object[cur_obj].material.diffuse_colour.green * texc.green * nl + 
+            object[cur_obj].material.diffuse_colour.green * nl + 
             object[cur_obj].material.specular_colour.green * rv);
          colour.blue += light_source[cur_light].colour.blue * (
-            object[cur_obj].material.diffuse_colour.blue * texc.blue * nl + 
+            object[cur_obj].material.diffuse_colour.blue * nl + 
             object[cur_obj].material.specular_colour.blue * rv);
       }
    }
