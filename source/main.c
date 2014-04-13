@@ -86,6 +86,8 @@ RGBColour ray_trace2(RayDef ray, int rec){
    double A, B, C, det;
    RGBColour colour;
 
+   colour = background_colour;
+
    ray.direction = vector_normalise(ray.direction);
 
    A = vector_dot(ray.direction, ray.direction);/* v.v */
@@ -95,8 +97,8 @@ RGBColour ray_trace2(RayDef ray, int rec){
 
    if (det > 0) /* hits the sphere */
       colour.red = colour.green = colour.blue = 1;
-   else
-      colour.red = colour.green = colour.blue = 0;
+
+   return colour;
 }
 
 /* the main ray tracing procedure */
