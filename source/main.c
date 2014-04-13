@@ -171,7 +171,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
          /* range: 0-1 */
          nl = max(0, nl);
-         rv = pow( max(0, rv) , object[cur_obj].material.phong);
+         //rv = pow( max(0, rv) , object[cur_obj].material.phong);
       
          RGBColour texc = texture_diffuse(object[cur_obj].material.diffuse_colour,
                                           object[cur_obj].material.texture, SurfaceNormal);      
