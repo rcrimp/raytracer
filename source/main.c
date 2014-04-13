@@ -85,11 +85,10 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
 RGBColour ray_trace2(RayDef ray, int rec){
    double A, B, C, det;
    RGBColour colour;
-
    colour = background_colour;
 
    ray.start.z += 5;
-   ray.direction = vector_normalise(ray.direction);
+   //ray.direction = vector_normalise(ray.direction);
 
    A = vector_dot(ray.direction, ray.direction);/* v.v */
    B = 2 * vector_dot(ray.direction, ray.start );/* 2 * u.v */
