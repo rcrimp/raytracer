@@ -289,24 +289,24 @@ void fileio_readfile(char *fname) {
          }
          fscanf(description_file, "%lf", &angle);
 
-         angle = -angle;
+         //angle = -angle;
          
          switch(axis){
-         case 'z':
+         case 'x':
             matrix_make(&transformation,
                         1.0, 0.0, 0.0, 0.0,
                         0.0, cos(angle), -sin(angle), 0.0,
                         0.0, sin(angle), cos(angle), 0.0,
                         0.0, 0.0, 0.0, 1.0);
             break;
-         case 'x':
+         case 'y':
             matrix_make(&transformation,
                         cos(angle), 0.0, sin(angle), 0.0,
                         0.0, 1.0, 0.0, 0.0,
                         -sin(angle), 0.0, cos(angle), 0.0,
                         0.0, 0.0, 0.0, 1.0);
             break;
-         case 'y':
+         case 'z':
             matrix_make(&transformation,
                         cos(angle), sin(angle), 0.0, 0.0,
                         -sin(angle), cos(angle), 0.0, 0.0,
