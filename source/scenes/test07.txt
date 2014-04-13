@@ -7,7 +7,7 @@ imagesize     320
 background    0.050 0.250 0.400
 
 # The ambient lighting of the scene
-ambient       0.200 0.200 0.200
+ambient       0.000 0.000 0.000
 
 # the default camera is located at the origin
 # the default viewplane has corners
@@ -15,7 +15,7 @@ ambient       0.200 0.200 0.200
 # --  bottom right: ( 16, -16, -lens) 
 # ((Actually, Blender uses a 32*24 viewplane))
 # 
-lens  30.000
+lens  60.000
 
 # Outputting the lights in the scene
 # NOTE: Converted all blender light sources to point lights
@@ -26,14 +26,23 @@ light   4.071 0.000 0.000   1.000 1.000 1.000
 # Outputting the objects in the scene
 # NOTE: Converted all Meshes as spheres
 
-# Exported Object : "Sphere.002" 
+# Exported Object : "Sphere.003" 
 sphere
 ambient   1.000 1.000 1.000
+diffuse   0.800 0.169 0.795
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+translate  1.000 1.000 -7.000
+
+# Exported Object : "Sphere.002" 
+sphere
+ambient   0.000 0.000 0.000
 diffuse   0.127 0.800 0.245
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
 texture   0
-translate  0.000 0.000 -7.000
+translate  1.000 -1.000 -7.000
 
 # Exported Object : "Sphere.001" 
 sphere
@@ -42,7 +51,7 @@ diffuse   0.291 0.520 0.800
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
 texture   0
-translate  0.000 0.000 -7.000
+translate  -1.000 1.000 -7.000
 
 # Exported Object : "Sphere" 
 sphere
@@ -51,6 +60,6 @@ diffuse   0.800 0.000 0.016
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
 texture   0
-translate  0.000 0.000 -7.000
+translate  -1.000 -1.000 -7.000
 
 endview
