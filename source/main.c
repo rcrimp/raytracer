@@ -160,7 +160,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       /* for each light */
       for(cur_light = 0; cur_light < num_lights; cur_light++){
-         cur_light_pos = vector_transform(object[cur_obj].transform, light_source[0].position);
+         cur_light_pos = vector_transform(object[cur_obj].transform, light_source[cur_light].position);
       
          double nl = vector_dot(SurfaceNormal, ToLight);
          Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
@@ -175,14 +175,14 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
                                           object[cur_obj].material.texture, SurfaceNormal);      
          /* calculate RGB */
          colour.red +=
-            object[cur_obj].material.diffuse_colour.red * light_source[0].colour.red * texc.red * nl + 
-            object[cur_obj].material.specular_colour.red * light_source[0].colour.red * rv;
+            object[cur_obj].material.diffuse_colour.red * light_source[cur_light].colour.red * texc.red * nl + 
+            object[cur_obj].material.specular_colour.red * light_source[cur_light].colour.red * rv;
          colour.green +=
-            object[cur_obj].material.diffuse_colour.green * light_source[0].colour.green * texc.green * nl + 
-            object[cur_obj].material.specular_colour.green * light_source[0].colour.green * rv;
+            object[cur_obj].material.diffuse_colour.green * light_source[cur_light].colour.green * texc.green * nl + 
+            object[cur_obj].material.specular_colour.green * light_source[cur_light].colour.green * rv;
          colour.blue +=
-            object[cur_obj].material.diffuse_colour.blue * light_source[0].colour.blue * texc.blue * nl + 
-            object[cur_obj].material.specular_colour.blue * light_source[0].colour.blue * rv;
+            object[cur_obj].material.diffuse_colour.blue * light_source[cur_light].colour.blue * texc.blue * nl + 
+            object[cur_obj].material.specular_colour.blue * light_source[cur_light].colour.blue * rv;
       }
    }
    return colour;
