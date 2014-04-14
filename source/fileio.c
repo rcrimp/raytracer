@@ -290,7 +290,7 @@ void fileio_readfile(char *fname) {
          fscanf(description_file, "%lf", &angle);
 
          //angle to rads
-         angle = angle*(M_PI/180.0f);
+         angle = angle*(180.0f/M_PI);
          
          switch(axis){
          case 'x':
