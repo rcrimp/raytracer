@@ -127,24 +127,16 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    }
 
    if(closest_obj >= 0){
-      /*cur_obj = 0;
-      t = intersection[0];
-
-      for(i = 1; i < num_objs; i++){
-         if (intersection[i] < t){
-            t = intersection[i];
-            cur_obj = i;
-         }
-      }*/
-
       /* ambient light */
       colour.red   = object[closest_obj].material.ambient_colour.red   * ambient_light.red;
       colour.green = object[closest_obj].material.ambient_colour.green * ambient_light.green;
       colour.blue  = object[closest_obj].material.ambient_colour.blue  * ambient_light.blue;
-      
-      /* translate light and objects */
+      /* transform the ray by object */
       cur_ray_start = vector_transform(object[closest_obj].transform, ray.start);
+      /* transform the ray by the camera */
       cur_ray_dir = vector_normalise(ray.direction);
+      cur_ray_dir = vector_transform(camera.transform, cur_ray_dir);
+      
       
       /* Lighting calculations */
       SurfaceNormal = (vector_add(cur_ray_start, vector_scale(cur_ray_dir, t)));
