@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <float.h>
+#include <limits.h>
 
 #include "typedefs.h"
 #include "vector_ops.h"
@@ -84,7 +85,7 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
 
 /* the main ray tracing procedure */
 RGBColour ray_trace(RayDef ray, int recurse_depth) {
-   int cur_obj, cur_light, i;   
+   int cur_obj, closest_obj, cur_light, i;   
    RGBColour colour;
    Vector obj_translation;
    double A, B, C, det, t1, t2, t; //quadratic variables
@@ -94,12 +95,13 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    Vector cur_light_pos;
    
    /* setup */
-   int closest_obj = -1;
+   closest_obj = -1;
+   t = INT_MAX;
    /*double intersection[num_objs];
    for(i = 0; i < num_objs; i++){
       intersection[i] = DBL_MAX;
       }*/
-   t = 99999;
+   
    colour = background_colour;
 
    ray.direction = vector_normalise(ray.direction);
