@@ -88,7 +88,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    int cur_obj, closest_obj, cur_light, i;   
    RGBColour colour;
    Vector obj_translation;
-   double A, B, C, det, t1, t2, t; //quadratic variables
+   double A, B, C, det, t1, t2, t, temp; //quadratic variables
    Vector SurfaceNormal, ToLight, ToCamera;
    Vector cur_ray_start;
    Vector cur_ray_dir;
@@ -97,17 +97,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    /* setup */
    closest_obj = -1;
    t = INT_MAX;
-   /*double intersection[num_objs];
-   for(i = 0; i < num_objs; i++){
-      intersection[i] = DBL_MAX;
-      }*/
-   
    colour = background_colour;
-
    ray.direction = vector_normalise(ray.direction);
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
-      
       cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
       cur_ray_dir = vector_normalise(vector_transform(object[cur_obj].transform, ray.direction));
       
@@ -115,7 +108,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       B = 2 * vector_dot(cur_ray_dir, cur_ray_start );/* 2 * u.v */
       C = vector_dot(cur_ray_start, cur_ray_start) - 1; /* u.u -r */
       det = (B*B) - (4*A*C);
-      if (det > 0) {
+      if (det > 0) { /* if ray collides with the sphere */
          if ( B > 0 )
             t1 = (-B - sqrt(det)) / 2*A;
          else
@@ -123,8 +116,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
          t2 = C / (A*t1);
 
-         if(min(t1,t2) < t){
-            t = min(t1,t2);
+         temp = min(t1,t2);
+         if(temp < t){
+            t = temp;
             closest_obj = cur_obj;
          }
          
