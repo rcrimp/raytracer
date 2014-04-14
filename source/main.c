@@ -94,7 +94,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    Vector cur_light_pos;
    
    /* setup */
-   int ray_intersected = 0;
+   int closest_obj = -1;
    double intersection[num_objs];
    for(i = 0; i < num_objs; i++){
       intersection[i] = DBL_MAX;
@@ -120,40 +120,42 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
          t2 = C / (A*t1);
 
-         intersection[cur_obj] = min(t1, t2);
-         ray_intersected = 1;
+         if(min(t1,t2) < t){
+            t = min(t1,t2);
+            closest_obj = cur_obj;
+         }
+         
       }
    }
 
-   if(ray_intersected){
-      cur_obj = 0;
+   if(closest_obj >= 0){
+      /*cur_obj = 0;
       t = intersection[0];
 
-      /* find closest object */
       for(i = 1; i < num_objs; i++){
          if (intersection[i] < t){
             t = intersection[i];
             cur_obj = i;
          }
-      }
+      }*/
 
       /* ambient light */
-      colour.red   = object[cur_obj].material.ambient_colour.red   * ambient_light.red;
-      colour.green = object[cur_obj].material.ambient_colour.green * ambient_light.green;
-      colour.blue  = object[cur_obj].material.ambient_colour.blue  * ambient_light.blue;
+      colour.red   = object[closest_obj].material.ambient_colour.red   * ambient_light.red;
+      colour.green = object[closest_obj].material.ambient_colour.green * ambient_light.green;
+      colour.blue  = object[closest_obj].material.ambient_colour.blue  * ambient_light.blue;
       
       /* translate light and objects */
-      cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
+      cur_ray_start = vector_transform(object[closest_obj].transform, ray.start);
       cur_ray_dir = vector_normalise(ray.direction);
       
       /* Lighting calculations */
       SurfaceNormal = (vector_add(cur_ray_start, vector_scale(cur_ray_dir, t)));
-      //SurfaceNormal = vector_transform( matrix_transpose(object[cur_obj].transform) , SurfaceNormal);
+      //SurfaceNormal = vector_transform( matrix_transpose(object[closest_obj].transform) , SurfaceNormal);
       ToCamera = vector_scale(cur_ray_dir, -1);//vector_normalise(vector_subtract(cur_ray_start, SurfaceNormal));
       
       /* for each light */
       for(cur_light = 0; cur_light < num_lights; cur_light++) {
-         cur_light_pos = vector_transform(object[cur_obj].transform, light_source[cur_light].position);
+         cur_light_pos = vector_transform(object[closest_obj].transform, light_source[cur_light].position);
          ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
          
          double nl = vector_dot(SurfaceNormal, ToLight);
@@ -162,11 +164,11 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
          /* range: 0-1 */
          nl = max(0, nl);
-         rv = pow( max(0, rv) , object[cur_obj].material.phong);
+         rv = pow( max(0, rv) , object[closest_obj].material.phong);
 
-#define obj_diff object[cur_obj].material.diffuse_colour
-#define obj_spec object[cur_obj].material.specular_colour
-#define obj_text object[cur_obj].material.texture
+#define obj_diff object[closest_obj].material.diffuse_colour
+#define obj_spec object[closest_obj].material.specular_colour
+#define obj_text object[closest_obj].material.texture
 #define light_col light_source[cur_light].colour
          
          RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
