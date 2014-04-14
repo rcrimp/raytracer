@@ -219,7 +219,7 @@ void renderImage(void) {
 
    int load_count_max = (image_size/100);
    int load_count;
-   fprintf(stderr, "<");
+   fprintf(stderr, "Loading \n<");
    
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
