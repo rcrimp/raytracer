@@ -1,6 +1,6 @@
 
 # default value for the size of the image to be created
-imagesize     320
+imagesize     320 
 
 # The background colour of the scene
 # -- using the blender 'horizon' value
@@ -80,8 +80,8 @@ diffuse   0.800 0.000 0.016
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
 texture   0
-stretch    0.500 3.000 1.000
+stretch    0.500 2.000 1.000
 rotate     z  -45.000
-translate  -1.500 -1.500 -6.000
+translate  0.000 0.000 -6.000
 
 endview
