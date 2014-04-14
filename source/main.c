@@ -243,7 +243,7 @@ void renderImage(void) {
          drawPixel(col+1, image_size-row-1, pixelColour);
          writePPM(pixelColour, picfile);
 
-         if(++load_count == load_count_max){
+         if(load_count++ > load_count_max){
             load_count = 0;
             fprintf(stderr, "=");
          }
