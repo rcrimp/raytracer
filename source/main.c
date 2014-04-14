@@ -217,7 +217,7 @@ void renderImage(void) {
    int i, j, grid_size;
    grid_size = sqrt(SUPER_SAMPLES);
 
-   int load_count_max = (image_size/20);
+   int load_count_max = (image_size/50);
    int load_count;
    fprintf(stderr, "<");
    
