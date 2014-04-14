@@ -20,7 +20,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-#define SUPER_SAMPLES 16 /* needs to be a square number */
+#define SUPER_SAMPLES 1 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
@@ -217,7 +217,7 @@ void renderImage(void) {
    int i, j, grid_size;
    grid_size = sqrt(SUPER_SAMPLES);
 
-   int load_count_max = (image_size);
+   int load_count_max = (image_size/20);
    int load_count;
    fprintf(stderr, "<");
    
@@ -241,13 +241,11 @@ void renderImage(void) {
            pixelColour = ray_trace(ray, 0);
          */
          drawPixel(col+1, image_size-row-1, pixelColour);
-         writePPM(pixelColour, picfile);
-
-         if(load_count++ > load_count_max){
-            load_count = 0;
-            fprintf(stderr, "=");
-         }
-         
+         writePPM(pixelColour, picfile);         
+      }
+      if(load_count++ > load_count_max){
+         load_count = 0;
+         fprintf(stderr, "=");
       }
    }
    fprintf(stderr, ">\n");
