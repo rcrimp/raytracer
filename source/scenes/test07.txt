@@ -1,6 +1,6 @@
 
 # default value for the size of the image to be created
-imagesize     320 
+imagesize     900
 
 # The background colour of the scene
 # -- using the blender 'horizon' value
