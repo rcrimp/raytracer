@@ -216,6 +216,10 @@ void renderImage(void) {
    /* super samples */
    int i, j, grid_size;
    grid_size = sqrt(SUPER_SAMPLES);
+
+   int load_count_max = (image_size/20);
+   int load_count;
+   fprintf(stderr, "<");
    
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
@@ -238,8 +242,15 @@ void renderImage(void) {
          */
          drawPixel(col+1, image_size-row-1, pixelColour);
          writePPM(pixelColour, picfile);
+
+         if(++load_count == load_count_max){
+            load_count = 0;
+            fprintf(stderr, "=");
+         }
+         
       }
    }
+   fprintf(stderr, ">\n");
 
    /* make sure all of the picture is displayed */
    showScreen();
