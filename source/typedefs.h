@@ -37,33 +37,34 @@
 
 /* ray is defined by a point and a direction */
 typedef struct RayDef {
-  Vector start;
-  Vector direction;
+   Vector start;
+   Vector direction;
 } RayDef;
 	
 
 /* information about our point light source */
 typedef struct LightSourceDef {
-  Vector position;
-  RGBColour colour;
+   Vector position;
+   RGBColour colour;
 } LightSourceDef;
 
 
 /* material properties for a surface */
 typedef struct MaterialProperty {
-  RGBColour ambient_colour;
-  RGBColour diffuse_colour;
-  RGBColour specular_colour;
-  double phong;
-  RGBColour mirror_colour;
-  int texture;
+   RGBColour ambient_colour;
+   RGBColour diffuse_colour;
+   RGBColour specular_colour;
+   double phong;
+   RGBColour mirror_colour;
+   int texture;
 } MaterialProperty;
 
 
 /* See Fileio.c  to see how to access the values in the array of objects */
 typedef struct ObjectDef {
-  MaterialProperty material;
-  Matrix transform;
+   MaterialProperty material;
+   Matrix transform;
+   Matrix t2;
 } ObjectDef;
 
 
@@ -72,9 +73,9 @@ typedef struct ObjectDef {
  * We provide viewing geometry details here
  */
 typedef struct CameraDef {
-  double view_size;  /* defines the camera square view plane */
-  double lens;       /* distance from camera to view plane */
-  Matrix transform;  /* transformation from the 'standard' position */
+   double view_size;  /* defines the camera square view plane */
+   double lens;       /* distance from camera to view plane */
+   Matrix transform;  /* transformation from the 'standard' position */
 } CameraDef;
 
 
