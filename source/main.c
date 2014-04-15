@@ -108,12 +108,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       /* transform the ray origin */
       cur_ray.start     = vector_transform(ray.start,     object[cur_obj].transform);
-
       /* transform the ray direction */
-      cur_ray.direction = ray.direction;
-      //cur_ray.direction = vector_normalise(cur_ray.direction);
-      //cur_ray.direction = vector_transform(cur_ray.direction,     camera.transform);
-      cur_ray.direction = vector_transform(cur_ray.direction, object[cur_obj].transform);
+      cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
       
       A = vector_dot(cur_ray.direction, cur_ray.direction);/* v.v */
       B = 2 * vector_dot(cur_ray.direction, cur_ray.start );/* 2 * u.v */
@@ -148,7 +144,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       cur_ray.start = vector_transform(ray.start, object[closest_obj].transform);
 
       /* transform the ray by the camera */
-      //cur_ray.direction = vector_transform(ray.direction, camera.transform);
+      cur_ray.direction = vector_transform(ray.direction, camera.transform);
       
       /* Lighting calculations */
       Vector SurfacePoint = (vector_add(cur_ray.start, vector_scale(cur_ray.direction, t)));
