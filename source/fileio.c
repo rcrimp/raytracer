@@ -270,7 +270,7 @@ void fileio_readfile(char *fname) {
                         0.0, 1.0, 0.0, y,
                         0.0, 0.0, 1.0, z,
                         0.0, 0.0, 0.0, 1.0);
-            matrix_multiply_right(&object[num_objs-1].t2, t2);
+            //matrix_multiply_right(&object[num_objs-1].t2, t2);
          }
       } /* stretch last defined object (camera or sphere) */
       else if (!strcmp(descriptor, "stretch")) {
@@ -337,7 +337,6 @@ void fileio_readfile(char *fname) {
             matrix_multiply_right(&camera.transform, transformation);
          } else { /* store the inverse rotation of the current object */
             matrix_multiply_left(&object[num_objs-1].transform, transformation);
-            matrix_multiply_right(&object[num_objs-1].t2, transformation);
          }
 
       } /* unknown descriptor in file */
