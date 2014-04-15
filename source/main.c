@@ -1,17 +1,14 @@
 /*
  * File: main.c
- * Author: Nabeelah Saib
+ * Author: Reuben Crimp
  *
  * Description: Contains the main routine plus the ray-tracing function.
  */
-
-
-
-/* ----- INCLUDES ---------------------------------------------------------- */
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <float.h>
+#include <limits.h>
 
 #include "typedefs.h"
 #include "vector_ops.h"
@@ -20,11 +17,10 @@
 #include "mygl.h"
 #include "ppm.h"
 
-
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
- * Values are loaded in fileio.c
- */
+ * Values are loaded in fileio.c */
+#define SUPER_SAMPLES 4 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
@@ -33,13 +29,11 @@ int             image_size;
 RGBColour       background_colour;
 RGBColour       ambient_light;
 
-
 int             num_lights;
 LightSourceDef  light_source[MAX_NUM_LIGHTS];
 
 int             num_objs;
 ObjectDef       object[MAX_NUM_OBJS];
-
 
 /* ----- main prototypes --------------------------------------------------- */
 RGBColour ray_trace(RayDef ray, int recurse_depth);
@@ -50,128 +44,9 @@ int main (int argc,  char** argv);
 
 /* ----- Functions --------------------------------------------------------- */
 
-/* Geoff's code that may be used for testing Primary rays;
- * it is not part of the final solution. The code appears after main().
- */
-bool circle(Vector v);
-RGBColour ray_test(RayDef ray);
-
- 
-
-
-/* the main ray tracing procedure */
-RGBColour ray_trace(RayDef ray, int recurse_depth) {
- 
-   RGBColour colour = background_colour;
-
-   int i;
-   for(i = 0; i < num_objs; i++){
-      
-      Vector objectPoint;
-      objectPoint.x = 0.0f;
-      objectPoint.y = 0.0f;
-      objectPoint.z = -5.0f;
-      objectPoint.w = 1.0f;
-
-      ray.direction = vector_normalise(ray.direction);
-      ray.start = vector_subtract(ray.start, objectPoint);
-      
-      double A = vector_dot(ray.direction, ray.direction);
-      double B = 2.0*(vector_dot(ray.start, ray.direction));
-      double C = vector_dot(ray.start, ray.start) - 1;
-
-      double D = (B*B) - (4*A*C);
-      double t = 0.0;
-      double t1, t2;
-
-      /*checks if the ray collides with the sphere by calculating the t
-        values*/
-      if(D >= 0){ 
-         if(B > 0){
-            t1 = ((-B - sqrt(D)))/(2.0 *A);
-         }else{
-            t1 = ((-B + sqrt(D)))/(2.0 *A);
-         }
-         t2 = (C/(A * t1));
-      
-         t = min(t1, t2);
-
-         /*sets up variables for light equation*/
-         
-         Vector vt;
-         vt = vector_scale(ray.direction, t);
- 
-         Vector hitPoint = vector_add(ray.start, vt);
-         hitPoint = vector_normalise(hitPoint);
-         Vector normal = hitPoint;
-         /*normal = vector_norm(normal);*/
-
-         Vector l = vector_subtract(light_source[i].position, hitPoint);
-         l = vector_normalise(l);
-         double nl = max(0, vector_dot(normal, l));
-        
-         Vector e = vector_subtract(ray.start, hitPoint);
-         e = vector_normalise(e);
-         
-         /*to calculate r in the equation we use r = 2*(l.n) * n-l;*/
-         //double scaler = 2.0 *  nl;
-         //Vector nlMinus =  vector_subtract(normal, l);
-         //Vector r = vector_scale(nlMinus, scaler);
-         //r = vector_normalise(r);
-         //double re = vector_dot(r, e);
-         Vector r = vector_subtract(vector_scale(normal, 2*nl), l);
-         double re = vector_dot(r, e);
-         
-         re = max(0, re);
-         re = pow(re, object[i].material.phong);
-
-         /* vector_display(e);
-            printf("\n");*/
-            
-         /* calculates how the point is coloured (r, g, b)  using the light
-            model equation I = Ia ka + Il [kd (n.l) + ks(r.e)^n], where Ia
-            is the intensity of the ambient light, Il is the intensity
-            of the light source and ka, kd, ks and n are all conststants*/
-         colour.red = ambient_light.red
-            * object[i].material.ambient_colour.red
-            + light_source[0].colour.red
-            * ((object[i].material.diffuse_colour.red *  nl)
-               + (object[i].material.specular_colour.red * re));
-
-         colour.green = (ambient_light.green
-                         * object[i].material.ambient_colour.green)
-            +  light_source[0].colour.green 
-            * ((object[i].material.diffuse_colour.green *  nl)
-               + (object[i].material.specular_colour.green * re));
-         
-         colour.blue = (ambient_light.blue
-                        * object[i].material.ambient_colour.blue)
-            +  light_source[0].colour.blue
-            * ((object[i].material.diffuse_colour.blue *  nl)
-               + (object[i].material.specular_colour.blue * re));
-
-         /*moves the light source back to original position view*/
-         /*colour.red = light_source[ind].position.z - t;
-         colour.green = light_source[ind].position.z - t;
-         colour.blue = light_source[ind].position.z - t;*/
-
-      }
-      
-   }
-  
-   
-        
-
-   return (colour);
-}
-
 /* A function to modify the diffuse colour if a material's property
    requests this. Note that when texture==0 diffuse_colour is returned
-   unmodified. 
-
-   Feel free to merge this code into your own ray_trace function: it's
-   presented like this so I can give you the texturing code without
-   having to try to position them in the ray_trace skeleton code. */
+   unmodified. */
 RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_point){
    /* used in "random noise" texture */
    static int rseed; 
@@ -208,26 +83,117 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    return diffuse_colour;
 }
 
+/* the main ray tracing procedure */
+RGBColour ray_trace(RayDef ray, int recurse_depth) {
+   int cur_obj, closest_obj, cur_light, i;   
+   RGBColour colour;
+   Vector obj_translation;
+   double A, B, C, det, t1, t2, t, temp; //quadratic variables
+   Vector SurfaceNormal, ToLight, ToCamera;
+   Vector cur_ray_start;
+   Vector cur_ray_dir;
+   Vector cur_light_pos;
+   
+   /* setup */
+   closest_obj = -1;
+   t = INT_MAX;
+   colour = background_colour;
+   ray.direction = vector_normalise(ray.direction);
+   
+   for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
+      cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
+      
+      cur_ray_dir = (vector_transform(object[cur_obj].transform, ray.direction));
+      
+      A = vector_dot(cur_ray_dir, cur_ray_dir);/* v.v */
+      B = 2 * vector_dot(cur_ray_dir, cur_ray_start );/* 2 * u.v */
+      C = vector_dot(cur_ray_start, cur_ray_start) - 1; /* u.u -r */
+      det = (B*B) - (4*A*C);
+      if (det > 0) { /* if ray collides with the sphere */
+         if ( B > 0 )
+            t1 = (-B - sqrt(det)) / 2*A;
+         else
+            t1 = (-B + sqrt(det)) / 2*A;
+         
+         t2 = C / (A*t1);
+
+         temp = min(t1,t2);
+         if(temp < t){
+            t = temp;
+            closest_obj = cur_obj;
+         }
+         
+      }
+   }
+
+   if(closest_obj >= 0){
+      /* ambient light */
+      colour.red   = object[closest_obj].material.ambient_colour.red   * ambient_light.red;
+      colour.green = object[closest_obj].material.ambient_colour.green * ambient_light.green;
+      colour.blue  = object[closest_obj].material.ambient_colour.blue  * ambient_light.blue;
+      /* transform the ray by object */
+      
+      cur_ray_start = vector_transform(object[closest_obj].transform, ray.start);
+
+      cur_ray_start = vector_transform(camera.transform, cur_ray_start);
+
+      /* transform the ray by the camera */
+      cur_ray_dir = vector_normalise(ray.direction);
+      cur_ray_dir = vector_transform(camera.transform, cur_ray_dir);
+      
+      
+      /* Lighting calculations */
+      SurfaceNormal = (vector_add(cur_ray_start, vector_scale(cur_ray_dir, t)));
+      //SurfaceNormal = vector_transform( matrix_transpose(object[closest_obj].transform) , SurfaceNormal);
+      ToCamera = vector_scale(cur_ray_dir, -1);//vector_normalise(vector_subtract(cur_ray_start, SurfaceNormal));
+      
+      /* for each light */
+      for(cur_light = 0; cur_light < num_lights; cur_light++) {
+         cur_light_pos = vector_transform(object[closest_obj].transform, light_source[cur_light].position);
+         ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
+         
+         double nl = vector_dot(SurfaceNormal, ToLight);
+         Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
+         double rv =  vector_dot(r, ToCamera);
+
+         /* range: 0-1 */
+         nl = max(0, nl);
+         rv = pow( max(0, rv) , object[closest_obj].material.phong);
+
+#define obj_diff object[closest_obj].material.diffuse_colour
+#define obj_spec object[closest_obj].material.specular_colour
+#define obj_text object[closest_obj].material.texture
+#define light_col light_source[cur_light].colour
+         
+         RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
+         colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
+         colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
+         colour.blue  += light_col.blue  * ( texc.blue  * nl + obj_spec.blue  * rv);
+
+#undef obj_diff
+#undef obj_spec
+#undef obj_tex
+#undef light_col
+      }
+   }
+   return colour;
+}
+
 /*
  *  The main drawing routine.
- *
- *  Use 'alreadyDrawn' to disable redrawing it when part of the picture
- *  is obscured.
  */
 void renderImage(void) {
-
    int row, col;
-   double step_size;
    RayDef ray;
    RGBColour pixelColour;
    FILE  *picfile;
-   double pixelSize;
+   double pixel_size;
+   RGBColour samples[SUPER_SAMPLES];
 
    /* avoid redrawing it if the window is obscured */
    static bool alreadyDrawn = false;
    if (alreadyDrawn) return;
    alreadyDrawn = true;
-   /* */
 
    clearScreen();
 
@@ -236,42 +202,50 @@ void renderImage(void) {
    initPPM(image_size, image_size, picfile); 
 
    /* Calculate the step size */
-   step_size = 0;
-   pixelSize = camera.view_size/image_size;
-  
+   pixel_size = camera.view_size/image_size;
+   
    /* create the start point for the primary ray */
-   ray.start.x = 0.0;
-   ray.start.y = 0.0;
-   ray.start.z = 0.0;
-   ray.start.w = 1.0;
-
-   /*equation of circle*/
-   /*(x * x) + (y * y) = 1;*/
-
-  
-
-  
-  
+   ray.start = vector_new(0,0,0,1);
+   
    /* create the direction of the primary ray */
-   ray.direction.x = 0.0;
-   ray.direction.y = 0.0;
-   ray.direction.z = -camera.lens;
-   ray.direction.w = 0.0;
+   ray.direction = vector_new(0,0,-camera.lens,0);
+      
+   /* super samples */
+   int i, j, grid_size;
+   grid_size = sqrt(SUPER_SAMPLES);
 
-   /* create the image pixel by pixel */
+   int load_count_max = (image_size/100);
+   int load_count;
+   fprintf(stderr, "Loading \n<");
+   
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
 
-         /* Find out the colour of this pixel */
-         ray.direction.x = -camera.view_size/2 + ((0.5 +col) * pixelSize);
-         ray.direction.y= -camera.view_size/2 + ((0.5 + row) * pixelSize); 
-         pixelColour = ray_trace(ray, 0);
-
-         /* Note that GL draws from bottom, not the top! */
-         drawPixel(col, image_size-row-1, pixelColour);
-         writePPM(pixelColour, picfile);
+         /* super sampling */
+         for(i = 0; i < grid_size; i++){
+            for(j = 0; j < grid_size; j++){
+               ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
+               ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
+               samples[j + i*grid_size] = ray_trace(ray, 0);
+            }
+         }
+         pixelColour = colour_blend(samples, SUPER_SAMPLES);
+         
+         /* no super sampling */
+         /*
+           ray.direction.x = -camera.view_size/2 + pixel_size*(0.5 + col);
+           ray.direction.y = -camera.view_size/2 + pixel_size*(0.5 + row);
+           pixelColour = ray_trace(ray, 0);
+         */
+         drawPixel(col+1, image_size-row-1, pixelColour);
+         writePPM(pixelColour, picfile);         
+      }
+      if(load_count++ > load_count_max){
+         load_count = 0;
+         fprintf(stderr, "=");
       }
    }
+   fprintf(stderr, ">\n");
 
    /* make sure all of the picture is displayed */
    showScreen();
@@ -279,16 +253,13 @@ void renderImage(void) {
    /* close the ppm file */
    fclose(picfile);
 
-   /* finished */
    printf("\nDone\n");
-
 }
 
 
 /* ------------------------------------------------------------------------- */
 /* Main */
 int main (int argc,  char** argv) {
-
    /* read the scene file */
    fileio_readfile(argv[1]);
    fileio_printscene();
@@ -301,42 +272,16 @@ int main (int argc,  char** argv) {
    return EXIT_SUCCESS;
 }
 
-
-
-/* ------------------------------------------------------------------------- */
-/* ------------------------------------------------------------------------- */
-/* function that could be useful for testing the early part of the raytracer */
-/* ------------------------------------------------------------------------- */
-/* circle:
- *
- * will test the ray for intersections with a 'standard' circle
- */
-
-bool circle(Vector v) {
-   return (v.z < 0) && (1225 * ((v.x*v.x) + (v.y*v.y)) < 256 * (v.z * v.z));
-}
-
-/* ray_test:
- *  Maybe useful for testing the Primary ray, before any sphere intersections
- *  are written
- *
- * For testing purposes,
- *     replace  ray_trace(ray, 0);
- *     with     ray_test(ray);
- *     in the renderImage() double loop.
- *
- * When the camera is in the default position (no transformations) 
- * it should produce a circle
- *
- */
-RGBColour ray_test(RayDef ray) {
-
-   static RGBColour black = {0.0, 0.0, 0.0};
-   static RGBColour white = {1.0, 1.0, 1.0};
-
-   if (circle(ray.direction)) {
-      return white;
-   } else {
-      return black;
-   }
+RGBColour ray_trace_test(RayDef ray, int rec){
+   double A, B, C, det;
+   RGBColour colour;
+   ray.start.z += 5;
+   
+   A = vector_dot(ray.direction, ray.direction); //v.v
+   B = 2 * vector_dot(ray.direction, ray.start ); //2*u.v
+   C = vector_dot(ray.start, ray.start) - 1; //u.u -r;
+   det = (B*B) - (4*A*C);
+   if (det > 0) //hits sphere
+      colour.red = colour.green = colour.blue = 1;
+   return background_colour;
 }
