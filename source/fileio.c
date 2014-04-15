@@ -328,6 +328,9 @@ void fileio_readfile(char *fname) {
                         0.0        , 0.0       , 0.0, 1.0);
             break;
          }
+
+         matrix_display(transformation);
+         
          if(num_objs == 0){ //translate the camera
             camera.transform = transformation;
             //matrix_multiply_right(&camera.transform, transformation);
