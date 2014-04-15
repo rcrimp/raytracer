@@ -177,7 +177,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
               cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
               cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
              */
-         if(closest_obj == 1){  
+         
+         if(closest_obj == 1){ //if we are a shadow receiving obj 
             Vector temp_l_pos =
                vector_transform(light_source[cur_light].position, object[0].transform);
 
@@ -188,9 +189,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             //sta = vector_transform(sta, object[0].transform);
             Vector dir =
                //ToLight;
-               //vector_normalise(vector_subtract(temp_l_pos, sta));
+               vector_normalise(vector_subtract(temp_l_pos, sta));
                //vector_transform(ToLight, object[0].transform);
-               vector_subtract(temp_l_pos, sta);
+               //vector_subtract(temp_l_pos, sta);
 
                
             /* ensure ToLight vector doesn't intersect with any other objects */
