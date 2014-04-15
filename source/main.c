@@ -126,39 +126,33 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
          /* vector_display(e);
             printf("\n");*/
-         printf("%f %f %.50f  \n", re, n, pow(re, n));
-         
-         
-         int ind;
-         for(ind = 0; ind < num_lights; ind++){
             
          /* calculates how the point is coloured (r, g, b)  using the light
             model equation I = Ia ka + Il [kd (n.l) + ks(r.e)^n], where Ia
             is the intensity of the ambient light, Il is the intensity
             of the light source and ka, kd, ks and n are all conststants*/
-            colour.red = ambient_light.red
-               * object[i].material.ambient_colour.red
-               + light_source[ind].colour.red
-               * ((object[i].material.diffuse_colour.red *  nl)
-                  + (object[i].material.specular_colour.red * pow(re, n)));
+         colour.red = ambient_light.red
+            * object[i].material.ambient_colour.red
+            + light_source[0].colour.red
+            * ((object[i].material.diffuse_colour.red *  nl)
+               + (object[i].material.specular_colour.red * pow(re, n)));
 
-            colour.green = (ambient_light.green
-                            * object[i].material.ambient_colour.green)
-               +  light_source[ind].colour.green 
-               * ((object[i].material.diffuse_colour.green *  nl)
-                  + (object[i].material.specular_colour.green * pow(re, n)));
+         colour.green = (ambient_light.green
+                         * object[i].material.ambient_colour.green)
+            +  light_source[0].colour.green 
+            * ((object[i].material.diffuse_colour.green *  nl)
+               + (object[i].material.specular_colour.green * pow(re, n)));
          
-            colour.blue = (ambient_light.blue
-                           * object[i].material.ambient_colour.blue)
-            +  light_source[ind].colour.blue
-               * ((object[i].material.diffuse_colour.blue *  nl)
-                  + (object[i].material.specular_colour.blue * pow(re, n)));
+         colour.blue = (ambient_light.blue
+                        * object[i].material.ambient_colour.blue)
+            +  light_source[0].colour.blue
+            * ((object[i].material.diffuse_colour.blue *  nl)
+               + (object[i].material.specular_colour.blue * pow(re, n)));
 
          /*moves the light source back to original position view*/
          /*colour.red = light_source[ind].position.z - t;
          colour.green = light_source[ind].position.z - t;
          colour.blue = light_source[ind].position.z - t;*/
-         }
 
       }
       
