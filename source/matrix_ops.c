@@ -101,16 +101,18 @@ void matrix_multiply_right(Matrix *m, Matrix n){
    }
 }
 
-void matrix_multiply_left(Matrix n, Matrix *m){
+void matrix_multiply_left(Matrix A, Matrix *B){
    int row, col;
 
+   /* store B*A into B */
+   
    for (row = 0; row < MATRIX_SIZE; row++) { // for each row of m
       for (col = 0; col < MATRIX_SIZE; col++) { // for each column of n
-         m->element[row][col] =
-            n.element[0][row] * m->element[col][0] +
-            n.element[1][row] * m->element[col][1] +
-            n.element[2][row] * m->element[col][2] +
-            n.element[3][row] * m->element[col][3];
+         B->element[row][col] =
+            A.element[0][col] * B->element[row][0] +
+            A.element[1][col] * B->element[row][1] +
+            A.element[2][col] * B->element[row][2] +
+            A.element[3][col] * B->element[row][3];
       }
    }
 }
