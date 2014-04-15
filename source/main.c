@@ -20,7 +20,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-#define SUPER_SAMPLES 9 /* needs to be a square number */
+#define SUPER_SAMPLES 25 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
