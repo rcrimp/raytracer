@@ -111,6 +111,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
       cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
+      double trnl = vector_length(cur_ray.direction);
       cur_ray.direction = vector_normalise(cur_ray.direction);
 
       /* quadratic representation of the line-sphere intersection */
@@ -126,8 +127,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             t1 = (-B + sqrt(det)) / 2*A;
          t2 = C / (A*t1);
 
-         t1 *= vector_length(cur_ray.direction);
-         t2 *= vector_length(cur_ray.direction);
+         t1 *= 1/trnl;
+         t2 *= 1/trnl;
          
          /* if the current object is closer than any prior objects, then set it as the closest */
          temp = min(t1,t2);
