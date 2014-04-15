@@ -19,6 +19,7 @@ lens  32.000
 rotate     x  3.256
 rotate     y  -9.299
 rotate     z  -18.524
+translate  -0.984 -0.062 1.533
 
 # Outputting the lights in the scene
 # NOTE: Converted all blender light sources to point lights
