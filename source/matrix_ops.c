@@ -103,7 +103,8 @@ void matrix_multiply_right(Matrix *A, Matrix B){
             B.element[row][1] * A->element[1][col] +
             B.element[row][2] * A->element[2][col] +
             B.element[row][3] * A->element[3][col];
-         printf("A%d%d B%d0 * A0%d ", row, col);
+         printf("A%d%d ", row, col);
+         printf("B%d0 * A0%d ", row, col);
       }
       printf("\n");
    }
