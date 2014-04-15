@@ -205,14 +205,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       ToCamera = vector_normalise(vector_subtract(cur_ray.start, SurfaceNormal));
 
-#define mc object[closest_obj].material.mirror_colour
-      if ( (mc.red != 0 && mc.blue != 0 && mc.green != 0) & recurse_depth > 0) {
-         //reflected_colour = ray_trace( ray(intersection point, reflection vector), n-1);
-         colour.red += mc.red * background_colour.red;
-         colour.blue += mc.blue * background_colour.blue;
-         colour.green += mc.green * background_colour.green;
-      }
-#undef mc
+      //if (reflective & recurse_depth > 0) {
+      //   reflective_colour = ray_trace( Ray(intersection point, reflective vector), n-1);
+      //   colour += reflective_coeff * reflective_colour ;
+      //}
       //if (refractive & recurse_depth > 0) {
       //   refracted_colour = ray_trace( Ray(intersection point, refracted vector), n-1);
       //   colour += refraction_coeff * refracted_colour ;
