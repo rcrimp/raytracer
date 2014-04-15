@@ -107,10 +107,10 @@ void matrix_multiply_left(Matrix n, Matrix *m){
    for (row = 0; row < MATRIX_SIZE; row++) { // for each row of m
       for (col = 0; col < MATRIX_SIZE; col++) { // for each column of n
          m->element[row][col] =
-            m->element[0][row] * n.element[col][0] +
-            m->element[1][row] * n.element[col][1] +
-            m->element[2][row] * n.element[col][2] +
-            m->element[3][row] * n.element[col][3];
+            n.element[0][row] * m->element[col][0] +
+            n.element[1][row] * m->element[col][1] +
+            n.element[2][row] * m->element[col][2] +
+            n.element[3][row] * m->element[col][3];
       }
    }
 }
