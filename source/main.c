@@ -217,18 +217,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       /* for each light */
       for(cur_light = 0; cur_light < num_lights; cur_light++) {
          cur_light_pos = vector_transform(light_source[cur_light].position, object[closest_obj].transform);
-
-         //Vector rename_me =
-         //vector_subtract(vector_transform(SurfaceNormal, object[closest_obj].transform),SurfaceNormal);
-            //SurfaceNormal;
-            //vector_transform(SurfaceNormal, object[closest_obj].transform);
-            /*vector_new(
-                       SurfaceNormal.x += object[closest_obj].transform.element[0][3],
-                       SurfaceNormal.y += object[closest_obj].transform.element[1][3],
-                       SurfaceNormal.z += object[closest_obj].transform.element[2][3],
-                       SurfaceNormal.w = 1);*/
-            
-         //if (shadow_ray(rename_me, light_source[cur_light].position, closest_obj) == 0)
+  
+         //if (shadow_ray(intersection p, light_p, closest_obj) == 0)
          {
             ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
 
