@@ -174,7 +174,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          //SurfaceNormal = vector_transform(SurfaceNormal, matrix_transpose(object[closest_obj].transform));
          //SurfaceNormal = vector_normalise(SurfaceNormal);
          double nl = vector_dot(SurfaceNormal, ToLight);
-         Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
+         Vector r = vector_normalise(vector_subtract(vector_scale(SurfacePoint, 2*nl), ToLight));
          double rv =  vector_dot(r, ToCamera);
 
          /* range: 0-1 */
