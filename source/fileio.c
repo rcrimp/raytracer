@@ -300,10 +300,11 @@ void fileio_readfile(char *fname) {
          fscanf(description_file, "%lf", &angle);
 
          //angle to rads
-         angle = angle*(M_PI/180);
-         if( num_objs != 0){
-            angle = -angle;
-         }
+         if( num_objs != 0)
+            angle *= -(M_PI/180);
+         else
+            angle *= (M_PI/180);
+         
          switch(axis){
          case 'x':
             matrix_make(&transformation,
