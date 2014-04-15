@@ -63,7 +63,7 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
       break; 
    case 1: /* checkerboard -- scale original colour */
       /* condition below is Boolean exclusive or */
-      if(((int)(sv+90) % 30 < 20) == (((int)su+10) % 30 < 20))
+      if(((int)(sv+90) % 30 < 15) == (((int)su+10) % 30 < 15))
          diffuse_colour = colour_scale(0.2,diffuse_colour);
       break;
    case 2: /* noise -- scale original colour */
