@@ -195,7 +195,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             A =     vector_dot(dir, dir);  /* v.v */
             B = 2 * vector_dot(dir, sta);      /* 2 * u.v */
             C =     vector_dot(sta, sta) - 1;  /* u.u -r */
-            if ((B*B) - (4*A*C) > 0)
+            if ((B*B) - (4*A*C) < 0)
                return colour;
          }
             //}
