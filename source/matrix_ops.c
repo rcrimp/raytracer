@@ -18,7 +18,8 @@ Matrix matrix_identity(void) {
 
    Matrix result;
 
-   matrix_make(&result,1.0, 0.0, 0.0, 0.0,
+   matrix_make(&result
+               ,1.0, 0.0, 0.0, 0.0,
                0.0, 1.0, 0.0, 0.0,
                0.0, 0.0, 1.0, 0.0,
                0.0, 0.0, 0.0, 1.0);
@@ -40,17 +41,22 @@ void matrix_make(Matrix *m,
                  double a20, double a21, double a22, double a23,
                  double a30, double a31, double a32, double a33) {
 
-   (*m).element[0][0] = a00;(*m).element[0][1] = a01;
-   (*m).element[0][2] = a02;(*m).element[0][3] = a03;
-
-   (*m).element[1][0] = a10;(*m).element[1][1] = a11;
-   (*m).element[1][2] = a12;(*m).element[1][3] = a13;
-
-   (*m).element[2][0] = a20;(*m).element[2][1] = a21;
-   (*m).element[2][2] = a22;(*m).element[2][3] = a23;
-
-   (*m).element[3][0] = a30;(*m).element[3][1] = a31;
-   (*m).element[3][2] = a32;(*m).element[3][3] = a33;
+   (*m).element[0][0] = a00;
+   (*m).element[0][1] = a01;
+   (*m).element[0][2] = a02;
+   (*m).element[0][3] = a03;
+   (*m).element[1][0] = a10;
+   (*m).element[1][1] = a11;
+   (*m).element[1][2] = a12;
+   (*m).element[1][3] = a13;
+   (*m).element[2][0] = a20;
+   (*m).element[2][1] = a21;
+   (*m).element[2][2] = a22;
+   (*m).element[2][3] = a23;
+   (*m).element[3][0] = a30;
+   (*m).element[3][1] = a31;
+   (*m).element[3][2] = a32;
+   (*m).element[3][3] = a33;
 }
 
 /*
