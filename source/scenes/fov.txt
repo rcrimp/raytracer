@@ -19,17 +19,167 @@ lens  20.000
 rotate     x  73.170
 rotate     y  -0.000
 rotate     z  0.000
-translate  -0.000 -2.100 3.185
+translate  4.000 -2.100 3.185
 
 # Outputting the lights in the scene
 # NOTE: Converted all blender light sources to point lights
 
-light   0.660 -26.653 11.836   0.066 0.113 0.160
-light   -21.703 -29.249 13.912   1.000 0.941 0.802
+light   4.000 -2.100 -2.138   0.066 0.113 0.160
+light   4.000 -2.100 3.185   1.000 0.941 0.802
 
 
 # Outputting the objects in the scene
 # NOTE: Converted all Meshes as spheres
+
+# Exported Object : "camera_track.015" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  1.461 -44.000 1.000
+
+# Exported Object : "camera_track.014" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 37.000 0.000
+
+# Exported Object : "camera_track.013" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 27.000 0.000
+
+# Exported Object : "camera_track.012" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 17.000 0.000
+
+# Exported Object : "camera_track.011" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 7.000 0.000
+
+# Exported Object : "camera_track.010" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 47.000 0.000
+
+# Exported Object : "camera_track.009" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 57.000 0.000
+
+# Exported Object : "camera_track.008" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 67.000 0.000
+
+# Exported Object : "camera_track.007" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 62.000 0.000
+
+# Exported Object : "camera_track.006" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 52.000 0.000
+
+# Exported Object : "camera_track.005" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 42.000 0.000
+
+# Exported Object : "camera_track.004" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 2.000 0.000
+
+# Exported Object : "camera_track.003" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 12.000 0.000
+
+# Exported Object : "camera_track.002" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 22.000 0.000
+
+# Exported Object : "camera_track.001" 
+sphere
+ambient   0.000 0.000 0.000
+diffuse   1.000 1.000 1.000
+specular  1.000 1.000 1.000  50.000
+mirror    0.000 0.000 0.000
+texture   0
+stretch    2.000 2.000 2.000
+translate  7.461 32.000 0.000
 
 # Exported Object : "camera_track" 
 sphere
@@ -38,7 +188,7 @@ diffuse   1.000 1.000 1.000
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
 texture   0
-stretch    1.000 32.000 1.000
+stretch    2.000 64.000 2.000
 translate  0.000 32.000 0.000
 
 endview
