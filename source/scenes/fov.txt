@@ -15,11 +15,11 @@ ambient       0.133 0.133 0.133
 # --  bottom right: ( 16, -16, -lens) 
 # ((Actually, Blender uses a 32*24 viewplane))
 # 
-lens  40.000
-rotate     x  53.800
+lens  20.000
+rotate     x  73.170
 rotate     y  -0.000
 rotate     z  0.000
-translate  -0.000 -2.892 6.449
+translate  -0.000 -2.100 3.185
 
 # Outputting the lights in the scene
 # NOTE: Converted all blender light sources to point lights
@@ -38,7 +38,7 @@ diffuse   1.000 1.000 1.000
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
 texture   0
-stretch    1.000 16.000 1.000
-translate  0.000 16.000 0.000
+stretch    1.000 32.000 1.000
+translate  0.000 32.000 0.000
 
 endview
