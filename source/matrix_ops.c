@@ -118,7 +118,7 @@ void matrix_multiply_right(Matrix *A, Matrix B){
       A->element[0][1] * B.element[1][2] +
       A->element[0][2] * B.element[2][2] +
       A->element[0][3] * B.element[3][2];
-   A->element[0][1] =
+   A->element[0][3] =
       A->element[0][0] * B.element[0][3] +
       A->element[0][1] * B.element[1][3] +
       A->element[0][2] * B.element[2][3] +
@@ -139,7 +139,7 @@ void matrix_multiply_right(Matrix *A, Matrix B){
       A->element[1][1] * B.element[1][2] +
       A->element[1][2] * B.element[2][2] +
       A->element[1][3] * B.element[3][2];
-   A->element[1][1] =
+   A->element[1][3] =
       A->element[1][0] * B.element[0][3] +
       A->element[1][1] * B.element[1][3] +
       A->element[1][2] * B.element[2][3] +
@@ -160,7 +160,7 @@ void matrix_multiply_right(Matrix *A, Matrix B){
       A->element[2][1] * B.element[1][2] +
       A->element[2][2] * B.element[2][2] +
       A->element[2][3] * B.element[3][2];
-   A->element[2][1] =
+   A->element[2][3] =
       A->element[2][0] * B.element[0][3] +
       A->element[2][1] * B.element[1][3] +
       A->element[2][2] * B.element[2][3] +
@@ -181,7 +181,7 @@ void matrix_multiply_right(Matrix *A, Matrix B){
       A->element[3][1] * B.element[1][2] +
       A->element[3][2] * B.element[2][2] +
       A->element[3][3] * B.element[3][2];
-   A->element[3][1] =
+   A->element[3][3] =
       A->element[3][0] * B.element[0][3] +
       A->element[3][1] * B.element[1][3] +
       A->element[3][2] * B.element[2][3] +
