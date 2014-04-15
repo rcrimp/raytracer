@@ -106,7 +106,7 @@ void matrix_multiply_right(Matrix *A, Matrix B){
             B.element[row][3] * A->element[3][col];
       }
    }
-   A = &temp;
+   *A = temp;
 }
 void matrix_multiply_left(Matrix *A, Matrix B){
    Matrix temp;
