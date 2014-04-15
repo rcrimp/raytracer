@@ -148,7 +148,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       
       /* Lighting calculations */
       SurfaceNormal = (vector_add(cur_ray.start, vector_scale(cur_ray.direction, t)));
-      SurfaceNormal = vector_transform(SurfaceNormal, matrix_transpose(object[closest_obj].transform));
+      //SurfaceNormal = vector_transform(SurfaceNormal, matrix_transpose(object[closest_obj].transform));
       ToCamera = vector_scale(cur_ray.direction, -1);
       //vector_normalise(vector_subtract(cur_ray.start, SurfaceNormal));
       
@@ -157,7 +157,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          cur_light_pos = vector_transform(light_source[cur_light].position, object[closest_obj].transform);
          ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
 
-         //SurfaceNormal = vector_transform(SurfaceNormal, matrix_transpose(object[closest_obj].transform));
+         SurfaceNormal = vector_transform(SurfaceNormal, matrix_transpose(object[closest_obj].transform));
          double nl = vector_dot(SurfaceNormal, ToLight);
          Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
          double rv =  vector_dot(r, ToCamera);
