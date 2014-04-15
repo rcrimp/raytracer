@@ -169,19 +169,19 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
 
 
-         int i;
-         for(i = 0; i < num_objs; i++){
-            if (i == closest_obj) break;
+         //int i;
+         //for(i = 0; i < num_objs; i++){
+         //if (i == closest_obj) break;
 
             /*
               cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
               cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
              */
-            
-            Vector temp_l_pos = vector_transform(cur_light_pos, object[i].transform);
+         if(closest_obj == 1){  
+            Vector temp_l_pos = vector_transform(cur_light_pos, object[0].transform);
                
-            Vector sta = vector_transform(SurfaceNormal, object[i].transform);
-            Vector dir = vector_new(3,-3,1,0);
+            Vector sta = vector_transform(SurfaceNormal, object[0].transform);
+            Vector dir = ToLight;
                //ToLight;
                //vector_transform(ToLight, object[cur_obj].transform);
                //vector_normalise(vector_subtract(temp_l_pos, sta));
@@ -193,10 +193,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             A =     vector_dot(dir, dir);  /* v.v */
             B = 2 * vector_dot(dir, sta);      /* 2 * u.v */
             C =     vector_dot(sta, sta) - 1;  /* u.u -r */
-            if ((B*B) - (4*A*C) > 0){
+            if ((B*B) - (4*A*C) > 0)
                return colour;
-            }
          }
+            //}
 
          double nl = vector_dot(SurfaceNormal, ToLight);
          Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
