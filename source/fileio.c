@@ -258,7 +258,7 @@ void fileio_readfile(char *fname) {
                         0.0, 1.0, 0.0, y,
                         0.0, 0.0, 1.0, z,
                         0.0, 0.0, 0.0, 1.0);
-            matrix_multiply_left(transformation, &camera.transform);
+            matrix_multiply_right(&camera.transform, transformation);
          } else { //translate the current object
             matrix_make(&transformation,
                         1.0, 0.0, 0.0, -x,
@@ -273,15 +273,20 @@ void fileio_readfile(char *fname) {
          fscanf(description_file, "%lf", &y);
          fscanf(description_file, "%lf", &z);
 
-         matrix_make(&transformation,
-                     1/x, 0.0, 0.0, 0.0,
-                     0.0, 1/y, 0.0, 0.0,
-                     0.0, 0.0, 1/z, 0.0,
-                     0.0, 0.0, 0.0, 1.0);
          /* must stretch either the camera or most recent sphere */
          if(num_objs == 0){ //translate the camera
-            matrix_multiply_left(transformation, &camera.transform);
+            matrix_make(&transformation,
+                        x, 0.0, 0.0, 0.0,
+                        0.0, y, 0.0, 0.0,
+                        0.0, 0.0, z, 0.0,
+                        0.0, 0.0, 0.0, 1.0);
+            matrix_multiply_right(&camera.transform, transformation);
          } else { //translate the current object
+            matrix_make(&transformation,
+                        1/x, 0.0, 0.0, 0.0,
+                        0.0, 1/y, 0.0, 0.0,
+                        0.0, 0.0, 1/z, 0.0,
+                        0.0, 0.0, 0.0, 1.0);
             matrix_multiply_left(transformation, &object[num_objs-1].transform);
          }
       } /* rotate last defined object (camera or sphere) */
