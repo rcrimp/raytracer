@@ -20,7 +20,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-#define SUPER_SAMPLES 144 /* needs to be a square number */
+#define SUPER_SAMPLES 256 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
@@ -307,8 +307,8 @@ void renderImage(void) {
                
                //ray.start.x = 2*DOF_r * sin(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
                //ray.start.y = DOF_r * cos(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
-               ray.start.x = (rand() / (double)RAND_MAX)-1;
-               ray.start.y = (rand() / (double)RAND_MAX)-1;
+               ray.start.x = 1.5*(rand() / (double)RAND_MAX)-1;
+               ray.start.y = 1/5*(rand() / (double)RAND_MAX)-1;
                
                px = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                py = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
