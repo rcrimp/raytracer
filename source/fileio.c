@@ -315,9 +315,9 @@ void fileio_readfile(char *fname) {
             break;
          case 'y':
             matrix_make(&transformation,
-                        cos(angle), 0.0, -sin(angle), 0.0,
+                        cos(angle), 0.0, sin(angle), 0.0,
                         0.0       , 1.0, 0.0        , 0.0,
-                        sin(angle), 0.0, cos(angle) , 0.0,
+                        -sin(angle), 0.0, cos(angle) , 0.0,
                         0.0       , 0.0, 0.0        , 1.0);
             break;
          case 'z':
