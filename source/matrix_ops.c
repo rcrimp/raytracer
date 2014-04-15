@@ -87,7 +87,7 @@ void matrix_scale(Matrix *m, double s){
    }
 }
 
-void matrix_multiply_left(Matrix *A, Matrix B){
+void matrix_multiply_right(Matrix *A, Matrix B){
    /* store B*A into A */
    int row, col;   
    for (row = 0; row < MATRIX_SIZE; row++) {
@@ -101,7 +101,7 @@ void matrix_multiply_left(Matrix *A, Matrix B){
    }
 }
 
-void matrix_multiply_right(Matrix *A, Matrix B){
+void matrix_multiply_left(Matrix *A, Matrix B){
    int row, col;
 
    /* store A*B into A */
