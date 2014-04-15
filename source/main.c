@@ -111,7 +111,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       /* transform the ray direction */
       cur_ray.direction = ray.direction;
-      cur_ray.direction = vector_normalise(cur_ray.direction);
+      //cur_ray.direction = vector_normalise(cur_ray.direction);
       cur_ray.direction = vector_transform(cur_ray.direction,     camera.transform);
       cur_ray.direction = vector_transform(cur_ray.direction, object[cur_obj].transform);
       
