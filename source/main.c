@@ -305,7 +305,7 @@ void renderImage(void) {
                DOF_r = 2*(rand() / (double)RAND_MAX)-1; /* [-1, 1} */
                DOF_theta = M_PI * (rand() / (double)RAND_MAX);
                
-               ray.start.x = 10*DOF_r * sin(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
+               ray.start.x = 5*DOF_r * sin(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
                ray.start.y = DOF_r * cos(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
                
                px = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
