@@ -114,13 +114,14 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          e = vector_normalise(e);
          
          /*to calculate r in the equation we use r = 2*(l.n) * n-l;*/
-         double scaler = 2.0 *  nl;
-         Vector nlMinus =  vector_subtract(normal, l);
-         Vector r = vector_scale(nlMinus, scaler);
-         r = vector_normalise(r);
-         
+         //double scaler = 2.0 *  nl;
+         //Vector nlMinus =  vector_subtract(normal, l);
+         //Vector r = vector_scale(nlMinus, scaler);
+         //r = vector_normalise(r);
+         //double re = vector_dot(r, e);
+         Vector r = vector_subtract(vector_scale(normal, 2*nl), l);
          double re = vector_dot(r, e);
-
+         
          re = max(0, re);
          re = pow(re, 2);//object[i].material.phong);
 
