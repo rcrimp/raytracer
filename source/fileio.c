@@ -248,14 +248,15 @@ void fileio_readfile(char *fname) {
          fscanf(description_file, "%lf", &y);
          fscanf(description_file, "%lf", &z);
 
-         if(num_objs == 0){ // translation of the camera
+         /************************************************************/
+         if(num_objs == 0){ /* store the translation of the camera */
             matrix_make(&transformation,
                         1.0, 0.0, 0.0, x,
                         0.0, 1.0, 0.0, y,
                         0.0, 0.0, 1.0, z,
                         0.0, 0.0, 0.0, 1.0);
             matrix_multiply_right(&camera.transform, transformation);
-         } else { // inverse translation of the current object
+         } else { /* store the inverse translation of the current object */
             matrix_make(&transformation,
                         1.0, 0.0, 0.0, -x,
                         0.0, 1.0, 0.0, -y,
@@ -269,14 +270,15 @@ void fileio_readfile(char *fname) {
          fscanf(description_file, "%lf", &y);
          fscanf(description_file, "%lf", &z);
 
-         if(num_objs == 0){ //stretching of the camera
+         /************************************************************/
+         if(num_objs == 0){ /* store the stretching of the camera */
             matrix_make(&transformation,
                         x, 0.0, 0.0, 0.0,
                         0.0, y, 0.0, 0.0,
                         0.0, 0.0, z, 0.0,
                         0.0, 0.0, 0.0, 1.0);
             matrix_multiply_right(&camera.transform, transformation);
-         } else { //Inverse stretching of the current object
+         } else { /* store the inverse stretching of the current object */
             matrix_make(&transformation,
                         1/x, 0.0, 0.0, 0.0,
                         0.0, 1/y, 0.0, 0.0,
@@ -294,41 +296,32 @@ void fileio_readfile(char *fname) {
          }
          fscanf(description_file, "%lf", &angle);
 
-         // deg to rads
+         /*************************************************************/
+         /* deg to rads and if an object rotation => inverse rotation */
          angle *= (num_objs == 0) ? (M_PI/180) : -(M_PI/180);
-         
          switch(axis){
-         case 'x':
-            matrix_make(&transformation,
+         case 'x': matrix_make(&transformation,
                         1.0, 0.0       , 0.0        , 0.0,
                         0.0, cos(angle), -sin(angle), 0.0,
                         0.0, sin(angle), cos(angle) , 0.0,
                         0.0, 0.0       , 0.0        , 1.0);
             break;
-         case 'y':
-            matrix_make(&transformation,
+         case 'y': matrix_make(&transformation,
                         cos(angle), 0.0, sin(angle), 0.0,
                         0.0       , 1.0, 0.0        , 0.0,
                         -sin(angle), 0.0, cos(angle) , 0.0,
                         0.0       , 0.0, 0.0        , 1.0);
             break;
-         case 'z':
-            matrix_make(&transformation,
+         case 'z': matrix_make(&transformation,
                         cos(angle) , -sin(angle), 0.0, 0.0,
                         sin(angle), cos(angle), 0.0, 0.0,
                         0.0        , 0.0       , 1.0, 0.0,
                         0.0        , 0.0       , 0.0, 1.0);
             break;
          }
-
-         matrix_display(camera.transform);
-         matrix_display(transformation);
-         
-         if(num_objs == 0){ //translate the camera
-            //camera.transform = transformation;
+         if(num_objs == 0){ /* store the rotation of the camera */
             matrix_multiply_right(&camera.transform, transformation);
-            matrix_display(camera.transform);
-         } else { //translate the current object
+         } else { /* store the inverse rotation of the current object */
             matrix_multiply_left(&object[num_objs-1].transform, transformation);
          }
 

@@ -15,15 +15,12 @@
 
 /* Create an identity matrix */
 Matrix matrix_identity(void) {
-
    Matrix result;
-
    matrix_make(&result
                ,1.0, 0.0, 0.0, 0.0,
                0.0, 1.0, 0.0, 0.0,
                0.0, 0.0, 1.0, 0.0,
                0.0, 0.0, 0.0, 1.0);
-
    return result;
 }
 
@@ -131,7 +128,6 @@ Matrix matrix_transpose(Matrix m){
    for(row = 0; row < MATRIX_SIZE; row++)
       for(col = 0; col < MATRIX_SIZE; col++)
          result.element[row][col] = m.element[col][row];
-   
    /*   matrix_make(&result,
                     m.element[0][0], m.element[1][0], m.element[2][0], m.element[0][3],
                     m.element[0][1], m.element[1][1], m.element[2][1], m.element[3][1],
