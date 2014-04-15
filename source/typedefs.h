@@ -64,7 +64,6 @@ typedef struct MaterialProperty {
 typedef struct ObjectDef {
    MaterialProperty material;
    Matrix transform;
-   Matrix t2;
 } ObjectDef;
 
 
