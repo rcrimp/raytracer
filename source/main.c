@@ -302,7 +302,7 @@ void renderImage(void) {
          /* super sampling */
          for(i = 0; i < grid_size; i++){
             for(j = 0; j < grid_size; j++){
-               DOF_r = 2*(rand() / (double)RAND_MAX)-1; /* [-1, 1} */
+               DOF_r = 4*(rand() / (double)RAND_MAX)-1; /* [-1, 1} */
                DOF_theta = M_PI * (rand() / (double)RAND_MAX);
                
                ray.start.x = 2*DOF_r * sin(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
