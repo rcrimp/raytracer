@@ -104,10 +104,10 @@ void matrix_multiply_right(Matrix *A, Matrix B){
 }
 
 void matrix_multiply_left(Matrix A, Matrix *B){
-   int row, col;
-
    /* store B*A into B */
-   
+   matrix_multiply_right(&B, A);
+   /*
+   int row, col;   
    for (row = 0; row < MATRIX_SIZE; row++) {
       for (col = 0; col < MATRIX_SIZE; col++) {
          B->element[row][col] =
@@ -116,7 +116,7 @@ void matrix_multiply_left(Matrix A, Matrix *B){
             B->element[row][2] * A.element[2][col] +
             B->element[row][3] * A.element[3][col];
       }
-   }
+      }*/
 }
 
 Matrix matrix_transpose(Matrix m){
