@@ -217,31 +217,35 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       /* for each light */
       for(cur_light = 0; cur_light < num_lights; cur_light++) {
          
-         cur_light_pos = vector_transform(light_source[cur_light].position, object[closest_obj].transform);
-         ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
-
-         double nl = vector_dot(SurfaceNormal, ToLight);
-         Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
-         double rv =  vector_dot(r, ToCamera);
          
-         /* range: 0-1 */
-         nl = max(0, nl);
-         rv = pow( max(0, rv) , object[closest_obj].material.phong);
+         cur_light_pos = vector_transform(light_source[cur_light].position, object[closest_obj].transform);
+
+         if (shadow_ray(SurfaceNormal, cur_light_pos, closest_obj) == 0 ){
+            ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
+
+            double nl = vector_dot(SurfaceNormal, ToLight);
+            Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
+            double rv =  vector_dot(r, ToCamera);
+         
+            /* range: 0-1 */
+            nl = max(0, nl);
+            rv = pow( max(0, rv) , object[closest_obj].material.phong);
 
 #define obj_diff object[closest_obj].material.diffuse_colour
 #define obj_spec object[closest_obj].material.specular_colour
 #define obj_text object[closest_obj].material.texture
 #define light_col light_source[cur_light].colour
          
-         RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
-         colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
-         colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
-         colour.blue  += light_col.blue  * ( texc.blue  * nl + obj_spec.blue  * rv);
+            RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
+            colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
+            colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
+            colour.blue  += light_col.blue  * ( texc.blue  * nl + obj_spec.blue  * rv);
 
 #undef obj_diff
 #undef obj_spec
 #undef obj_tex
 #undef light_col
+         }
       }
    }
    return colour;
