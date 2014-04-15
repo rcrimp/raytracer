@@ -37,6 +37,7 @@ ObjectDef       object[MAX_NUM_OBJS];
 
 /* ----- main prototypes --------------------------------------------------- */
 RGBColour ray_trace(RayDef ray, int recurse_depth);
+int shadow_ray(Vector point1, Vector point2, int obj_caster);
 RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_point);
 
 void renderImage(void);
@@ -87,7 +88,53 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    return diffuse_colour;
 }
 
+/* returns 1 if shadow, overkill will simplify */
+int shadow_ray(Vector point1, Vector point2, int obj_caster) {
+   int cur_obj, closest_obj;
+   RayDef ray, cur_ray;
+   ray.start = point1;
+   ray.direction = vector_subtract(point2,point1);
 
+   //double t = INT_MAX;
+   //int nearest_object = -1;
+   double A, B, C, det, t1, t2, t, temp;
+   t = DBL_MAX;
+   closest_obj = -1;
+   
+   for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
+      if (cur_obj == obj_caster) break; /* assume no self shadowing */
+      
+      cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
+      cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
+      temp = vector_length(cur_ray.direction);
+      cur_ray.direction = vector_normalise(cur_ray.direction);
+      
+      A =     vector_dot(cur_ray.direction, cur_ray.direction);  /* v.v */
+      B = 2 * vector_dot(cur_ray.direction, cur_ray.start);      /* 2 * u.v */
+      C =     vector_dot(cur_ray.start,     cur_ray.start) - 1;  /* u.u -r */
+      det = (B*B) - (4*A*C); /* determinant */
+      
+      if (det > 0) { /* if ray collides with the sphere */
+         if ( B > 0 )
+            t1 = (-B - sqrt(det)) / 2*A;
+         else
+            t1 = (-B + sqrt(det)) / 2*A;
+         t2 = C / (A*t1);
+
+         t1 /= temp;
+         t2 /= temp;
+         
+         /* if the current object is closer than any prior objects, then set it as the closest */
+         temp = min(t1,t2);
+         if(temp < t){
+            t = temp;
+            closest_obj = cur_obj;
+         }
+      }
+   }
+   if ( t < 1 ) return 1;
+   return 0;
+}
 
 /* the main ray tracing procedure */
 RGBColour ray_trace(RayDef ray, int recurse_depth) {
