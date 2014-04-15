@@ -105,28 +105,25 @@ void matrix_multiply_right(Matrix *A, Matrix B){
             B.element[row][3] * A->element[3][col];
       }
    }
-   printf("start mops\n");
-   matrix_display(temp);
-   matrix_display(*A);
    *A = temp;
-   matrix_display(*A);
-   printf("end\n");
 }
 
 void matrix_multiply_left(Matrix *A, Matrix B){
+   Matrix temp;
    int row, col;
 
    /* store A*B into A */
    
    for(row = 0; row < MATRIX_SIZE; row++){
       for(col = 0; col < MATRIX_SIZE; col++){
-      A->element[row][col] =
+      temp.element[row][col] =
          A->element[row][0] * B.element[0][col] +
          A->element[row][1] * B.element[1][col] +
          A->element[row][2] * B.element[2][col] +
          A->element[row][3] * B.element[3][col];
       }
    }
+   *A = temp;
 
    /*for (row = 0; row < MATRIX_SIZE; row++) { // for each row of m
       for (col = 0; col < MATRIX_SIZE; col++) { // for each column of n
