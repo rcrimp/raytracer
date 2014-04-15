@@ -180,7 +180,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
          /* if the current object is closer than any prior objects, then set it as the closest */
          temp = min(t1,t2);
-         if(temp < t){
+         if(temp < t, temp > 0){
             t = temp;
             closest_obj = cur_obj;
          }
