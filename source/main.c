@@ -147,7 +147,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    RayDef cur_ray;
    
    ray.start = vector_transform(ray.start, camera.transform);
-   ray.direction = vector_transform( ray.direction, camera.transform);
+   ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
    
    /* setup */
    t = DBL_MAX;
@@ -308,8 +308,8 @@ void renderImage(void) {
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
 
-               ray.direction = vector_normalise(ray.direction);
-               //ray.direction = vector_normalise(vector_subtract(ray.direction, ray.start));
+               //ray.direction = vector_normalise(ray.direction)
+                  //ray.direction = vector_normalise(vector_subtract(ray.direction, ray.start));
                
                samples[j + i*grid_size] = ray_trace(ray, 10);
             }
