@@ -199,17 +199,18 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       
       /* Lighting calculations */
       SurfaceNormal = (vector_add(cur_ray.start, vector_scale(cur_ray.direction, t)));
+      SurfaceNormal.w = 0;
       //SurfaceNormal = SurfaceNormal;
-      //SurfaceNormal = vector_transform(SurfaceNormal, matrix_transpose(object[closest_obj].transform));
+      SurfaceNormal = vector_transform(SurfaceNormal, matrix_transpose(object[closest_obj].transform));
 
       ToCamera = vector_normalise(vector_subtract(cur_ray.start, SurfaceNormal));
 
 #define mc object[closest_obj].material.mirror_colour
       if ( (mc.red != 0 && mc.blue != 0 && mc.green != 0) & recurse_depth > 0) {
          //reflected_colour = ray_trace( ray(intersection point, reflection vector), n-1);
-         //colour.red += mc.red * background_colour.red;
-         //colour.blue += mc.blue * background_colour.blue;
-         //colour.green += mc.green * background_colour.green;
+         colour.red += mc.red * background_colour.red;
+         colour.blue += mc.blue * background_colour.blue;
+         colour.green += mc.green * background_colour.green;
       }
 #undef mc
       //if (refractive & recurse_depth > 0) {
@@ -219,12 +220,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       
       /* for each light */
       for(cur_light = 0; cur_light < num_lights; cur_light++) {
-         
-         
          cur_light_pos = vector_transform(light_source[cur_light].position, object[closest_obj].transform);
 
-         Vector rename_me =
-            vector_subtract(vector_transform(SurfaceNormal, object[closest_obj].transform),SurfaceNormal);
+         //Vector rename_me =
+         //vector_subtract(vector_transform(SurfaceNormal, object[closest_obj].transform),SurfaceNormal);
             //SurfaceNormal;
             //vector_transform(SurfaceNormal, object[closest_obj].transform);
             /*vector_new(
