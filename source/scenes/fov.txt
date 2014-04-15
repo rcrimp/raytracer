@@ -24,15 +24,15 @@ translate  -3.541 5.909 -3.820
 # Outputting the lights in the scene
 # NOTE: Converted all blender light sources to point lights
 
-light   0.000 0.000 0.000   0.427 0.427 0.427
-light   0.000 -5.001 -10.000   1.000 1.000 1.000
-light   -3.536 -3.536 -10.000   1.000 1.000 1.000
-light   -3.536 3.536 -10.000   1.000 1.000 1.000
-light   -5.001 -0.000 -10.000   1.000 1.000 1.000
-light   5.001 0.000 -10.000   1.000 1.000 1.000
-light   3.536 -3.536 -10.000   1.000 1.000 1.000
-light   3.536 3.536 -10.000   1.000 1.000 1.000
-light   -0.000 5.001 -10.000   1.000 1.000 1.000
+light   0.000 0.000 0.000   1.000 1.000 1.000
+light   0.000 -13.056 -10.000   0.360 0.360 0.360
+light   -9.232 -9.232 -10.000   0.360 0.360 0.360
+light   -9.232 9.232 -10.000   0.360 0.360 0.360
+light   -13.056 -0.000 -10.000   0.360 0.360 0.360
+light   13.056 0.000 -10.000   0.360 0.360 0.360
+light   9.232 -9.232 -10.000   0.360 0.360 0.360
+light   9.232 9.232 -10.000   0.360 0.360 0.360
+light   -0.000 13.056 -10.000   0.360 0.360 0.360
 
 
 # Outputting the objects in the scene
@@ -56,7 +56,7 @@ specular  1.000 1.000 1.000  175.000
 mirror    0.000 0.000 0.000
 texture   0
 stretch    1.000 0.500 1.000
-translate  -2.492 4.801 -6.717
+translate  -2.966 5.390 -6.525
 
 # Exported Object : "Sphere.006" 
 sphere
@@ -65,9 +65,9 @@ diffuse   0.800 0.169 0.795
 specular  1.000 1.000 1.000  175.000
 mirror    0.000 0.000 0.000
 texture   0
-stretch    1.024 2.047 2.047
+stretch    1.189 2.379 2.379
 rotate     z  45.000
-translate  10.193 -26.327 -24.141
+translate  11.052 -39.188 -34.183
 
 # Exported Object : "Sphere.002" 
 sphere
@@ -78,7 +78,7 @@ mirror    0.000 0.000 0.000
 texture   0
 stretch    0.250 1.251 1.251
 rotate     z  -45.000
-translate  -0.809 -5.978 -12.076
+translate  -1.446 -6.110 -13.855
 
 # Exported Object : "Sphere.004" 
 sphere
@@ -88,7 +88,7 @@ specular  1.000 1.000 1.000  175.000
 mirror    0.000 0.000 0.000
 texture   0
 stretch    1.500 1.500 0.200
-translate  3.000 0.000 -10.000
+translate  3.544 -0.391 -9.474
 
 # Exported Object : "Sphere.001" 
 sphere
@@ -97,8 +97,8 @@ diffuse   0.291 0.520 0.800
 specular  1.000 1.000 1.000  175.000
 mirror    0.000 0.000 0.000
 texture   0
-stretch    1.312 1.312 1.312
-translate  -2.262 -5.678 -17.832
+stretch    2.359 2.359 2.359
+translate  -2.423 -11.682 -23.977
 
 # Exported Object : "Sphere" 
 sphere
