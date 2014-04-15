@@ -97,9 +97,6 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    
    ray.start = vector_transform(ray.start, camera.transform);
    ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
-   Vector temprd = vector_transform( vector_normalise(ray.direction), camera.transform);
-   double temprd_l = vector_length(temprd);
-   cur_ray.direction = vector_scale(cur_ray.direction, temprd_l);
    
    /* setup */
    closest_obj = -1;
@@ -114,6 +111,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       /* transform the ray direction */
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
       //cur_ray.direction = vector_normalise(cur_ray.direction);
+
+      double temprd_l = vector_length(cur_ray.direction);
+      cur_ray.direction = vector_scale(cur_ray.direction, temprd_l);
 
       /* quadratic representation of the line-sphere intersection */
       A =     vector_dot(cur_ray.direction, cur_ray.direction);  /* v.v */
