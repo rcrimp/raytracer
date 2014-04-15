@@ -99,7 +99,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
    Vector temprd = vector_transform( vector_normalise(ray.direction), camera.transform);
    double temprd_l = vector_length(temprd);
-   cur_ray.direction = vector_scale(cur_ray.direction, 1/temprd_l);
+   cur_ray.direction = vector_scale(cur_ray.direction, temprd_l);
    
    /* setup */
    closest_obj = -1;
