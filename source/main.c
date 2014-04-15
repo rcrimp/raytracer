@@ -204,11 +204,15 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       ToCamera = vector_normalise(vector_subtract(cur_ray.start, SurfaceNormal));
 
-      //if (reflective & recurse_depth >= 0) {
-      //   reflected_colour = ray_trace( ray(intersection point, reflection vector), n-1);
-      //   colour += reflection_coeff * reflected_colour ;
-      //}
-      //if (refractive & recurse_depth >= 0) {
+#define mc object[closest_obj].material.mirror_colour
+      if ( (mc.red != 0 && mc.blue != 0 && mc.green != 0) & recurse_depth > 0) {
+         //reflected_colour = ray_trace( ray(intersection point, reflection vector), n-1);
+         colour.red += mc.red * background_colour.red;
+         colour.blue += mc.blue * background_colour.blue;
+         colour.green += mc.green * background_colour.green;
+      }
+#undef mc
+      //if (refractive & recurse_depth > 0) {
       //   refracted_colour = ray_trace( Ray(intersection point, refracted vector), n-1);
       //   colour += refraction_coeff * refracted_colour ;
       //}
@@ -229,8 +233,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
                        SurfaceNormal.z += object[closest_obj].transform.element[2][3],
                        SurfaceNormal.w = 1);*/
             
-         //if (shadow_ray(rename_me, cur_light_pos, closest_obj) == 0 ){
-         if (shadow_ray(rename_me, light_source[cur_light].position, closest_obj) == 0){
+         //if (shadow_ray(rename_me, light_source[cur_light].position, closest_obj) == 0)
+         {
             ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
 
             double nl = vector_dot(SurfaceNormal, ToLight);
@@ -308,7 +312,7 @@ void renderImage(void) {
             for(j = 0; j < grid_size; j++){
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
-               samples[j + i*grid_size] = ray_trace(ray, 0);
+               samples[j + i*grid_size] = ray_trace(ray, 10);
             }
          }
          pixelColour = colour_blend(samples, SUPER_SAMPLES);
