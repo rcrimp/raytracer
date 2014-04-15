@@ -93,17 +93,15 @@ void fileio_readfile(char *fname) {
    ambient_light.blue = 0.0;
 
    /* default camera */
-   /* viewplane size is constant!!
+   /* viewplane size is constant!! unless we do stupid FOV stuff
     * -- it is 32 units by 32 units (i.e., [-16.0, 16.0] )
     */
    camera.view_size = 32.0;
    camera.lens = 35.0;
    matrix_loadIdentity(&camera.transform);
 
-   /* initial lights */	
-   num_lights = 0;
-
-   /* initial objects */	
+   /* initial count */	
+   num_lights = 0;	
    num_objs = 0;
 
 
@@ -250,16 +248,14 @@ void fileio_readfile(char *fname) {
          fscanf(description_file, "%lf", &y);
          fscanf(description_file, "%lf", &z);
 
-         /* should I subtract the identity matrix to &translate,
-            and change the matrix_multiply to matrix add */
-         if(num_objs == 0){ //translate the camera
+         if(num_objs == 0){ // translation of the camera
             matrix_make(&transformation,
                         1.0, 0.0, 0.0, x,
                         0.0, 1.0, 0.0, y,
                         0.0, 0.0, 1.0, z,
                         0.0, 0.0, 0.0, 1.0);
             matrix_multiply_right(&camera.transform, transformation);
-         } else { //translate the current object
+         } else { // inverse translation of the current object
             matrix_make(&transformation,
                         1.0, 0.0, 0.0, -x,
                         0.0, 1.0, 0.0, -y,
@@ -273,15 +269,14 @@ void fileio_readfile(char *fname) {
          fscanf(description_file, "%lf", &y);
          fscanf(description_file, "%lf", &z);
 
-         /* must stretch either the camera or most recent sphere */
-         if(num_objs == 0){ //translate the camera
+         if(num_objs == 0){ //stretching of the camera
             matrix_make(&transformation,
                         x, 0.0, 0.0, 0.0,
                         0.0, y, 0.0, 0.0,
                         0.0, 0.0, z, 0.0,
                         0.0, 0.0, 0.0, 1.0);
             matrix_multiply_right(&camera.transform, transformation);
-         } else { //translate the current object
+         } else { //Inverse stretching of the current object
             matrix_make(&transformation,
                         1/x, 0.0, 0.0, 0.0,
                         0.0, 1/y, 0.0, 0.0,
@@ -299,11 +294,8 @@ void fileio_readfile(char *fname) {
          }
          fscanf(description_file, "%lf", &angle);
 
-         //angle to rads
-         if( num_objs != 0)
-            angle *= -(M_PI/180);
-         else
-            angle *= (M_PI/180);
+         // deg to rads
+         angle *= (num_objs == 0) ? (M_PI/180) : -(M_PI/180);
          
          switch(axis){
          case 'x':
