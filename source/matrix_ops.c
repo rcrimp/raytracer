@@ -121,11 +121,17 @@ void matrix_multiply_left(Matrix A, Matrix *B){
 
 Matrix matrix_transpose(Matrix m){
    Matrix result;
-   matrix_make(&result,
+   int row, col;
+
+   for(row = 0; row < MATRIX_SIZE; row++)
+      for(col = 0; col < MATRIX_SIZE; col++)
+         result.element[row][col] = m.element[col][row];
+   
+   /*   matrix_make(&result,
                     m.element[0][0], m.element[1][0], m.element[2][0], m.element[0][3],
                     m.element[0][1], m.element[1][1], m.element[2][1], m.element[3][1],
                     m.element[0][2], m.element[2][1], m.element[2][2], m.element[3][2],
-                    m.element[0][3], m.element[3][1], m.element[3][2], m.element[3][3]);
+                    m.element[0][3], m.element[3][1], m.element[3][2], m.element[3][3]);*/
    return result;
 }
 
