@@ -24,7 +24,7 @@ translate  -0.984 -0.062 1.533
 # Outputting the lights in the scene
 # NOTE: Converted all blender light sources to point lights
 
-#light   0.000 0.000 0.000   1 1 1
+light   0.000 0.000 0.000   1 1 1
 #light   0.000 0.000 0.000   0.213 0.213 0.213
 #light   0.000 -7.000 0.000   0.100 0.120 0.120
 #light   -4.950 -4.950 0.000   0.100 0.120 0.120
