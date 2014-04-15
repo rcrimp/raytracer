@@ -45,7 +45,7 @@ specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
 texture   0
 stretch    2.000 0.200 0.200
-translate  0.000 0.000 -6.000
+translate  0.000 0.000 -5.196
 
 # Exported Object : "Sphere.005" 
 sphere
