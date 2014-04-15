@@ -7,7 +7,7 @@ imagesize     320
 background    0.050 0.250 0.400
 
 # The ambient lighting of the scene
-ambient       1 1 1
+ambient       0.5 0.5 0.5
 
 # the default camera is located at the origin
 # the default viewplane has corners
@@ -40,7 +40,7 @@ light   -0.000 7.000 0.000   0.100 0.120 0.120
 
 # Exported Object : "Sphere.006" 
 sphere
-ambient   1.000 1.000 1.000
+ambient   0.800 0.169 0.795
 diffuse   0.800 0.169 0.795
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
@@ -50,7 +50,7 @@ translate  1.000 1.500 -6.000
 
 # Exported Object : "Sphere.002" 
 sphere
-ambient   0.000 0.000 0.000
+ambient   1.000 0.564 0.289
 diffuse   1.000 0.564 0.289
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
@@ -63,7 +63,7 @@ translate  0.000 0.000 -5.196
 
 # Exported Object : "Sphere.005" 
 sphere
-ambient   0.000 0.000 0.000
+ambient   1.000 1.000 1.000
 diffuse   1.000 1.000 1.000
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
@@ -73,7 +73,7 @@ translate  0.000 0.000 -6.319
 
 # Exported Object : "Sphere.004" 
 sphere
-ambient   0.000 0.000 0.000
+ambient   0.127 0.800 0.245
 diffuse   0.127 0.800 0.245
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
@@ -83,7 +83,7 @@ translate  1.500 -1.500 -6.000
 
 # Exported Object : "Sphere.003" 
 sphere
-ambient   1.000 1.000 1.000
+ambient   0.800 0.169 0.795
 diffuse   0.800 0.169 0.795
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
@@ -93,7 +93,7 @@ translate  1.500 1.500 -6.000
 
 # Exported Object : "Sphere.001" 
 sphere
-ambient   1.000 1.000 1.000
+ambient   0.291 0.520 0.800
 diffuse   0.291 0.520 0.800
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
@@ -102,7 +102,7 @@ translate  -1.500 1.500 -6.000
 
 # Exported Object : "Sphere" 
 sphere
-ambient   1.000 1.000 1.000
+ambient    0.800 0.000 0.016
 diffuse   0.800 0.000 0.016
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000

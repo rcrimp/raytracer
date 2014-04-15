@@ -165,16 +165,16 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          //vector_normalise(vector_subtract(cur_ray.start, SurfacePoint));
       
       /* for each light */
-      /*for(cur_light = 0; cur_light < num_lights; cur_light++) {
+      for(cur_light = 0; cur_light < num_lights; cur_light++) {
          cur_light_pos = vector_transform(light_source[cur_light].position, object[closest_obj].transform);
          ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfacePoint));
          
          double nl = vector_dot(SurfaceNormal, ToLight);
          Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
          double rv =  vector_dot(r, ToCamera);
-         /*
+         
          /* range: 0-1 */
-         /*  nl = max(0, nl);
+         nl = max(0, nl);
          rv = pow( max(0, rv) , object[closest_obj].material.phong);
 
 #define obj_diff object[closest_obj].material.diffuse_colour
@@ -191,7 +191,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 #undef obj_spec
 #undef obj_tex
 #undef light_col
-      }*/
+      }
    }
    return colour;
 }
