@@ -147,7 +147,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    RayDef cur_ray;
    
    ray.start = vector_transform(ray.start, camera.transform);
-   ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
+   ray.direction = vector_transform( ray.direction, camera.transform);
    
    /* setup */
    t = DBL_MAX;
