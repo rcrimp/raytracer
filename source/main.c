@@ -300,8 +300,8 @@ void renderImage(void) {
             for(j = 0; j < grid_size; j++){
                //double FOV_jitter = 2*(rand() / (double)RAND_MAX)-1; /* [-1, 1} */
 
-               ray.start.x += 2*(rand() / (double)RAND_MAX)-1;
-               ray.start.y += 2*(rand() / (double)RAND_MAX)-1;
+               //ray.start.x += 2*(rand() / (double)RAND_MAX)-1;
+               //ray.start.y += 2*(rand() / (double)RAND_MAX)-1;
                
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
