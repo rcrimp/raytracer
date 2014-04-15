@@ -156,6 +156,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    /* for the current ray, find the closest object */
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
       cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
+
+      cur_ray.start.x += 2*(rand() / (double)RAND_MAX)-1;
+      cur_ray.start.y += 2*(rand() / (double)RAND_MAX)-1;
+
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
 
       temp = vector_length(cur_ray.direction);
@@ -299,9 +303,6 @@ void renderImage(void) {
          for(i = 0; i < grid_size; i++){
             for(j = 0; j < grid_size; j++){
                //double FOV_jitter = 2*(rand() / (double)RAND_MAX)-1; /* [-1, 1} */
-
-               //ray.start.x += 2*(rand() / (double)RAND_MAX)-1;
-               //ray.start.y += 2*(rand() / (double)RAND_MAX)-1;
                
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
