@@ -205,6 +205,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       ToCamera = vector_normalise(vector_subtract(cur_ray.start, SurfaceNormal));
 
+      Vector SurfacePoint = SurfaceNormal;
+      SurfacePoint.w = 1;
+      
       //if (reflective & recurse_depth > 0) {
       //   reflective_colour = ray_trace( Ray(intersection point, reflective vector), n-1);
       //   colour += reflective_coeff * reflective_colour ;
@@ -220,7 +223,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
   
          //if (shadow_ray(intersection p, light_p, closest_obj) == 0)
          {
-            ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
+            ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfacePoint));
 
             double nl = vector_dot(SurfaceNormal, ToLight);
             Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
