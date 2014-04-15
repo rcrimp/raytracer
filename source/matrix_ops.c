@@ -106,13 +106,13 @@ void matrix_multiply_left(Matrix A, Matrix *B){
 
    /* store B*A into B */
    
-   for (row = 0; row < MATRIX_SIZE; row++) { // for each row of m
-      for (col = 0; col < MATRIX_SIZE; col++) { // for each column of n
+   for (row = 0; row < MATRIX_SIZE; row++) {
+      for (col = 0; col < MATRIX_SIZE; col++) {
          B->element[row][col] =
-            A.element[0][col] * B->element[row][0] +
-            A.element[1][col] * B->element[row][1] +
-            A.element[2][col] * B->element[row][2] +
-            A.element[3][col] * B->element[row][3];
+            B->element[row][0] * A.element[0][col] +
+            B->element[row][1] * A.element[1][col] +
+            B->element[row][2] * A.element[2][col] +
+            B->element[row][3] * A.element[3][col];
       }
    }
 }
