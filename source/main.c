@@ -102,7 +102,7 @@ int shadow_ray(Vector point1, Vector point2, int obj_caster) {
    closest_obj = -1;
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
-      if (cur_obj == obj_caster) break; /* assume no self shadowing */
+      //if (cur_obj == obj_caster) break; /* assume no self shadowing */
       
       cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
@@ -226,7 +226,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
                        SurfaceNormal.y += object[closest_obj].transform.element[1][3],
                        SurfaceNormal.z += object[closest_obj].transform.element[2][3],
                        SurfaceNormal.w = 1);
-         if (shadow_ray(rename_me, cur_light_pos, closest_obj) == 1 ){
+         if (shadow_ray(rename_me, cur_light_pos, closest_obj) == 0 ){
             ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
 
             double nl = vector_dot(SurfaceNormal, ToLight);
