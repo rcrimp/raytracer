@@ -87,7 +87,7 @@ void matrix_scale(Matrix *m, double s){
    }
 }
 
-void matrix_multiply(Matrix *m, Matrix n){
+void matrix_multiply_right(Matrix *m, Matrix n){
    int row, col;
 
    for (row = 0; row < MATRIX_SIZE; row++) { // for each row of m
@@ -101,16 +101,16 @@ void matrix_multiply(Matrix *m, Matrix n){
    }
 }
 
-void matrix_multiply_left(Matrix *m, Matrix n){
+void matrix_multiply_left(Matrix n, Matrix *m){
    int row, col;
 
-   for (col = 0; col < MATRIX_SIZE; col++) { // for each row of m
-      for (row = 0; row < MATRIX_SIZE; row++) { // for each column of n
+   for (row = 0; row < MATRIX_SIZE; row++) { // for each row of m
+      for (col = 0; col < MATRIX_SIZE; col++) { // for each column of n
          m->element[row][col] =
-            n.element[0][col] * m->element[row][0] +
-            n.element[1][col] * m->element[row][1] +
-            n.element[2][col] * m->element[row][2] +
-            n.element[3][col] * m->element[row][3];
+            m->element[0][row] * n.element[col][0] +
+            m->element[1][row] * n.element[col][1] +
+            m->element[2][row] * n.element[col][2] +
+            m->element[3][row] * n.element[col][3];
       }
    }
 }

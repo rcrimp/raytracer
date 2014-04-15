@@ -258,9 +258,9 @@ void fileio_readfile(char *fname) {
                      0.0, 0.0, 1.0, -z,
                      0.0, 0.0, 0.0, 1.0);
          if(num_objs == 0){ //translate the camera
-            matrix_multiply_left(&camera.transform, transformation);
+            matrix_multiply_left(transformation, &camera.transform);
          } else { //translate the current object
-            matrix_multiply_left(&object[num_objs-1].transform, transformation);
+            matrix_multiply_left(transformation, &object[num_objs-1].transform);
          }
       } /* stretch last defined object (camera or sphere) */
       else if (!strcmp(descriptor, "stretch")) {
@@ -274,10 +274,10 @@ void fileio_readfile(char *fname) {
                      0.0, 0.0, 1/z, 0.0,
                      0.0, 0.0, 0.0, 1.0);
          /* must stretch either the camera or most recent sphere */
-         if(num_objs == 0){
-            matrix_multiply_left(&camera.transform, transformation);
-         } else { 
-            matrix_multiply(&object[num_objs-1].transform, transformation);
+         if(num_objs == 0){ //translate the camera
+            matrix_multiply_left(transformation, &camera.transform);
+         } else { //translate the current object
+            matrix_multiply_left(transformation, &object[num_objs-1].transform);
          }
       } /* rotate last defined object (camera or sphere) */
       else if (!strcmp(descriptor, "rotate")) {
@@ -315,10 +315,10 @@ void fileio_readfile(char *fname) {
                         0.0, 0.0, 0.0, 1.0);
             break;
          }
-         if(num_objs == 0){
-            matrix_multiply_left(&camera.transform, transformation);
-         } else { 
-            matrix_multiply_left(&object[num_objs-1].transform, transformation);
+         if(num_objs == 0){ //translate the camera
+            matrix_multiply_left(transformation, &camera.transform);
+         } else { //translate the current object
+            matrix_multiply_left(transformation, &object[num_objs-1].transform);
          }
 
       } /* unknown descriptor in file */
