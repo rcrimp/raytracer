@@ -20,7 +20,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-#define SUPER_SAMPLES 256 /* needs to be a square number */
+#define SUPER_SAMPLES 1 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
@@ -296,16 +296,17 @@ void renderImage(void) {
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
 
-         
+         double DOF_r;
+         double DOF_theta;
          
          /* super sampling */
          for(i = 0; i < grid_size; i++){
             for(j = 0; j < grid_size; j++){
-               double FOV_r = 2*(rand() / (double)RAND_MAX)-1; /* [-1, 1} */
-               double FOV_theta = M_PI * (rand() / (double)RAND_MAX);
+               DOF_r = 2*(rand() / (double)RAND_MAX)-1; /* [-1, 1} */
+               DOF_theta = M_PI * (rand() / (double)RAND_MAX);
                
-               ray.start.x = 2*FOV_r * sin(FOV_theta);//(2*(rand() / (double)RAND_MAX)-1);
-               ray.start.y = FOV_r * cos(FOV_theta);//(2*(rand() / (double)RAND_MAX)-1);
+               ray.start.x = 20*DOF_r * sin(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
+               ray.start.y = DOF_r * cos(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
                
                px = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                py = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
