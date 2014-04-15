@@ -265,7 +265,7 @@ void fileio_readfile(char *fname) {
                         0.0, 1.0, 0.0, -y,
                         0.0, 0.0, 1.0, -z,
                         0.0, 0.0, 0.0, 1.0);
-            matrix_multiply_left(transformation, &object[num_objs-1].transform);
+            matrix_multiply_left(&object[num_objs-1].transform, transformation);
          }
       } /* stretch last defined object (camera or sphere) */
       else if (!strcmp(descriptor, "stretch")) {
@@ -287,7 +287,7 @@ void fileio_readfile(char *fname) {
                         0.0, 1/y, 0.0, 0.0,
                         0.0, 0.0, 1/z, 0.0,
                         0.0, 0.0, 0.0, 1.0);
-            matrix_multiply_left(transformation, &object[num_objs-1].transform);
+            matrix_multiply_left(&object[num_objs-1].transform, transformation);
          }
       } /* rotate last defined object (camera or sphere) */
       else if (!strcmp(descriptor, "rotate")) {
@@ -331,7 +331,7 @@ void fileio_readfile(char *fname) {
          if(num_objs == 0){ //translate the camera
             matrix_multiply_right(&camera.transform, transformation);
          } else { //translate the current object
-            matrix_multiply_left(transformation, &object[num_objs-1].transform);
+            matrix_multiply_left(&object[num_objs-1].transform, transformation);
          }
 
       } /* unknown descriptor in file */
