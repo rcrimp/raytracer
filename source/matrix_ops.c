@@ -94,18 +94,18 @@ void matrix_scale(Matrix *m, double s){
 }
 
 void matrix_multiply_right(Matrix *A, Matrix B){
-   Matrix *temp;
+   Matrix temp;
    int row, col;   
    for (row = 0; row < MATRIX_SIZE; row++) {
       for (col = 0; col < MATRIX_SIZE; col++) {
-         temp->element[row][col] =
+         temp.element[row][col] =
             B.element[row][0] * A->element[0][col] +
             B.element[row][1] * A->element[1][col] +
             B.element[row][2] * A->element[2][col] +
             B.element[row][3] * A->element[3][col];
       }
    }
-   A = temp;
+   A = &temp;
 }
 
 void matrix_multiply_left(Matrix *A, Matrix B){
