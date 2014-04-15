@@ -166,34 +166,49 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
          ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
 
-         /* ensure ToLight vector doesn't intersect with any other objects */
-         A =     vector_dot(ToLight, ToLight);  /* v.v */
-         B = 2 * vector_dot(ToLight, SurfaceNormal);      /* 2 * u.v */
-         C =     vector_dot(SurfaceNormal, SurfaceNormal) - 1;  /* u.u -r */
-         if ((B*B) - (4*A*C) > 0){ /* determinant */
-            double nl = vector_dot(SurfaceNormal, ToLight);
-            Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
-            double rv =  vector_dot(r, ToCamera);
-         
-            /* range: 0-1 */
-            nl = max(0, nl);
-            rv = pow( max(0, rv) , object[closest_obj].material.phong);
 
+
+
+         for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
+            Vector sta = vector_transform(SurfaceNormal, object[cur_obj].transform);
+            Vector dir = vector_transform(ToLight, object[cur_obj].transform);
+
+            /* ensure ToLight vector doesn't intersect with any other objects */
+            A =     vector_dot(dir, dir);  /* v.v */
+            B = 2 * vector_dot(dir, sta);      /* 2 * u.v */
+            C =     vector_dot(sta, sta) - 1;  /* u.u -r */
+            if ((B*B) - (4*A*C) > 0){ /* determinant */
+               double nl = vector_dot(SurfaceNormal, ToLight);
+               Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
+               double rv =  vector_dot(r, ToCamera);
+         
+               /* range: 0-1 */
+               nl = max(0, nl);
+               rv = pow( max(0, rv) , object[closest_obj].material.phong);
+
+
+
+
+
+
+
+            
          
 #define obj_diff object[closest_obj].material.diffuse_colour
 #define obj_spec /*colour_black*/object[closest_obj].material.specular_colour
 #define obj_text object[closest_obj].material.texture
 #define light_col light_source[cur_light].colour
          
-            RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
-            colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
-            colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
-            colour.blue  += light_col.blue  * ( texc.blue  * nl + obj_spec.blue  * rv);
+               RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
+               colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
+               colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
+               colour.blue  += light_col.blue  * ( texc.blue  * nl + obj_spec.blue  * rv);
 
 #undef obj_diff
 #undef obj_spec
 #undef obj_tex
 #undef light_col
+            }
          }
       }
    }
