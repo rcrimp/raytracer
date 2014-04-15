@@ -58,15 +58,15 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    double su = acos(surface_point.x/tmp)/M_PI*180.0;
    double sv = atan(surface_point.y/tmp)/M_PI*180.0;
 
-   if(!abs(cv - sv) < 0.001 )
-      printf("fuck\n");
+   if(abs(cv - sv) > 0.001 )
+      printf("different\n");
    
    switch(texture){
    case 0: /* default: don't change diffuse colour at all */
       break; 
    case 1: /* checkerboard -- scale original colour */
       /* condition below is Boolean exclusive or */
-      if(((int)(cv+90) % 40 < 20) == (((int)su+10) % 40 < 20))
+      if(((int)(sv+90) % 40 < 20) == (((int)su+10) % 40 < 20))
          diffuse_colour = colour_scale(0.2,diffuse_colour);
       break;
    case 2: /* noise -- scale original colour */
