@@ -174,7 +174,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
          
 #define obj_diff object[closest_obj].material.diffuse_colour
-#define obj_spec colour_black//object[closest_obj].material.specular_colour
+#define obj_spec /*colour_black*/object[closest_obj].material.specular_colour
 #define obj_text object[closest_obj].material.texture
 #define light_col light_source[cur_light].colour
          
