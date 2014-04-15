@@ -93,10 +93,10 @@ void matrix_multiply(Matrix *m, Matrix n){
    for (row = 0; row < MATRIX_SIZE; row++) { // for each row of m
       for (col = 0; col < MATRIX_SIZE; col++) { // for each column of n
          m->element[row][col] =
-            n.element[0][col] * m->element[row][0] +
-            n.element[1][col] * m->element[row][1] +
-            n.element[2][col] * m->element[row][2] +
-            n.element[3][col] * m->element[row][3];
+            m->element[0][col] * n.element[row][0] +
+            m->element[1][col] * n.element[row][1] +
+            m->element[2][col] * n.element[row][2] +
+            m->element[3][col] * n.element[row][3];
       }
    }
 }
