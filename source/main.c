@@ -20,7 +20,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-#define SUPER_SAMPLES 25 /* needs to be a square number */
+#define SUPER_SAMPLES 1 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
@@ -157,8 +157,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
       cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
 
-      cur_ray.start.x += 2*(rand() / (double)RAND_MAX)-1;
-      cur_ray.start.y += 2*(rand() / (double)RAND_MAX)-1;
+      cur_ray.start.x += (2*(rand() / (double)RAND_MAX)-1)/10;
+      cur_ray.start.y += (2*(rand() / (double)RAND_MAX)-1)/10;
 
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
 
