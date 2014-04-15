@@ -252,14 +252,19 @@ void fileio_readfile(char *fname) {
 
          /* should I subtract the identity matrix to &translate,
             and change the matrix_multiply to matrix add */
-         matrix_make(&transformation,
-                     1.0, 0.0, 0.0, -x,
-                     0.0, 1.0, 0.0, -y,
-                     0.0, 0.0, 1.0, -z,
-                     0.0, 0.0, 0.0, 1.0);
          if(num_objs == 0){ //translate the camera
+            matrix_make(&transformation,
+                        1.0, 0.0, 0.0, x,
+                        0.0, 1.0, 0.0, y,
+                        0.0, 0.0, 1.0, z,
+                        0.0, 0.0, 0.0, 1.0);
             matrix_multiply_left(transformation, &camera.transform);
          } else { //translate the current object
+            matrix_make(&transformation,
+                        1.0, 0.0, 0.0, -x,
+                        0.0, 1.0, 0.0, -y,
+                        0.0, 0.0, 1.0, -z,
+                        0.0, 0.0, 0.0, 1.0);
             matrix_multiply_left(transformation, &object[num_objs-1].transform);
          }
       } /* stretch last defined object (camera or sphere) */
