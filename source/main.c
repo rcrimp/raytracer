@@ -308,8 +308,12 @@ void renderImage(void) {
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
 
+               vector_display(ray.direction);
+               
                //ray.direction = vector_normalise(ray.direction)
-                  ray.direction = (vector_subtract(ray.direction, ray.start));
+               ray.direction = (vector_subtract(ray.direction, ray.start));
+
+               vector_display(ray.direction);
                
                samples[j + i*grid_size] = ray_trace(ray, 10);
             }
