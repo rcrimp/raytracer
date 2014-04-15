@@ -231,7 +231,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
                        SurfaceNormal.z += object[closest_obj].transform.element[2][3],
                        SurfaceNormal.w = 1);*/
          //if (shadow_ray(rename_me, cur_light_pos, closest_obj) == 0 ){
-         if (shadow_ray(SurfaceNormal, light_source[cur_light].position, closest_obj) == 0){
+         if (shadow_ray(rename_me, light_source[cur_light].position, closest_obj) == 0){
          ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
 
             double nl = vector_dot(SurfaceNormal, ToLight);
