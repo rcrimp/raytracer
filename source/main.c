@@ -95,19 +95,19 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    RayDef cur_ray;
    Vector cam_pos;
    
-   ray.direction = vector_normalise(ray.direction);
+   //ray.direction = 
+      cur_ray.start = vector_transform(vector_normalise(ray.direction),     camera.transform);
    
    /* setup */
    closest_obj = -1;
    t = INT_MAX;
    colour = background_colour;
-   
-   for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
 
+   /* for the current ray, find the closest object */
+   for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
       /* transform the ray origin */
-      cur_ray.start     = vector_transform(ray.start,         camera.transform);
-      cur_ray.start     = vector_transform(cur_ray.start,     object[cur_obj].transform);
-
+      //cur_ray.start     = vector_transform(ray.start,         camera.transform);
+      cur_ray.start     = vector_transform(ray.start,     object[cur_obj].transform);
       /* transform the ray direction */
       cur_ray.direction = ray.direction;
       //cur_ray.direction = vector_normalise(cur_ray.direction);
@@ -135,21 +135,19 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       }
    }
 
-   if(closest_obj >= 0){
+   /* if the ray intersects an object, do lighting for the closest */
+   if(closest_obj != -1){
       /* ambient light */
       colour.red   = object[closest_obj].material.ambient_colour.red   * ambient_light.red;
       colour.green = object[closest_obj].material.ambient_colour.green * ambient_light.green;
       colour.blue  = object[closest_obj].material.ambient_colour.blue  * ambient_light.blue;
 
-      /* transform the ray by  */
-      cur_ray.start = vector_transform(ray.start, camera.transform);
-      cur_ray.start = vector_transform(cur_ray.start,     object[closest_obj].transform);
-      
+      /* transform the ray origin to match the camera  */
+      //cur_ray.start = vector_transform(ray.start,     camera.transform);
+      cur_ray.start = vector_transform(ray.start, object[closest_obj].transform);
 
       /* transform the ray by the camera */
-      cur_ray.direction = ray.direction;
-      //cur_ray.direction = vector_normalise(cur_ray.direction);
-      cur_ray.direction = vector_transform(cur_ray.direction, camera.transform);
+      cur_ray.direction = vector_transform(ray.direction, camera.transform);
       
       /* Lighting calculations */
       Vector SurfacePoint = (vector_add(cur_ray.start, vector_scale(cur_ray.direction, t)));
