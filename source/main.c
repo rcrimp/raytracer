@@ -87,10 +87,12 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    return diffuse_colour;
 }
 
+
+
 /* the main ray tracing procedure */
 RGBColour ray_trace(RayDef ray, int recurse_depth) {
    int cur_obj, closest_obj, cur_light, i;   
-   RGBColour colour;
+   RGBColour colour = background_colour;
    double A, B, C, det, t1, t2, t, temp; //quadratic variables
    Vector SurfaceNormal, ToLight, ToCamera;
 
@@ -102,10 +104,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
    
    /* setup */
-   t = INT_MAX;
-   closest_obj = NULL;
-   
-   colour = background_colour;
+   t = DBL_MAX;
+   closest_obj = -1;
 
    /* for the current ray, find the closest object */
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
@@ -138,7 +138,6 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             t = temp;
             closest_obj = cur_obj;
          }
-         
       }
    }
 
@@ -158,6 +157,15 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       //SurfaceNormal = vector_transform(SurfaceNormal, matrix_transpose(object[closest_obj].transform));
 
       ToCamera = vector_normalise(vector_subtract(cur_ray.start, SurfaceNormal));
+
+      //if (reflective & recurse_depth >= 0) {
+      //   reflected_colour = ray_trace( ray(intersection point, reflection vector), n-1);
+      //   colour += reflection_coeff * reflected_colour ;
+      //}
+      //if (refractive & recurse_depth >= 0) {
+      //   refracted_colour = ray_trace( Ray(intersection point, refracted vector), n-1);
+      //   colour += refraction_coeff * refracted_colour ;
+      //}
       
       /* for each light */
       for(cur_light = 0; cur_light < num_lights; cur_light++) {
