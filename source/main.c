@@ -183,8 +183,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             SurfaceNormal.w = 1;
             Vector sta = vector_transform(SurfaceNormal, object[1].transform);
             Vector dir =
-               //ToLight;
-               vector_normalise(vector_subtract(temp_l_pos, sta));
+               ToLight;
+            //vector_normalise(vector_subtract(temp_l_pos, sta));
                //vector_transform(ToLight, object[0].transform);
                //vector_subtract(temp_l_pos, sta);
 
