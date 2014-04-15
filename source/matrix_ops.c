@@ -108,7 +108,7 @@ void matrix_multiply_right(Matrix *A, Matrix B){
    printf("start mops\n");
    matrix_display(temp);
    matrix_display(*A);
-   A = &temp;
+   *A = temp;
    matrix_display(*A);
    printf("end\n");
 }
