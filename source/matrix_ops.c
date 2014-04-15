@@ -96,15 +96,16 @@ void matrix_scale(Matrix *m, double s){
 void matrix_multiply_right(Matrix *A, Matrix B){
    /* store B*A into A */
    int row, col;   
-   
+   for (row = 0; row < MATRIX_SIZE; row++) {
       for (col = 0; col < MATRIX_SIZE; col++) {
-         for (row = 0; row < MATRIX_SIZE; row++) {
          A->element[row][col] =
             B.element[row][0] * A->element[0][col] +
             B.element[row][1] * A->element[1][col] +
             B.element[row][2] * A->element[2][col] +
             B.element[row][3] * A->element[3][col];
+         printf("[%d][%d] ", row, col);
       }
+      printf("\n");
    }
 }
 
