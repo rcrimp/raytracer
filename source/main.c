@@ -282,7 +282,7 @@ void renderImage(void) {
    ray.start = vector_new(0,0,0,1);
    
    /* create the direction of the primary ray */
-   ray.direction = vector_new(0,0,-camera.lens,0);
+   ray.direction = vector_new(0,0,0,0);
       
    /* super samples */
    int i, j, grid_size;
@@ -307,14 +307,17 @@ void renderImage(void) {
                
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
-
-               printf("\n\n");
-               vector_display(ray.direction);
+               ray.direction.z = -camera.lens;
+               ray.direction.w = 0;
+               
+               
+               //printf("\n\n");
+               //vector_display(ray.direction);
                
                //ray.direction = vector_normalise(ray.direction)
                ray.direction = (vector_subtract(ray.direction, ray.start));
 
-               vector_display(ray.direction);
+               //vector_display(ray.direction);
                
                samples[j + i*grid_size] = ray_trace(ray, 10);
             }
