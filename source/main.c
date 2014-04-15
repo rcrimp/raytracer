@@ -110,19 +110,22 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       cur_ray.start     = vector_transform(ray.start,     object[cur_obj].transform);
       /* transform the ray direction */
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
+      cur_ray.direction = vector_normalise(cur_ray.direction);
+
+      /* quadratic representation of the line-sphere intersection */
+      A =     vector_dot(cur_ray.direction, cur_ray.direction);  /* v.v */
+      B = 2 * vector_dot(cur_ray.direction, cur_ray.start);      /* 2 * u.v */
+      C =     vector_dot(cur_ray.start,     cur_ray.start) - 1;  /* u.u -r */
+      det = (B*B) - (4*A*C); /* determinant */
       
-      A = vector_dot(cur_ray.direction, cur_ray.direction);/* v.v */
-      B = 2 * vector_dot(cur_ray.direction, cur_ray.start );/* 2 * u.v */
-      C = vector_dot(cur_ray.start, cur_ray.start) - 1; /* u.u -r */
-      det = (B*B) - (4*A*C);
-      if (det > 0) { /* if ray collides with the sphere */
+      if (det > 0) { /* if ray collides with the sphere, find the distance (t) to the object */
          if ( B > 0 )
             t1 = (-B - sqrt(det)) / 2*A;
          else
             t1 = (-B + sqrt(det)) / 2*A;
-         
          t2 = C / (A*t1);
 
+         /* if the current object is closer than any prior objects, then set it as the closest */
          temp = min(t1,t2);
          if(temp < t){
             t = temp;
