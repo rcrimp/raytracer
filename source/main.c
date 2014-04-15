@@ -171,7 +171,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
          
          for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
-            //if (cur_obj == closest_obj) break;
+            if (cur_obj == closest_obj) break;
             
             Vector temp_l_pos = vector_transform(cur_light_pos, object[cur_obj].transform);
                
