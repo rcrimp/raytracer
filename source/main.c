@@ -305,9 +305,10 @@ void renderImage(void) {
                ray.start.x = (2*(rand() / (double)RAND_MAX)-1)/5;
                ray.start.y = (2*(rand() / (double)RAND_MAX)-1)/5;
                
-               ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size) - ray.start.x;
-               ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size) - ray.start.y;
-
+               ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
+               ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
+               ray.direction = vector_subtract(ray.direction, ray.start);
+               
                samples[j + i*grid_size] = ray_trace(ray, 10);
             }
          }
