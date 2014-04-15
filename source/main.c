@@ -177,7 +177,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             
                
             Vector sta = vector_transform(SurfaceNormal, object[cur_obj].transform);
-            Vector dir = vector_transform(ToLight, object[cur_obj].transform);
+            Vector dir = ToLight;//vector_transform(ToLight, object[cur_obj].transform);
 
             /* ensure ToLight vector doesn't intersect with any other objects */
             A =     vector_dot(dir, dir);  /* v.v */
