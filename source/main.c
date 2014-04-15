@@ -63,7 +63,7 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
       break; 
    case 1: /* checkerboard -- scale original colour */
       /* condition below is Boolean exclusive or */
-      if(((int)(sv+90) % 40 < 20))
+      if(((int)(sv+90) % 40 < 20) == (((int)su+10) % 40 < 20))
          diffuse_colour = colour_scale(0.2,diffuse_colour);
       break;
    case 2: /* noise -- scale original colour */
@@ -77,8 +77,9 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
       diffuse_colour = colour_scale(0.8+0.2*sin(2*su/M_PI),diffuse_colour);
       break;
    case 4: /* rings -- overwrite r+b colour */
-      diffuse_colour.red = (0.5+sin(2*cu/M_PI))/2;
-      diffuse_colour.blue = (0.5+sin(2*cv/M_PI))/2;
+      diffuse_colour.red = cu;
+      //diffuse_colour.red = (0.5+sin(2*cu/M_PI))/2;
+      //diffuse_colour.blue = (0.5+sin(2*cv/M_PI))/2;
    }	
    return diffuse_colour;
 }
