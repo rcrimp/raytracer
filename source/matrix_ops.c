@@ -105,7 +105,11 @@ void matrix_multiply_right(Matrix *A, Matrix B){
             B.element[row][3] * A->element[3][col];
       }
    }
+   printf("mops\n");
+   matrix_display(temp);
    A = &temp;
+   matrix_display(*A);
+   printf("mops\n");
 }
 
 void matrix_multiply_left(Matrix *A, Matrix B){
