@@ -98,7 +98,7 @@ Vector vector_transform(Matrix m, Vector v){
    result.x = m.element[0][0]*v.x + m.element[0][1]*v.y + m.element[0][2]*v.z + m.element[0][3]*v.w;
    result.y = m.element[1][0]*v.x + m.element[1][1]*v.y + m.element[1][2]*v.z + m.element[1][3]*v.w;
    result.z = m.element[2][0]*v.x + m.element[2][1]*v.y + m.element[2][2]*v.z + m.element[2][3]*v.w;
-   result.w = m.element[3][0]*v.x + m.element[3][1]*v.y + m.element[3][2]*v.z + m.element[3][3]*v.w;
+   result.w = /*m.element[3][0]*v.x + m.element[3][1]*v.y + m.element[3][2]*v.z +*/ m.element[3][3]*v.w;
    return result;
 }
 
