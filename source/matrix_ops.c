@@ -93,26 +93,13 @@ void matrix_multiply_right(Matrix *A, Matrix B){
    /* store A*B into A */
    
    for(row = 0; row < MATRIX_SIZE; row++){
-      A->element[row][0] =
-         A->element[row][0] * B.element[0][0] +
-         A->element[row][1] * B.element[1][0] +
-         A->element[row][2] * B.element[2][0] +
-         A->element[row][3] * B.element[3][0];
-      A->element[row][1] =
-         A->element[row][0] * B.element[0][1] +
-         A->element[row][1] * B.element[1][1] +
-         A->element[row][2] * B.element[2][1] +
-         A->element[0][3] * B.element[3][1];
-      A->element[row][2] =
-         A->element[row][0] * B.element[0][2] +
-         A->element[row][1] * B.element[1][2] +
-         A->element[row][2] * B.element[2][2] +
-         A->element[row][3] * B.element[3][2];
-      A->element[row][3] =
-         A->element[row][0] * B.element[0][3] +
-         A->element[row][1] * B.element[1][3] +
-         A->element[row][2] * B.element[2][3] +
-         A->element[row][3] * B.element[3][3];
+      for(col = 0; col < MATRIX_SIZE; col++){
+      A->element[row][col] =
+         A->element[row][0] * B.element[0][col] +
+         A->element[row][1] * B.element[1][col] +
+         A->element[row][2] * B.element[2][col] +
+         A->element[row][3] * B.element[3][col];
+      }
    }
 
    /*for (row = 0; row < MATRIX_SIZE; row++) { // for each row of m
@@ -125,6 +112,29 @@ void matrix_multiply_right(Matrix *A, Matrix B){
       }
       }*/
 
+   /*    for(row = 0; row < MATRIX_SIZE; row++){
+         A->element[row][0] =
+         A->element[row][0] * B.element[0][0] +
+         A->element[row][1] * B.element[1][0] +
+         A->element[row][2] * B.element[2][0] +
+         A->element[row][3] * B.element[3][0];
+         A->element[row][1] =
+         A->element[row][0] * B.element[0][1] +
+         A->element[row][1] * B.element[1][1] +
+         A->element[row][2] * B.element[2][1] +
+         A->element[0][3] * B.element[3][1];
+         A->element[row][2] =
+         A->element[row][0] * B.element[0][2] +
+         A->element[row][1] * B.element[1][2] +
+         A->element[row][2] * B.element[2][2] +
+         A->element[row][3] * B.element[3][2];
+         A->element[row][3] =
+         A->element[row][0] * B.element[0][3] +
+         A->element[row][1] * B.element[1][3] +
+         A->element[row][2] * B.element[2][3] +
+         A->element[row][3] * B.element[3][3];
+         } */
+   
    //for row 0
    /*A->element[0][0] =
       A->element[0][0] * B.element[0][0] +
@@ -208,7 +218,7 @@ void matrix_multiply_right(Matrix *A, Matrix B){
       A->element[3][0] * B.element[0][3] +
       A->element[3][1] * B.element[1][3] +
       A->element[3][2] * B.element[2][3] +
-      A->element[3][3] * B.element[3][3];*/  
+      A->element[3][3] * B.element[3][3]; */ 
 }
 
 void matrix_multiply_left(Matrix B, Matrix *A){
