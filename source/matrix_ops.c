@@ -96,6 +96,7 @@ void matrix_scale(Matrix *m, double s){
 void matrix_multiply_right(Matrix *A, Matrix B){
    Matrix temp;
    int row, col;   
+   /* store A*B into A */
    for (row = 0; row < MATRIX_SIZE; row++) {
       for (col = 0; col < MATRIX_SIZE; col++) {
          temp.element[row][col] =
@@ -105,15 +106,12 @@ void matrix_multiply_right(Matrix *A, Matrix B){
             B.element[row][3] * A->element[3][col];
       }
    }
-   *A = temp;
+   A = &temp;
 }
-
 void matrix_multiply_left(Matrix *A, Matrix B){
    Matrix temp;
    int row, col;
-
    /* store A*B into A */
-   
    for(row = 0; row < MATRIX_SIZE; row++){
       for(col = 0; col < MATRIX_SIZE; col++){
       temp.element[row][col] =
@@ -124,101 +122,6 @@ void matrix_multiply_left(Matrix *A, Matrix B){
       }
    }
    *A = temp;
-
-   /*for (row = 0; row < MATRIX_SIZE; row++) { // for each row of m
-      for (col = 0; col < MATRIX_SIZE; col++) { // for each column of n
-         A->element[row][col] =
-            A->element[0][row] * B.element[col][0] +
-            A->element[1][row] * B.element[col][1] +
-            A->element[2][row] * B.element[col][2] +
-            A->element[3][row] * B.element[col][3];
-      }
-      }*/
-   
-   //for row 0
-   /*A->element[0][0] =
-      A->element[0][0] * B.element[0][0] +
-      A->element[0][1] * B.element[1][0] +
-      A->element[0][2] * B.element[2][0] +
-      A->element[0][3] * B.element[3][0];
-   A->element[0][1] =
-      A->element[0][0] * B.element[0][1] +
-      A->element[0][1] * B.element[1][1] +
-      A->element[0][2] * B.element[2][1] +
-      A->element[0][3] * B.element[3][1];
-   A->element[0][2] =
-      A->element[0][0] * B.element[0][2] +
-      A->element[0][1] * B.element[1][2] +
-      A->element[0][2] * B.element[2][2] +
-      A->element[0][3] * B.element[3][2];
-   A->element[0][3] =
-      A->element[0][0] * B.element[0][3] +
-      A->element[0][1] * B.element[1][3] +
-      A->element[0][2] * B.element[2][3] +
-      A->element[0][3] * B.element[3][3];
-   //for row 1
-   A->element[1][0] =
-      A->element[1][0] * B.element[0][0] +
-      A->element[1][1] * B.element[1][0] +
-      A->element[1][2] * B.element[2][0] +
-      A->element[1][3] * B.element[3][0];
-   A->element[1][1] =
-      A->element[1][0] * B.element[0][1] +
-      A->element[1][1] * B.element[1][1] +
-      A->element[1][2] * B.element[2][1] +
-      A->element[1][3] * B.element[3][1];
-   A->element[1][2] =
-      A->element[1][0] * B.element[0][2] +
-      A->element[1][1] * B.element[1][2] +
-      A->element[1][2] * B.element[2][2] +
-      A->element[1][3] * B.element[3][2];
-   A->element[1][3] =
-      A->element[1][0] * B.element[0][3] +
-      A->element[1][1] * B.element[1][3] +
-      A->element[1][2] * B.element[2][3] +
-      A->element[1][3] * B.element[3][3];
-   //for row 2
-   A->element[2][0] =
-      A->element[2][0] * B.element[0][0] +
-      A->element[2][1] * B.element[1][0] +
-      A->element[2][2] * B.element[2][0] +
-      A->element[2][3] * B.element[3][0];
-   A->element[2][1] =
-      A->element[2][0] * B.element[0][1] +
-      A->element[2][1] * B.element[1][1] +
-      A->element[2][2] * B.element[2][1] +
-      A->element[2][3] * B.element[3][1];
-   A->element[2][2] =
-      A->element[2][0] * B.element[0][2] +
-      A->element[2][1] * B.element[1][2] +
-      A->element[2][2] * B.element[2][2] +
-      A->element[2][3] * B.element[3][2];
-   A->element[2][3] =
-      A->element[2][0] * B.element[0][3] +
-      A->element[2][1] * B.element[1][3] +
-      A->element[2][2] * B.element[2][3] +
-      A->element[2][3] * B.element[3][3];
-   //for row 3
-   A->element[3][0] =
-      A->element[3][0] * B.element[0][0] +
-      A->element[3][1] * B.element[1][0] +
-      A->element[3][2] * B.element[2][0] +
-      A->element[3][3] * B.element[3][0];
-   A->element[3][1] =
-      A->element[3][0] * B.element[0][1] +
-      A->element[3][1] * B.element[1][1] +
-      A->element[3][2] * B.element[2][1] +
-      A->element[3][3] * B.element[3][1];
-   A->element[3][2] =
-      A->element[3][0] * B.element[0][2] +
-      A->element[3][1] * B.element[1][2] +
-      A->element[3][2] * B.element[2][2] +
-      A->element[3][3] * B.element[3][2];
-   A->element[3][3] =
-      A->element[3][0] * B.element[0][3] +
-      A->element[3][1] * B.element[1][3] +
-      A->element[3][2] * B.element[2][3] +
-      A->element[3][3] * B.element[3][3]; */ 
 }
 
 Matrix matrix_transpose(Matrix m){
