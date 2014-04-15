@@ -58,6 +58,7 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    double su = acos(surface_point.x/tmp)/M_PI*180.0;
    double sv = atan(surface_point.y/tmp)/M_PI*180.0;
 
+   printf("%3.1f\n", abs(cv - sv));
    if(abs(cv - sv) > 0.001 )
       printf("different\n"); /* it seems cv = sv */
    
