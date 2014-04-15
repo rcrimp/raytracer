@@ -122,7 +122,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          double re = vector_dot(r, e);
 
          re = max(0, re);
-         re = pow(re, object[i].material.phong);
+         re = pow(re, 1);//object[i].material.phong);
 
          /* vector_display(e);
             printf("\n");*/
