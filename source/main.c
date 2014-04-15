@@ -131,8 +131,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             t1 = (-B + sqrt(det)) / 2*A;
          t2 = C / (A*t1);
 
-         t1 *= 1/vector_length(cur_ray.direction);
-         t2 *= 1/vector_length(cur_ray.direction);
+         //t1 *= 1/vector_length(cur_ray.direction);
+         //t2 *= 1/vector_length(cur_ray.direction);
          
          /* if the current object is closer than any prior objects, then set it as the closest */
          temp = min(t1,t2);
@@ -159,8 +159,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       
       /* Lighting calculations */
       Vector SurfacePoint = (vector_add(cur_ray.start, vector_scale(cur_ray.direction, t)));
-      //SurfaceNormal = SurfacePoint;
-      SurfaceNormal = vector_transform(SurfacePoint, matrix_transpose(object[closest_obj].transform));
+      SurfaceNormal = SurfacePoint;
+      //SurfaceNormal = vector_transform(SurfacePoint, matrix_transpose(object[closest_obj].transform));
       ToCamera = vector_scale(cur_ray.direction, -1);
          //vector_normalise(vector_subtract(cur_ray.start, SurfacePoint));
       
