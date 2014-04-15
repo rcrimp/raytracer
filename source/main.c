@@ -111,7 +111,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
       cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
-      double trnl = vector_length(cur_ray.direction);
+
+      temp = vector_length(cur_ray.direction);
+
       cur_ray.direction = vector_normalise(cur_ray.direction);
 
       /* quadratic representation of the line-sphere intersection */
@@ -127,8 +129,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             t1 = (-B + sqrt(det)) / 2*A;
          t2 = C / (A*t1);
 
-         t1 /= trnl;
-         t2 /= trnl;
+         t1 /= temp;
+         t2 /= temp;
          
          /* if the current object is closer than any prior objects, then set it as the closest */
          temp = min(t1,t2);
@@ -179,9 +181,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 #define light_col light_source[cur_light].colour
          
          RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
-         //colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
-         //colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
-         //colour.blue  += light_col.blue  * ( texc.blue  * nl + obj_spec.blue  * rv);
+         colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
+         colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
+         colour.blue  += light_col.blue  * ( texc.blue  * nl + obj_spec.blue  * rv);
 
 #undef obj_diff
 #undef obj_spec
