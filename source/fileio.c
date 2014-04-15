@@ -265,7 +265,7 @@ void fileio_readfile(char *fname) {
                         0.0, 1.0, 0.0, -y,
                         0.0, 0.0, 1.0, -z,
                         0.0, 0.0, 0.0, 1.0);
-            matrix_multiply_left(&object[num_objs-1].transform,transformation);
+            matrix_multiply_left(&object[num_objs-1].transform, transformation);
          }
       } /* stretch last defined object (camera or sphere) */
       else if (!strcmp(descriptor, "stretch")) {
