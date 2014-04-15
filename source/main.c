@@ -169,7 +169,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          A =     vector_dot(ToLight, ToLight);  /* v.v */
          B = 2 * vector_dot(ToLight, cur_ray.start);      /* 2 * u.v */
          C =     vector_dot(SurfaceNormal,     SurfaceNormal) - 1;  /* u.u -r */
-         if ((B*B) - (4*A*C) > 0) /* determinant */
+         if ((B*B) - (4*A*C) < 0) /* determinant */
             return colour;
             
          double nl = vector_dot(SurfaceNormal, ToLight);
