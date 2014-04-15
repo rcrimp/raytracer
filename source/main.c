@@ -173,11 +173,11 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
             if (cur_obj == closest_obj) break;
             
-            //Vector temp_l_pos = vector_transform(cur_light_pos, object[cur_obj].transform);
+            Vector temp_l_pos = vector_transform(cur_light_pos, object[cur_obj].transform);
             
                
             Vector sta = vector_transform(SurfaceNormal, object[cur_obj].transform);
-            Vector dir = ToLight;//vector_transform(ToLight, object[cur_obj].transform);
+            Vector dir = /*ToLight;*/vector_transform(ToLight, object[cur_obj].transform);
 
             /* ensure ToLight vector doesn't intersect with any other objects */
             A =     vector_dot(dir, dir);  /* v.v */
