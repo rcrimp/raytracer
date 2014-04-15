@@ -15,10 +15,6 @@
 
 /*
  * this a record structure that contains a 4D vector (x, y, z, w).
- *
- * Note - if w == 1 then it represents a point.
- *        if w == 0 then it represents a vector.
- *
  *   typedef struct _Vector {
  *      double x, y, z, w;
  *   } Vector;
