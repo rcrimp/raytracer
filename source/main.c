@@ -302,8 +302,8 @@ void renderImage(void) {
                
                ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
-               //ray.start.x = (2*(rand() / (double)RAND_MAX)-1)/6;
-               //ray.start.y = (2*(rand() / (double)RAND_MAX)-1)/6;
+               ray.start.x = (2*(rand() / (double)RAND_MAX)-1)/6;
+               ray.start.y = (2*(rand() / (double)RAND_MAX)-1)/6;
                samples[j + i*grid_size] = ray_trace(ray, 10);
             }
          }
