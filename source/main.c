@@ -59,8 +59,8 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    double sv = atan(surface_point.y/tmp)/M_PI*180.0;
 
    //printf("%3.20f\n", sv-cv);
-   if(abs(cv - sv) > 0.0000000001 )
-      printf("different\n"); /* it seems cv = sv */
+   //if(abs(cv - sv) > 0.0000000001 )
+   //printf("different\n"); /* it seems cv = sv */
    
    switch(texture){
    case 0: /* default: don't change diffuse colour at all */
