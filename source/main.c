@@ -220,7 +220,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          cur_light_pos = vector_transform(light_source[cur_light].position, object[closest_obj].transform);
 
          Vector rename_me =
-            vector_transform(SurfaceNormal, object[closest_obj].transform);
+            SurfaceNormal;
+            //vector_transform(SurfaceNormal, object[closest_obj].transform);
             /*vector_new(
                        SurfaceNormal.x += object[closest_obj].transform.element[0][3],
                        SurfaceNormal.y += object[closest_obj].transform.element[1][3],
