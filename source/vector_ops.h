@@ -12,30 +12,24 @@
 
 /*
  * this a record structure that contains a 4D vector (x, y, z, w).
- *
- * Note - if w == 1 then it represents a point.
- *        if w == 0 then it represents a vector.
- *
  */
 
 typedef struct Vector {
    double x, y, z, w;
 } Vector;
 
-
 /* ---- FUNCTION HEADERS --------------------------------------------------- */
 
-Vector vector_new(double x, double y, double z, double w);
-Vector vector_subtract(Vector a, Vector b);
-Vector vector_add(Vector a, Vector b);
-Vector vector_scale(Vector a, double s);
-double vector_dot(Vector a, Vector b);
-Vector vector_cross(Vector a, Vector b);
-double vector_length(Vector a);
-Vector vector_normalise(Vector a);
-Vector vector_transform(Matrix m, Vector v);
-Vector vector_transform_inv(Matrix m, Vector v);
-void vector_display(Vector v);
+Vector vector_new       (double x, double y, double z, double w);
+Vector vector_subtract  (Vector v, Vector u);
+Vector vector_add       (Vector v, Vector u);
+Vector vector_scale     (Vector v, double s);
+double vector_dot       (Vector v, Vector u);
+Vector vector_cross     (Vector v, Vector u);
+double vector_length    (Vector v);
+Vector vector_normalise (Vector v);
+Vector vector_transform (Vector v, Matrix m);
+void   vector_display   (Vector v);
 
 #endif /* _VECTOR_OPS_H_ */
 

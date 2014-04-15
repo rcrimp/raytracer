@@ -104,10 +104,11 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    //ray.direction = vector_normalise(ray.direction);
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
-      cur_ray.start     = vector_transform(camera.transform,          ray.start);
-      cur_ray.start     = vector_transform(object[cur_obj].transform, cur_ray.start);
-      cur_ray.direction = vector_transform(camera.transform, ray.direction);
-      cur_ray.direction = vector_transform(object[cur_obj].transform, cur_ray.direction);
+      cur_ray.start     = vector_transform(ray.start,         camera.transform);
+      cur_ray.start     = vector_transform(cur_ray.start,     object[cur_obj].transform);
+      
+      cur_ray.direction = vector_transform(ray.direction,     camera.transform);
+      cur_ray.direction = vector_transform(cur_ray.direction, object[cur_obj].transform);
       
       A = vector_dot(cur_ray.direction, cur_ray.direction);/* v.v */
       B = 2 * vector_dot(cur_ray.direction, cur_ray.start );/* 2 * u.v */
@@ -137,13 +138,12 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       colour.blue  = object[closest_obj].material.ambient_colour.blue  * ambient_light.blue;
       /* transform the ray by object */
       
-      cur_ray.start = vector_transform(object[closest_obj].transform, ray.start);
-
-      cur_ray.start = vector_transform(camera.transform, cur_ray.start);
+      cur_ray.start = vector_transform(ray.start,     object[closest_obj].transform);
+      cur_ray.start = vector_transform(cur_ray.start, camera.transform);
 
       /* transform the ray by the camera */
-      cur_ray.direction = vector_normalise(ray.direction);
-      cur_ray.direction = vector_transform(camera.transform, cur_ray.direction);
+      //cur_ray.direction = vector_normalise(ray.direction);
+      cur_ray.direction = vector_transform(ray.direction, camera.transform);
       
       
       /* Lighting calculations */
@@ -153,7 +153,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       
       /* for each light */
       for(cur_light = 0; cur_light < num_lights; cur_light++) {
-         cur_light_pos = vector_transform(object[closest_obj].transform, light_source[cur_light].position);
+         cur_light_pos = vector_transform(light_source[cur_light].position, object[closest_obj].transform);
          ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
          
          double nl = vector_dot(SurfaceNormal, ToLight);

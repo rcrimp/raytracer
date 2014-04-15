@@ -76,7 +76,7 @@ double vector_length(Vector a){
 Vector vector_normalise(Vector a){
    return vector_scale(a, 1/ vector_length(a) );
 }
-Vector vector_transform(Matrix m, Vector v){
+Vector vector_transform(Vector v, Matrix m){
    Vector result;
 
    /*Vector r1 = vector_new(m.element[0][0], m.element[0][1], m.element[0][2], m.element[0][3]);
