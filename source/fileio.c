@@ -303,7 +303,7 @@ void fileio_readfile(char *fname) {
          if( num_objs != 0)
             angle *= -(M_PI/180);
          else
-            angle *= (M_PI/180);
+            angle *= -(M_PI/180);
          
          switch(axis){
          case 'x':
