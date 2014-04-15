@@ -113,7 +113,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       //cur_ray.direction = vector_normalise(cur_ray.direction);
 
       double temprd_l = vector_length(cur_ray.direction);
-      cur_ray.direction = vector_scale(cur_ray.direction, temprd_l);
+      cur_ray.direction = vector_scale(cur_ray.direction, 1/temprd_l);
 
       /* quadratic representation of the line-sphere intersection */
       A =     vector_dot(cur_ray.direction, cur_ray.direction);  /* v.v */
