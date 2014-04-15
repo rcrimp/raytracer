@@ -154,7 +154,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       
       /* Lighting calculations */
       SurfaceNormal = (vector_add(cur_ray.start, vector_scale(cur_ray.direction, t)));
-      SurfaceNormal.w = 1;
+      vector_display(SurfaceNormal);
       //SurfaceNormal = SurfaceNormal;
       //SurfaceNormal = vector_transform(SurfaceNormal, matrix_transpose(object[closest_obj].transform));
 
