@@ -7,7 +7,7 @@ imagesize     320
 background    0.050 0.250 0.400
 
 # The ambient lighting of the scene
-ambient       0.000 0.000 0.000
+ambient       1 1 1
 
 # the default camera is located at the origin
 # the default viewplane has corners
