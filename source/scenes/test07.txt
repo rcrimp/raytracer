@@ -83,8 +83,8 @@ translate  1.500 -1.500 -6.000
 
 # Exported Object : "Sphere.003" 
 sphere
-ambient   0.800 0.169 0.795
-diffuse   0.800 0.169 0.795
+ambient   0.000 0.169 0.795
+diffuse   0.000 0.169 0.795
 specular  1.000 1.000 1.000  50.000
 mirror    0.000 0.000 0.000
 texture   0
