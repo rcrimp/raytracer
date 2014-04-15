@@ -135,6 +135,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
    if(closest_obj >= 0){
       /* ambient light */
+      colour.red = colour.green = colour.blue = 0;
       //colour.red   = object[closest_obj].material.ambient_colour.red   * ambient_light.red;
       //colour.green = object[closest_obj].material.ambient_colour.green * ambient_light.green;
       //colour.blue  = object[closest_obj].material.ambient_colour.blue  * ambient_light.blue;
