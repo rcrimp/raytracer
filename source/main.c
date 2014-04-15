@@ -108,7 +108,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
          Vector l = vector_subtract(light_source[i].position, hitPoint);
          l = vector_normalise(l);
-         double nl = vector_dot(normal, l);
+         double nl = max(0, vector_dot(normal, l));
         
          Vector e = vector_subtract(ray.start, hitPoint);
          e = vector_normalise(e);
@@ -120,9 +120,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          r = vector_normalise(r);
          
          double re = vector_dot(r, e);
-                   
-         /*phong's constant*/
-         double n = object[i].material.phong;
+
+         re = max(0, re);
+         re = pow(re, object[i].material.phong);
 
          /* vector_display(e);
             printf("\n");*/
@@ -135,19 +135,19 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             * object[i].material.ambient_colour.red
             + light_source[0].colour.red
             * ((object[i].material.diffuse_colour.red *  nl)
-               + (object[i].material.specular_colour.red * pow(re, n)));
+               + (object[i].material.specular_colour.red * re));
 
          colour.green = (ambient_light.green
                          * object[i].material.ambient_colour.green)
             +  light_source[0].colour.green 
             * ((object[i].material.diffuse_colour.green *  nl)
-               + (object[i].material.specular_colour.green * pow(re, n)));
+               + (object[i].material.specular_colour.green * re));
          
          colour.blue = (ambient_light.blue
                         * object[i].material.ambient_colour.blue)
             +  light_source[0].colour.blue
             * ((object[i].material.diffuse_colour.blue *  nl)
-               + (object[i].material.specular_colour.blue * pow(re, n)));
+               + (object[i].material.specular_colour.blue * re));
 
          /*moves the light source back to original position view*/
          /*colour.red = light_source[ind].position.z - t;
