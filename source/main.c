@@ -178,7 +178,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
               cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
              */
          if(closest_obj == 1){  
-            Vector temp_l_pos = vector_transform(cur_light_pos, object[0].transform);
+            Vector temp_l_pos = vector_transform(light_source[cur_light].position, object[0].transform);
                
             Vector sta = vector_transform(SurfaceNormal, object[0].transform);
             Vector dir =
