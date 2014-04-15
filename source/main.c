@@ -90,9 +90,12 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    Vector obj_translation;
    double A, B, C, det, t1, t2, t, temp; //quadratic variables
    Vector SurfaceNormal, ToLight, ToCamera;
-   Vector cur_ray_start;
-   Vector cur_ray_dir;
    Vector cur_light_pos;
+
+   RayDef cur_ray;
+
+   cur_ray.start = ray.start;
+   cur_ray.direction = vector_normalise(ray.direction);
    
    /* setup */
    closest_obj = -1;
@@ -101,13 +104,13 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    //ray.direction = vector_normalise(ray.direction);
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
-      cur_ray_start = vector_transform(object[cur_obj].transform, ray.start);
+      cur_ray.start = vector_transform(object[cur_obj].transform, ray.start);
       
-      cur_ray_dir = (vector_transform(object[cur_obj].transform, vector_normalise(ray.direction)));
+      cur_ray.direction = (vector_transform(object[cur_obj].transform, vector_normalise(ray.direction)));
       
-      A = vector_dot(cur_ray_dir, cur_ray_dir);/* v.v */
-      B = 2 * vector_dot(cur_ray_dir, cur_ray_start );/* 2 * u.v */
-      C = vector_dot(cur_ray_start, cur_ray_start) - 1; /* u.u -r */
+      A = vector_dot(cur_ray.direction, cur_ray.direction);/* v.v */
+      B = 2 * vector_dot(cur_ray.direction, cur_ray.start );/* 2 * u.v */
+      C = vector_dot(cur_ray.start, cur_ray.start) - 1; /* u.u -r */
       det = (B*B) - (4*A*C);
       if (det > 0) { /* if ray collides with the sphere */
          if ( B > 0 )
@@ -133,19 +136,19 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       colour.blue  = object[closest_obj].material.ambient_colour.blue  * ambient_light.blue;
       /* transform the ray by object */
       
-      cur_ray_start = vector_transform(object[closest_obj].transform, ray.start);
+      cur_ray.start = vector_transform(object[closest_obj].transform, ray.start);
 
-      cur_ray_start = vector_transform(camera.transform, cur_ray_start);
+      cur_ray.start = vector_transform(camera.transform, cur_ray.start);
 
       /* transform the ray by the camera */
-      cur_ray_dir = vector_normalise(ray.direction);
-      cur_ray_dir = vector_transform(camera.transform, cur_ray_dir);
+      cur_ray.direction = vector_normalise(ray.direction);
+      cur_ray.direction = vector_transform(camera.transform, cur_ray.direction);
       
       
       /* Lighting calculations */
-      SurfaceNormal = (vector_add(cur_ray_start, vector_scale(cur_ray_dir, t)));
+      SurfaceNormal = (vector_add(cur_ray.start, vector_scale(cur_ray.direction, t)));
       //SurfaceNormal = vector_transform( matrix_transpose(object[closest_obj].transform) , SurfaceNormal);
-      ToCamera = vector_scale(cur_ray_dir, -1);//vector_normalise(vector_subtract(cur_ray_start, SurfaceNormal));
+      ToCamera = vector_scale(cur_ray.direction, -1);//vector_normalise(vector_subtract(cur_ray.start, SurfaceNormal));
       
       /* for each light */
       for(cur_light = 0; cur_light < num_lights; cur_light++) {
