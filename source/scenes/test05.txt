@@ -37,7 +37,7 @@ diffuse   0.000 0.010 0.800
 specular  1.000 1.000 1.000  20.000
 mirror    0.000 0.000 0.000
 texture   0
-translate  0.000 0.000 1.000
+translate  0.000 0.000 -1.266
 
 # Exported Object : "Sphere" 
 sphere
