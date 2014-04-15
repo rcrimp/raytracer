@@ -301,7 +301,9 @@ void fileio_readfile(char *fname) {
 
          //angle to rads
          angle = angle*(3.1415926535/180);
-         
+         if( num_objs == 0) {
+            angle = -angle;
+         }
          switch(axis){
          case 'x':
             matrix_make(&transformation,
