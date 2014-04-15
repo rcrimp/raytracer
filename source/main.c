@@ -263,7 +263,8 @@ void renderImage(void) {
    FILE  *picfile;
    double pixel_size;
    RGBColour samples[SUPER_SAMPLES];
-
+   double px, py;
+   
    /* avoid redrawing it if the window is obscured */
    static bool alreadyDrawn = false;
    if (alreadyDrawn) return;
@@ -306,19 +307,13 @@ void renderImage(void) {
                ray.start.x = FOV_r * sin(FOV_theta);//(2*(rand() / (double)RAND_MAX)-1);
                ray.start.y = FOV_r * cos(FOV_theta);//(2*(rand() / (double)RAND_MAX)-1);
                
-               ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
-               ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
+               px = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
+               py = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
+
+
+               ray.direction = (vector_subtract(vector_new(px, py, -camera.lens, 0), ray.start));
                ray.direction.z = -camera.lens;
                ray.direction.w = 0;
-               
-               
-               //printf("\n\n");
-               //vector_display(ray.direction);
-               
-               //ray.direction = vector_normalise(ray.direction)
-               ray.direction = (vector_subtract(ray.direction, ray.start));
-
-               //vector_display(ray.direction);
                
                samples[j + i*grid_size] = ray_trace(ray, 10);
             }
