@@ -105,12 +105,12 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){ //for each object
 
-      double angle = 45 * (M_PI/180);
+      /*double angle = 45 * (M_PI/180);
       matrix_make(&camera.transform,
                   cos(angle) , sin(angle), 0.0, 0.0,
                   -sin(angle), cos(angle), 0.0, 0.0,
                   0.0        , 0.0       , 1.0, 0.0,
-                  0.0        , 0.0       , 0.0, 1.0);
+                  0.0        , 0.0       , 0.0, 1.0);*/
 
       cur_ray.start     = vector_transform(ray.start,         camera.transform);
       cur_ray.start     = vector_transform(cur_ray.start,     object[cur_obj].transform);
