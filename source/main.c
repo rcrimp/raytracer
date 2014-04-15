@@ -102,8 +102,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
    
    /* setup */
-   closest_obj = -1;
    t = INT_MAX;
+   closest_obj = NULL;
+   
    colour = background_colour;
 
    /* for the current ray, find the closest object */
