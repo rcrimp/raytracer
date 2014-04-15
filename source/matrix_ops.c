@@ -87,16 +87,18 @@ void matrix_scale(Matrix *m, double s){
    }
 }
 
-void matrix_multiply_right(Matrix *m, Matrix n){
+void matrix_multiply_right(Matrix *A, Matrix B){
    int row, col;
 
+   /* store A*B into A */
+   
    for (row = 0; row < MATRIX_SIZE; row++) { // for each row of m
       for (col = 0; col < MATRIX_SIZE; col++) { // for each column of n
-         m->element[row][col] =
-            m->element[0][row] * n.element[col][0] +
-            m->element[1][row] * n.element[col][1] +
-            m->element[2][row] * n.element[col][2] +
-            m->element[3][row] * n.element[col][3];
+         A->element[row][col] =
+            A->element[0][row] * B.element[col][0] +
+            A->element[1][row] * B.element[col][1] +
+            A->element[2][row] * B.element[col][2] +
+            A->element[3][row] * B.element[col][3];
       }
    }
 }
