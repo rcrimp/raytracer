@@ -173,7 +173,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
          /* range: 0-1 */
          nl = max(0, nl);
-         rv = pow( max(0, rv) , object[closest_obj].material.phong);
+         rv = pow( min(0, rv) , object[closest_obj].material.phong);
 
 #define obj_diff object[closest_obj].material.diffuse_colour
 #define obj_spec object[closest_obj].material.specular_colour
