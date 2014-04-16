@@ -295,6 +295,8 @@ void renderImage(void) {
    
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
+
+         pixelColour.red = pixelColour.blue = pixelColour.green = 0;
          
          /* super sampling */
          for(i = 0; i < grid_size; i++){
