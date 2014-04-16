@@ -262,7 +262,6 @@ void renderImage(void) {
    RGBColour pixelColour;
    FILE  *picfile;
    double pixel_size;
-   RGBColour samples[SUPER_SAMPLES];
    double px, py;
    
    /* avoid redrawing it if the window is obscured */
@@ -290,7 +289,7 @@ void renderImage(void) {
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
 
-         pixelColour.red = pixelColour.blue = pixelColour.green = 0;
+         pixelColour = colour_black;
          
          /* super sampling */
          for(i = 0; i < grid_size; i++){
@@ -309,10 +308,8 @@ void renderImage(void) {
                ray.direction.w = 0;
                
                pixelColour = colour_add(pixelColour, colour_scale(1/SUPER_SAMPLES, ray_trace(ray,10)));
-               //samples[j + i*grid_size] = ray_trace(ray, 10);
             }
          }
-         //pixelColour = colour_blend(samples, SUPER_SAMPLES);
          
          /* no super sampling */
          /*
