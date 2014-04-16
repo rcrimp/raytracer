@@ -125,10 +125,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             t1 = (-B - sqrt(det)) / 2*A;
          else
             t1 = (-B + sqrt(det)) / 2*A;
-         t2 = C / (A*t1);
+         t2 = ray_length*C / (A*t1);
 
          t1 /= ray_length;
-         t2 /= ray_length;
+         //t2 /= ray_length;
          
          /* if the current object is closer than any prior objects, then set it as the closest */
          t = min(t1,t2);
