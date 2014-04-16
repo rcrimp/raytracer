@@ -109,13 +109,14 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
       cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
-      ray_length = vector_length(cur_ray.direction);
-      cur_ray.direction = vector_normalise(cur_ray.direction);
-      
 
-      A =     vector_dot(cur_ray.direction, cur_ray.direction);  /* v.v */
-      B = 2 * vector_dot(cur_ray.direction, cur_ray.start);      /* 2 * u.v */
-      C =     vector_dot(cur_ray.start,     cur_ray.start) - 1;  /* u.u -r */
+      ray_length = vector_length(cur_ray.direction);
+
+      cur_ray.direction = vector_normalise(cur_ray.direction);
+
+      A = vector_dot(cur_ray.direction, cur_ray.direction);  /* v.v */
+      B = vector_dot(cur_ray.direction, cur_ray.start) * 2;      /* 2 * u.v */
+      C = vector_dot(cur_ray.start,     cur_ray.start) - 1;  /* u.u -r */
       det = (B*B) - (4*A*C); /* determinant */
       if (det > 0) { /* if ray collides with the sphere, find the distance (t) to the object */
          if ( B > 0 )
@@ -166,17 +167,19 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          {
             ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
             /* max(0, val) unnesacary when casting shadow rays */
-            double nl = max(0, vector_dot(SurfaceNormal, ToLight));
-            Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
-            double rv = pow(max(0, vector_dot(r, ToCamera)), object[closest_obj].material.phong);
+            /* nl = (surface normal) dot (to light) */
+            double lambert = max(0, vector_dot(SurfaceNormal, ToLight));
+            Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*lambert), ToLight));
+            /* ((reflected light) dot (to camera)) ^ (phone co-eff) */
+            double phong = pow(max(0, vector_dot(r, ToCamera)), object[closest_obj].material.phong);
 
 #define obj_diff object[closest_obj].material.diffuse_colour
 #define obj_spec object[closest_obj].material.specular_colour
 #define obj_text object[closest_obj].material.texture
 #define light_col light_source[cur_light].colour
             
-            colour = colour_add(colour, colour_multiply(light_col, colour_add(colour_scale(nl, texture_diffuse(obj_diff, obj_text, SurfaceNormal)),colour_scale(rv, obj_spec))));
-            
+            colour = colour_add(colour, colour_multiply(light_col, colour_add(colour_scale(lambert, texture_diffuse(obj_diff, obj_text, SurfaceNormal)),colour_scale(phong, obj_spec))));
+
 #undef obj_diff
 #undef obj_spec
 #undef obj_text
