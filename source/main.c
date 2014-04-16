@@ -295,33 +295,33 @@ void renderImage(void) {
    
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
-
-         double DOF_r;
-         double DOF_theta;
          
          /* super sampling */
          for(i = 0; i < grid_size; i++){
             for(j = 0; j < grid_size; j++){
-               DOF_r = 3*(rand() / (double)RAND_MAX)-1; /* [-1, 1} */
-               DOF_theta = M_PI * (rand() / (double)RAND_MAX);
-               
-               //ray.start.x = 2*DOF_r * sin(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
-               //ray.start.y = DOF_r * cos(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
-               ray.start.x = 2*(rand() / (double)RAND_MAX)-1;
-               ray.start.y = 2*(rand() / (double)RAND_MAX)-1;
-               
+               /* DOF */ /*
+                  double DOF_r = 3*(rand() / (double)RAND_MAX)-1;
+                  double DOF_theta = M_PI * (rand() / (double)RAND_MAX);
+                  ray.start.x = 2*DOF_r * sin(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
+                  ray.start.y = DOF_r * cos(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
+                  ray.start.x = 2*(rand() / (double)RAND_MAX)-1;
+                  ray.start.y = 2*(rand() / (double)RAND_MAX)-1;*/
+                  
                px = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                py = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
-
 
                ray.direction = (vector_subtract(vector_new(px, py, -camera.lens, 0), ray.start));
                ray.direction.z = -camera.lens;
                ray.direction.w = 0;
                
-               samples[j + i*grid_size] = ray_trace(ray, 10);
+               RGBColour tempc = ray_trace(ray,10);
+               pixelColour.red += tempc.red / grid_size;
+               pixelColour.blue += tempc.blue / grid_size;
+               pixelColour.green += tempc.green / grid_size;
+               //samples[j + i*grid_size] = ray_trace(ray, 10);
             }
          }
-         pixelColour = colour_blend(samples, SUPER_SAMPLES);
+         //pixelColour = colour_blend(samples, SUPER_SAMPLES);
          
          /* no super sampling */
          /*
