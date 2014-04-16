@@ -122,10 +122,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       
       if (det > 0) { /* if ray collides with the sphere, find the distance (t) to the object */
          if ( B > 0 )
-            t1 = (-B - sqrt(det)) / 2*A / ray_length;
+            t1 = ray_length*(-B - sqrt(det)) / 2*A;
          else
-            t1 = (-B + sqrt(det)) / 2*A / ray_length;
-         t2 = C / (A*t1) / ray_length;
+            t1 = ray_length*(-B + sqrt(det)) / 2*A;
+         t2 = ray_length*C / (A*t1);
 
          //t1 /= ray_length;
          //t2 /= ray_length;
