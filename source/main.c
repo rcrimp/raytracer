@@ -20,7 +20,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-#define SUPER_SAMPLES 3 /* needs to be a square number */
+#define SUPER_SAMPLES 1 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
@@ -279,19 +279,13 @@ void renderImage(void) {
    /* Calculate the step size */
    pixel_size = camera.view_size/image_size;
    
-   /* create the start point for the primary ray */
+   /* create the ray */
    ray.start = vector_new(0,0,0,1);
-   
-   /* create the direction of the primary ray */
    ray.direction = vector_new(0,0,0,0);
       
    /* super samples */
    int i, j, grid_size;
    grid_size = sqrt(SUPER_SAMPLES);
-
-   int load_count_max = (image_size/100);
-   int load_count;
-   fprintf(stderr, "Loading \n<");
    
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
@@ -301,25 +295,24 @@ void renderImage(void) {
          /* super sampling */
          for(i = 0; i < grid_size; i++){
             for(j = 0; j < grid_size; j++){
-               /* DOF */ /*
-                  double DOF_r = 3*(rand() / (double)RAND_MAX)-1;
-                  double DOF_theta = M_PI * (rand() / (double)RAND_MAX);
-                  ray.start.x = 2*DOF_r * sin(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
-                  ray.start.y = DOF_r * cos(DOF_theta);//(2*(rand() / (double)RAND_MAX)-1);
-                  ray.start.x = 2*(rand() / (double)RAND_MAX)-1;
-                  ray.start.y = 2*(rand() / (double)RAND_MAX)-1;*/
-                  
+               /* DOF */
+               //ray.start.x = 2*(rand() / (double)RAND_MAX)-1;
+               //ray.start.y = 2*(rand() / (double)RAND_MAX)-1;*/  
                px = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
                py = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
 
-               ray.direction = (vector_subtract(vector_new(px, py, -camera.lens, 0), ray.start));
+               //DOF //ray.direction = (vector_subtract(vector_new(px, py, -camera.lens, 0), ray.start));
+               ray.direction.x = px;
+               ray.direction.y = py;
+
                ray.direction.z = -camera.lens;
                ray.direction.w = 0;
                
                RGBColour tempc = ray_trace(ray,10);
-               pixelColour.red += tempc.red / SUPER_SAMPLES;
-               pixelColour.blue += tempc.blue / SUPER_SAMPLES;
-               pixelColour.green += tempc.green / SUPER_SAMPLES;
+               pixelColour = colour_add(pixelColour, colour_scale(1/SUPER_SAMPLES, tempc));
+               //pixelColour.red += tempc.red / SUPER_SAMPLES;
+               //pixelColour.blue += tempc.blue / SUPER_SAMPLES;
+               //pixelColour.green += tempc.green / SUPER_SAMPLES;
                //samples[j + i*grid_size] = ray_trace(ray, 10);
             }
          }
@@ -334,12 +327,7 @@ void renderImage(void) {
          drawPixel(col+1, image_size-row-1, pixelColour);
          writePPM(pixelColour, picfile);         
       }
-      if(load_count++ > load_count_max){
-         load_count = 0;
-         fprintf(stderr, "=");
-      }
    }
-   fprintf(stderr, ">\n");
 
    /* make sure all of the picture is displayed */
    showScreen();
