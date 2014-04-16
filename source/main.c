@@ -98,7 +98,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
    RayDef cur_ray;
    
- 
+   ray.start = vector_transform(ray.start, camera.transform);
+   ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
    
    /* setup */
    closest_t = DBL_MAX;
@@ -109,7 +110,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
       ray_length = vector_length(cur_ray.direction);
-      cur_ray.direction = vector_scale(cur_ray.direction, 1/ray_length);
+      cur_ray.direction = vector_normalise(cur_ray.direction);
+      
 
       A =     vector_dot(cur_ray.direction, cur_ray.direction);  /* v.v */
       B = 2 * vector_dot(cur_ray.direction, cur_ray.start);      /* 2 * u.v */
@@ -232,10 +234,6 @@ void renderImage(void) {
                py = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
 
                //DOF //ray.direction = (vector_subtract(vector_new(px, py, -camera.lens, 0), ray.start));
-
-               ray.start = vector_transform(ray.start, camera.transform);
-               ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
-               
                vector_set(&ray.direction, px, py, -camera.lens, 0);
                
                pixelColour = colour_add(pixelColour, colour_scale(1/SUPER_SAMPLES, ray_trace(ray,10)));
