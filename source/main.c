@@ -91,7 +91,7 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
 RGBColour ray_trace(RayDef ray, int recurse_depth) {
    int cur_obj, closest_obj, cur_light, i;   
    RGBColour colour = background_colour;
-   double A, B, C, det, t1, t2, t, t_closest, ray_length, temp; //quadratic variables
+   double A, B, C, det, t1, t2, t, closest_t, ray_length, temp; //quadratic variables
    Vector SurfaceNormal, ToLight, ToCamera;
 
    Vector cur_light_pos;
@@ -102,7 +102,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
    
    /* setup */
-   t = DBL_MAX;
+   closest_t = DBL_MAX;
    closest_obj = -1;
 
    /* for the current ray, find the closest object */
@@ -131,9 +131,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          t2 /= ray_length;
          
          /* if the current object is closer than any prior objects, then set it as the closest */
-         temp = min(t1,t2);
-         if(temp > 0 && temp < t){
-            t = temp;
+         t = min(t1,t2);
+         if(t > 0 && t < closest_t){
+            closest_t = t;
             closest_obj = cur_obj;
          }
       }
@@ -149,10 +149,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       
       /* Lighting calculations */
       SurfaceNormal.w = 0;
-      SurfaceNormal = (vector_add(cur_ray.start, vector_scale(cur_ray.direction, t)));
-      //SurfaceNormal = SurfaceNormal;
+      SurfaceNormal = (vector_add(cur_ray.start, vector_scale(cur_ray.direction, closest_t)));
       SurfaceNormal = vector_normalise(vector_transform(SurfaceNormal, matrix_transpose(object[closest_obj].transform)));
-
       ToCamera = vector_normalise(vector_subtract(cur_ray.start, SurfaceNormal));
 
       //Vector SurfacePoint = SurfaceNormal;
