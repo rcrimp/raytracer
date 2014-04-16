@@ -320,10 +320,10 @@ void renderImage(void) {
                pixelColour.red += tempc.red / grid_size;
                pixelColour.blue += tempc.blue / grid_size;
                pixelColour.green += tempc.green / grid_size;
-               samples[j + i*grid_size] = ray_trace(ray, 10);
+               //samples[j + i*grid_size] = ray_trace(ray, 10);
             }
          }
-         pixelColour = colour_blend(samples, SUPER_SAMPLES);
+         //pixelColour = colour_blend(samples, SUPER_SAMPLES);
          
          /* no super sampling */
          /*
