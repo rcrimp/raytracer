@@ -20,7 +20,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-#define SUPER_SAMPLES 16 /* needs to be a square number */
+#define SUPER_SAMPLES 1 /* needs to be a square number */
 
 int             MAX_RECURSE_DEPTH;
 
@@ -180,7 +180,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
          /* if the current object is closer than any prior objects, then set it as the closest */
          temp = min(t1,t2);
-         if(temp < t){
+         if(temp > 0 && temp < t){
             t = temp;
             closest_obj = cur_obj;
          }
@@ -262,13 +262,12 @@ void renderImage(void) {
    RGBColour pixelColour;
    FILE  *picfile;
    double pixel_size;
-   RGBColour samples[SUPER_SAMPLES];
-
+   double px, py;
+   
    /* avoid redrawing it if the window is obscured */
    static bool alreadyDrawn = false;
    if (alreadyDrawn) return;
    alreadyDrawn = true;
-
    clearScreen();
 
    /* set up the ppm file for writing */
@@ -278,38 +277,37 @@ void renderImage(void) {
    /* Calculate the step size */
    pixel_size = camera.view_size/image_size;
    
-   /* create the start point for the primary ray */
+   /* create the ray */
    ray.start = vector_new(0,0,0,1);
-   
-   /* create the direction of the primary ray */
-   ray.direction = vector_new(0,0,-camera.lens,0);
+   ray.direction = vector_new(0,0,0,0);
       
    /* super samples */
-   int i, j, grid_size;
-   grid_size = sqrt(SUPER_SAMPLES);
-
-   int load_count_max = (image_size/100);
-   int load_count;
-   fprintf(stderr, "Loading \n<");
+   int i, j, grid_size= sqrt(SUPER_SAMPLES);
    
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
 
+         pixelColour = colour_black;
+         
          /* super sampling */
          for(i = 0; i < grid_size; i++){
             for(j = 0; j < grid_size; j++){
-               //double FOV_jitter = 2*(rand() / (double)RAND_MAX)-1; /* [-1, 1} */
+               /* DOF */
+               //ray.start.x = 2*(rand() / (double)RAND_MAX)-1;
+               //ray.start.y = 2*(rand() / (double)RAND_MAX)-1;*/  
+               px = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
+               py = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
 
-               //ray.start.x = (2*(rand() / (double)RAND_MAX)-1)/20;
-               //ray.start.y = (2*(rand() / (double)RAND_MAX)-1)/20;
+               //DOF //ray.direction = (vector_subtract(vector_new(px, py, -camera.lens, 0), ray.start));
+               //ray.direction.x = px;
+               //ray.direction.y = py;
+               //ray.direction.z = -camera.lens;
+               //ray.direction.w = 0;
+               vector_set(&ray.direction, px, py, -camera.lens, 0);
                
-               ray.direction.x = -camera.view_size/2 + pixel_size*(col + (double)i/grid_size);
-               ray.direction.y = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
-
-               samples[j + i*grid_size] = ray_trace(ray, 10);
+               pixelColour = colour_add(pixelColour, colour_scale(1/SUPER_SAMPLES, ray_trace(ray,10)));
             }
          }
-         pixelColour = colour_blend(samples, SUPER_SAMPLES);
          
          /* no super sampling */
          /*
@@ -320,12 +318,7 @@ void renderImage(void) {
          drawPixel(col+1, image_size-row-1, pixelColour);
          writePPM(pixelColour, picfile);         
       }
-      if(load_count++ > load_count_max){
-         load_count = 0;
-         fprintf(stderr, "=");
-      }
    }
-   fprintf(stderr, ">\n");
 
    /* make sure all of the picture is displayed */
    showScreen();

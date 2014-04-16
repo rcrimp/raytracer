@@ -47,7 +47,7 @@ RGBColour colour_multiply(RGBColour a, RGBColour b){
    return result;
 }
 
-RGBColour colour_blend(RGBColour *colours, int colour_count){
+/*RGBColour colour_blend(RGBColour *colours, int colour_count){
    int i;
    RGBColour result;
    result.red = result.green = result.blue = 0;
@@ -58,7 +58,7 @@ RGBColour colour_blend(RGBColour *colours, int colour_count){
    }
    result = colour_scale(1.0f / (colour_count), result);
    return result;
-}
+   }*/
 
 void colour_display(RGBColour colour) {
 

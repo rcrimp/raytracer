@@ -101,6 +101,12 @@ Vector vector_transform(Vector v, Matrix m){
    result.w = m.element[0][3]*v.x + m.element[1][3]*v.y + m.element[2][3]*v.z + m.element[3][3]*v.w;*/
    return result;
 }
+void vector_set(Vector *v, double x, double y, double z, double w){
+   v->x = x;
+   v->y = y;
+   v->z = z;
+   v->w = w;
+}
 
 /* display a vector
  *
