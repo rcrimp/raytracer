@@ -237,12 +237,12 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 #define light_col light_source[cur_light].colour
 
             /* I = Ia *ka + (Il)*(kd*nl) + ks*rv */ 
-            //colour = colour_add(colour, colour_multiply(light_col,colour_add(colour_scale(nl, texture_diffuse(obj_diff, obj_text, SurfaceNormal)), colour_scale(rv, obj_spec))));
+            colour = colour_add(colour, colour_multiply(light_col,colour_add(colour_scale(nl, texture_diffuse(obj_diff, obj_text, SurfaceNormal)), colour_scale(rv, obj_spec))));
 
-            RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
-            colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
-            colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
-            colour.blue  += light_col.blue  * ( texc.blue  * nl + obj_spec.blue  * rv);
+            //RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
+            //colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
+            //colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
+            //colour.blue  += light_col.blue  * ( texc.blue  * nl + obj_spec.blue  * rv);
 
 #undef obj_diff
 #undef obj_spec
