@@ -190,9 +190,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    /* if the ray intersects an object, do lighting for the closest */
    if(closest_obj != -1){
       /* ambient light */
-      colour.red   = object[closest_obj].material.ambient_colour.red   * ambient_light.red;
-      colour.green = object[closest_obj].material.ambient_colour.green * ambient_light.green;
-      colour.blue  = object[closest_obj].material.ambient_colour.blue  * ambient_light.blue;
+      colour = colour_multiply(object[closest_obj].material.ambient_colour, ambient_light);
+      //colour.red   = object[closest_obj].material.ambient_colour.red   * ambient_light.red;
+      //colour.green = object[closest_obj].material.ambient_colour.green * ambient_light.green;
+      //colour.blue  = object[closest_obj].material.ambient_colour.blue  * ambient_light.blue;
 
       cur_ray.start = vector_transform(ray.start, object[closest_obj].transform);
       cur_ray.direction = vector_transform(ray.direction, object[closest_obj].transform);
