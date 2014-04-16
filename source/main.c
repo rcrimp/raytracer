@@ -317,9 +317,9 @@ void renderImage(void) {
                ray.direction.w = 0;
                
                RGBColour tempc = ray_trace(ray,10);
-               pixelColour.red += tempc.red / grid_size;
-               pixelColour.blue += tempc.blue / grid_size;
-               pixelColour.green += tempc.green / grid_size;
+               pixelColour.red += tempc.red / SUPER_SAMPLES;
+               pixelColour.blue += tempc.blue / SUPER_SAMPLES;
+               pixelColour.green += tempc.green / SUPER_SAMPLES;
                //samples[j + i*grid_size] = ray_trace(ray, 10);
             }
          }
