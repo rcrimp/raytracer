@@ -150,6 +150,9 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
    t = DBL_MAX;
    closest_obj = -1;
 
+   ray.start = vector_transform(ray.start, camera.transform);
+   ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
+   
    /* for the current ray, find the closest object */
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
       cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
@@ -302,9 +305,6 @@ void renderImage(void) {
                //ray.direction.z = -camera.lens;
                //ray.direction.w = 0;
                vector_set(&ray.direction, px, py, -camera.lens, 0);
-
-               ray.start = vector_transform(ray.start, camera.transform);
-               ray.direction = vector_transform( vector_normalise(ray.direction), camera.transform);
                
                pixelColour = colour_add(pixelColour, colour_scale(1/SUPER_SAMPLES, ray_trace(ray,10)));
             }
