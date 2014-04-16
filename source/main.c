@@ -155,8 +155,8 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 
       ToCamera = vector_normalise(vector_subtract(cur_ray.start, SurfaceNormal));
 
-      Vector SurfacePoint = SurfaceNormal;
-      SurfacePoint.w = 1;
+      //Vector SurfacePoint = SurfaceNormal;
+      //SurfacePoint.w = 1;
       
       //if (reflective & recurse_depth > 0) {
       //   reflective_colour = ray_trace( Ray(intersection point, reflective vector), n-1);
@@ -172,7 +172,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
   
          //if (shadow_ray(intersection p, light_p, closest_obj) == 0)
          {
-            ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfacePoint));
+            ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfaceNormal));
             /* max(0, val) unnesacary when casting shadow rays */
             double nl = max(0, vector_dot(SurfaceNormal, ToLight));
             Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
@@ -242,10 +242,6 @@ void renderImage(void) {
                py = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
 
                //DOF //ray.direction = (vector_subtract(vector_new(px, py, -camera.lens, 0), ray.start));
-               //ray.direction.x = px;
-               //ray.direction.y = py;
-               //ray.direction.z = -camera.lens;
-               //ray.direction.w = 0;
                vector_set(&ray.direction, px, py, -camera.lens, 0);
                
                pixelColour = colour_add(pixelColour, colour_scale(1/SUPER_SAMPLES, ray_trace(ray,10)));
@@ -270,7 +266,6 @@ void renderImage(void) {
    fclose(picfile);
 
    printf("\nDone\n");
-   exit(0);
 }
 
 
