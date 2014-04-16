@@ -230,18 +230,14 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 #define obj_spec object[closest_obj].material.specular_colour
 #define obj_text object[closest_obj].material.texture
 #define light_col light_source[cur_light].colour
-         
-            colour = colour_add(colour, colour_multiply(light_col, colour_add(colour_scale(nl, texture_diffuse(obj_diff, obj_text, SurfaceNormal)), colour_scale(rv, obj_spec))));
-
-            //RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
-            //colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
-            //colour.green += light_col.green * ( texc.green * nl + obj_spec.green * rv);
-            //colour.blue  += light_col.blue  * ( texc.blue  * nl + obj_spec.blue  * rv);
-
+            
+            colour = colour_add(colour, colour_multiply(light_col, colour_add(colour_scale(nl, texture_diffuse(obj_diff, obj_text, SurfaceNormal)),colour_scale(rv, obj_spec))));
+            
 #undef obj_diff
 #undef obj_spec
-#undef obj_tex
+#undef obj_text
 #undef light_col
+
          }
       }
    }
