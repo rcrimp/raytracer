@@ -248,9 +248,14 @@ void fileio_readfile(char *fname) {
          fscanf(description_file, "%lf", &y);
          fscanf(description_file, "%lf", &z);
 
-         if(num_objs == 0){ 
+         if(num_objs == 0){
+            matrix_make(&transformation,
+                        1.0, 0.0, 0.0, x,
+                        0.0, 1.0, 0.0, y,
+                        0.0, 0.0, 1.0, z,
+                        0.0, 0.0, 0.0, 1.0);
+            matrix_multiply_right(&camera.transform, transformation);
          } else { /* store the inverse translation of the current object */
-
             matrix_make(&transformation,
                         1.0, 0.0, 0.0, -x,
                         0.0, 1.0, 0.0, -y,
