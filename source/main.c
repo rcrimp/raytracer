@@ -125,7 +125,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             t1 = (-B - sqrt(det)) / 2*A;
          else
             t1 = (-B + sqrt(det)) / 2*A;
-         t2 = (C*ray_length) / (A*t1);
+         t2 = (C/ray_length) / (A*t1);
 
          t1 /= ray_length;
          //t2 /= ray_length;
