@@ -224,13 +224,13 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
             ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfacePoint));
 
             /* max(0, val) unnesacary when casting shadow rays */
-            double nl = max(0, vector_dot(SurfaceNormal, ToLight));
+            double nl = /*max(0, */vector_dot(SurfaceNormal, ToLight);//);
             Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
-            double rv = max(0, (pow(vector_dot(r, ToCamera), object[closest_obj].material.phong)));
+            double rv = /*max(0, (pow(*/vector_dot(r, ToCamera);//, object[closest_obj].material.phong)));
          
             /* range: 0-1 */
-            //nl = max(0, nl);
-            //rv = pow( max(0, rv) , object[closest_obj].material.phong);
+            nl = max(0, nl);
+            rv = pow( max(0, rv) , object[closest_obj].material.phong);
 
 #define obj_diff object[closest_obj].material.diffuse_colour
 #define obj_spec object[closest_obj].material.specular_colour
