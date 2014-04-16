@@ -215,22 +215,16 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       //   colour += refraction_coeff * refracted_colour ;
       //}
       
-      /* for each light */
       for(cur_light = 0; cur_light < num_lights; cur_light++) {
          cur_light_pos = vector_transform(light_source[cur_light].position, object[closest_obj].transform);
   
          //if (shadow_ray(intersection p, light_p, closest_obj) == 0)
          {
             ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfacePoint));
-
             /* max(0, val) unnesacary when casting shadow rays */
             double nl = max(0, vector_dot(SurfaceNormal, ToLight));
             Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
             double rv = pow(max(0, vector_dot(r, ToCamera)), object[closest_obj].material.phong);
-         
-            /* range: 0-1 */
-            //nl = max(0, nl);
-            //rv = pow( rv, object[closest_obj].material.phong);
 
 #define obj_diff object[closest_obj].material.diffuse_colour
 #define obj_spec object[closest_obj].material.specular_colour
@@ -328,6 +322,7 @@ void renderImage(void) {
    fclose(picfile);
 
    printf("\nDone\n");
+   exit(0);
 }
 
 
