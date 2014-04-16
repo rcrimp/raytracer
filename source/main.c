@@ -223,20 +223,21 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          {
             ToLight = vector_normalise(vector_subtract(cur_light_pos, SurfacePoint));
 
-            double nl = vector_dot(SurfaceNormal, ToLight);
+            /* max(0, val) unnesacary when casting shadow rays */
+            double nl = max(0, vector_dot(SurfaceNormal, ToLight));
             Vector r = vector_normalise(vector_subtract(vector_scale(SurfaceNormal, 2*nl), ToLight));
-            double rv =  vector_dot(r, ToCamera);
+            double rv = max(0, (pow(vector_dot(r, ToCamera), object[closest_obj].material.phong)));
          
             /* range: 0-1 */
-            nl = max(0, nl);
-            rv = pow( max(0, rv) , object[closest_obj].material.phong);
+            //nl = max(0, nl);
+            //rv = pow( max(0, rv) , object[closest_obj].material.phong);
 
 #define obj_diff object[closest_obj].material.diffuse_colour
 #define obj_spec object[closest_obj].material.specular_colour
 #define obj_text object[closest_obj].material.texture
 #define light_col light_source[cur_light].colour
          
-            colour = colour_add(colour, colour_multiply(light_col,colour_add(colour_scale(nl, texture_diffuse(obj_diff, obj_text, SurfaceNormal)),                                            colour_scale(rv, obj_spec))));
+            colour = colour_add(colour, colour_multiply(light_col, colour_add(colour_scale(nl, texture_diffuse(obj_diff, obj_text, SurfaceNormal)), colour_scale(rv, obj_spec))));
 
             //RGBColour texc = texture_diffuse(obj_diff, obj_text, SurfaceNormal);
             //colour.red   += light_col.red   * ( texc.red   * nl + obj_spec.red   * rv);
