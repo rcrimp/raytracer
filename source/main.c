@@ -308,11 +308,7 @@ void renderImage(void) {
                ray.direction.z = -camera.lens;
                ray.direction.w = 0;
                
-               RGBColour tempc = ray_trace(ray,10);
-               pixelColour = colour_add(pixelColour, colour_scale(1/SUPER_SAMPLES, tempc));
-               //pixelColour.red += tempc.red / SUPER_SAMPLES;
-               //pixelColour.blue += tempc.blue / SUPER_SAMPLES;
-               //pixelColour.green += tempc.green / SUPER_SAMPLES;
+               pixelColour = colour_add(pixelColour, colour_scale(1/SUPER_SAMPLES, ray_trace(ray,10)));
                //samples[j + i*grid_size] = ray_trace(ray, 10);
             }
          }
