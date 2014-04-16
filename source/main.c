@@ -300,7 +300,7 @@ void renderImage(void) {
          
          /* super sampling */
          for(i = 0; i < grid_size; i++){
-            for(j = 0; (i+1)*(j+1) <= SUPER_SAMPLES; j++){
+            for(j = 0; (i+1)*(j+1) <= SUPER_SAMPLES/i; j++){
                /* DOF */ /*
                   double DOF_r = 3*(rand() / (double)RAND_MAX)-1;
                   double DOF_theta = M_PI * (rand() / (double)RAND_MAX);
