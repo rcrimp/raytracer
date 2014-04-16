@@ -268,7 +268,6 @@ void renderImage(void) {
    static bool alreadyDrawn = false;
    if (alreadyDrawn) return;
    alreadyDrawn = true;
-
    clearScreen();
 
    /* set up the ppm file for writing */
@@ -283,8 +282,7 @@ void renderImage(void) {
    ray.direction = vector_new(0,0,0,0);
       
    /* super samples */
-   int i, j, grid_size;
-   grid_size = sqrt(SUPER_SAMPLES);
+   int i, j, grid_size= sqrt(SUPER_SAMPLES);
    
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
@@ -301,11 +299,11 @@ void renderImage(void) {
                py = camera.view_size/2 - pixel_size*(row + (double)j/grid_size);
 
                //DOF //ray.direction = (vector_subtract(vector_new(px, py, -camera.lens, 0), ray.start));
-               ray.direction.x = px;
-               ray.direction.y = py;
-
-               ray.direction.z = -camera.lens;
-               ray.direction.w = 0;
+               //ray.direction.x = px;
+               //ray.direction.y = py;
+               //ray.direction.z = -camera.lens;
+               //ray.direction.w = 0;
+               vector_set(&ray.direction, px, py, -camera.lens, 0);
                
                pixelColour = colour_add(pixelColour, colour_scale(1/SUPER_SAMPLES, ray_trace(ray,10)));
             }

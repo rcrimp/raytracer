@@ -31,6 +31,8 @@ Vector vector_normalise (Vector v);
 Vector vector_transform (Vector v, Matrix m);
 void   vector_display   (Vector v);
 
+void vector_set(Vector *v, double x, double y, double z, double w);
+
 #endif /* _VECTOR_OPS_H_ */
 
 

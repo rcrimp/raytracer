@@ -29,6 +29,5 @@ void colour_display(RGBColour colour);
 RGBColour colour_scale(double s, RGBColour b);
 RGBColour colour_add(RGBColour a, RGBColour b);
 RGBColour colour_multiply(RGBColour a, RGBColour b);
-RGBColour colour_blend(RGBColour *colours, int colour_count);
 
 #endif  /* _COLOUR_OPS_H_ */
