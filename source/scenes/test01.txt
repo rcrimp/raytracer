@@ -33,6 +33,7 @@ diffuse   0.640 0.640 0.640
 specular  0.500 0.500 0.500  50.00
 mirror    0.000 0.000 0.000
 texture   0
+stretch    1.840 0.640 0.640
 translate  0.000 0.000 -5.000
 
 endview
