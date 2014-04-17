@@ -110,11 +110,11 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       cur_ray.start = vector_transform(ray.start, object[cur_obj].transform);
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
 
-      ray_length = vector_length(cur_ray.direction);
-      if ((abs(ray_length)-1.0f) > 0.00001 )
-         printf("%f\n", ray_length);
+      //ray_length = vector_length(cur_ray.direction);
+      //if ((abs(ray_length)-1.0f) > 0.00001 )
+      //   printf("%f\n", ray_length);
       
-      cur_ray.direction = vector_normalise(cur_ray.direction);
+      //cur_ray.direction = vector_normalise(cur_ray.direction);
 
       A = vector_dot(cur_ray.direction, cur_ray.direction);  /* v.v */
       B = vector_dot(cur_ray.direction, cur_ray.start) * 2;      /* 2 * u.v */
