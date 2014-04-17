@@ -111,7 +111,7 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       cur_ray.direction = vector_transform(ray.direction, object[cur_obj].transform);
 
       ray_length = vector_length(cur_ray.direction);
-      if (ray_length !=1)
+      if ((abs(ray_length)-1.0f) > 0.00001 )
          printf("%f\n", ray_length);
       
       cur_ray.direction = vector_normalise(cur_ray.direction);
