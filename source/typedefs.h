@@ -75,6 +75,8 @@ typedef struct CameraDef {
    double view_size;  /* defines the camera square view plane */
    double lens;       /* distance from camera to view plane */
    Matrix transform;  /* transformation from the 'standard' position */
+   double dof_focus;
+   double dof_factor;
 } CameraDef;
 
 
@@ -96,6 +98,7 @@ extern CameraDef       camera;
 extern int             image_size;
 extern RGBColour       background_colour;
 extern RGBColour       ambient_light;
+extern int             super_samples;
 
 extern int             num_lights;
 extern LightSourceDef  light_source[MAX_NUM_LIGHTS];

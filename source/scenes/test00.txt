@@ -1,5 +1,0 @@
-
-# There's nothing in this file!
-# It is here to test the default values, and to test Geoff's circle test
-
-endview

@@ -81,7 +81,8 @@ void fileio_readfile(char *fname) {
 
    /* size of image on screen */
    image_size = 320;
-
+   super_samples = 1;
+   
    /* background colour == (0, 0, 0) */
    background_colour.red = 0.0;
    background_colour.green = 0.0;
@@ -99,7 +100,9 @@ void fileio_readfile(char *fname) {
    camera.view_size = 32.0;
    camera.lens = 35.0;
    matrix_loadIdentity(&camera.transform);
-
+   camera.dof_focus = 35.0;
+   camera.dof_factor = 0;
+   
    /* initial count */	
    num_lights = 0;	
    num_objs = 0;
@@ -138,6 +141,22 @@ void fileio_readfile(char *fname) {
       } /* camera lens */
       else if (!strcmp(descriptor, "lens")) {
          fscanf(description_file, "%lf", &camera.lens);
+
+
+
+
+      } /* super_samples */
+      else if (!strcmp(descriptor, "super_samples")) {
+         fscanf(description_file, "%d", &super_samples);
+      } /* dof_focal length */
+      else if (!strcmp(descriptor, "dof_focus")) {
+         fscanf(description_file, "%lg", &camera.dof_focus);
+      } /* dof blur factor */
+      else if (!strcmp(descriptor, "dof_factor")) {
+         fscanf(description_file, "%lg", &camera.dof_factor);
+
+         
+         
 
       } /* lights */
       else if (!strcmp(descriptor, "light")) {

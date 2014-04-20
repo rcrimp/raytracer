@@ -125,6 +125,7 @@ void   vector_display(Vector v) {
       fprintf(stdout, "UNKNOWN ");
    }
 
-   fprintf(stdout, "(%1.3f, %1.3f, %1.3f)", v.x, v.y, v.z);
+   fprintf(stdout, "(%1.3f, %1.3f, %1.3f)\n", v.x, v.y, v.z);
+   fprintf(stdout, "length: %f\n", vector_length(v));
 
 }

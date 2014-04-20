@@ -27,6 +27,7 @@ extern const RGBColour colour_black;
 
 void colour_display(RGBColour colour);
 RGBColour colour_scale(double s, RGBColour b);
+void colour_add_to(RGBColour *a, RGBColour b);
 RGBColour colour_add(RGBColour a, RGBColour b);
 RGBColour colour_multiply(RGBColour a, RGBColour b);
 

@@ -31,13 +31,17 @@ RGBColour colour_scale(double s, RGBColour b){
    result.blue  = s * b.blue;
    return result;
 }
-
 RGBColour colour_add(RGBColour a, RGBColour b){
    RGBColour result;
    result.red = a.red + b.red;
    result.green = a.green + b.green;
    result.blue = a.blue + b.blue;
    return result;
+}
+void colour_add_to(RGBColour *a, RGBColour b){
+   a->red += b.red;
+   a->green += b.green;
+   a->blue += b.blue;
 }
 RGBColour colour_multiply(RGBColour a, RGBColour b){
    RGBColour result;

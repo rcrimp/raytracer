@@ -1,4 +1,4 @@
-imagesize     640 
+imagesize     320
 background    0.050 0.250 0.400
 ambient       0.3 0.3 0.3
 lens  35.000

@@ -133,13 +133,6 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
          
          t = min(t1,t2) / ray_length;
 
-        //vector_display(ray.direction);
-         //vector_display(vector_transform(ray.direction, object[cur_obj].transform));
-         //vector_display(obj_ray.direction);
-
-         //if (cur_obj == 0) t /= 5;
-         //printf("%f %f %f\n", t1, t2, t);
-
          if(t > 0 && t < closest_t){
             closest_t = t;
             closest_obj = cur_obj;
@@ -176,12 +169,10 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       for(cur_light = 0; cur_light < num_lights; cur_light++) {
          if (1){ //cast a shadow ray from intersection to light
             ToLight = vector_normalise(vector_subtract(light_source[cur_light].position, intersection));
-            //Vector FromLight = vector_normalise(vector_subtract(intersection, light_source[cur_light].position));
             
             /* max(0, val) may be unnesacary when casting shadow rays */
             double lambert = max(0, vector_dot(surface_normal, ToLight));
             Vector r = vector_normalise(vector_subtract(vector_scale(surface_normal, 2*lambert), ToLight));
-            //Vector r = /*v-2n(n.v)*/ vector_subtract(FromLight, vector_scale(surface_normal, 2*vector_dot(surface_normal,FromLight)));
             double phong = max(0, vector_dot(r, ToCamera));
             phong = pow(phong, object[closest_obj].material.phong);
             
