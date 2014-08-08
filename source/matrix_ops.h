@@ -1,19 +1,15 @@
-
 /*
  * File: matrix_ops.h
  *
  * Description: Header file for matrix operations.
  */
 
-
 #ifndef _MATRIX_OPS_H
 #define _MATRIX_OPS_H
-
 
 /* ---- INCLUDES ------------------------------------------------------------*/
 #include <stdio.h>       /* for io */
 #include <math.h>        /* for maths functions, and M_PI */
-
 
 /* ---- CONSTANT DECLARATION ------------------------------------------------*/
 #define  MATRIX_SIZE   4

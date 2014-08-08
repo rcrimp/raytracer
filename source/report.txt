@@ -1,0 +1,75 @@
+Reuben Crimp - 26150
+cosc342 assg2 report.
+
+-How does it work?
+in pseudo code:
+
+for every pixel:
+  call trace_ray routine
+
+ROUTINE trace_ray
+  for every object: trace a ray
+    choose the closest object that the ray intersects (if any)
+      if object is mirror reflective
+        recursively call trace_ray, with a reflected ray
+      for every light: trace a shadow ray
+        if not in shadow
+          do Lambert and Phong lighting calculations
+  return colour
+
+I had alot of fun making this.
+
+-Scene File (can be found in the "source/final/" folder)
+
+The Dalek scene file demonstrates almost all the features of my ray tracer.
+The transformed spheres making the dalek, is an accurate reprentation of , proving my transformations are if not perfect but near identical to blenders.
+It shows the ray shadows from 2 lights accurately.
+the Perfect mirror reflections on spheres and transformed spheres can be seen in the scene.
+It's also antialiased :)
+
+does not demonstrate texturing or depth of field, as the scene is far too clutterd as it is.
+
+I have provided an extra scene file which demonstrates the depth of field effect quite well. I recomend not attempting to render "dof_HD.txt", not unless you have some spare time.
+
+I do not mind which scene is submitted to the gallery.
+
+-Testing
+
+Test driven development was used heavily, I made scenes which introduced a single feature, then programmed the feature in until the scene worked. Blender was used to make the test scenes, and blenders render was used for comparisons, so I knew the results were right.
+
+Things I tested for in order:
+started with translation
+then ambient
+Lambert, Phong
+stretch, rotate
+camera transformations
+accurate intersections, of transformed spheres (many tests)
+lighting on stretched spheres
+super sampling, depth of field
+shadow rays
+reflection rays
+rotated texture co-ordinates
+inside spheres (which I never got working)
+
+
+-Super sampling
+
+very simple, for each pixel instead of shooting a single ray shoot many rays in a grid pattern, within the given pixel, and just blend all the colours. quite expensive, quite slow.
+
+
+-Depth of field ( 10_dof.txt )
+
+Since a high super sampling factor is required for decent results, I pre-renderd "dof_HD.txt", the scene file is there if you don't mind waiting > 15 mins lol, or a few seconds with "dof_small.txt"
+
+This is not real dof, it's the hacky kind described in the lecture material
+The camera's aperture shape is square because I'm lazy, I plan on letting the user choose any regular n-gon as the aperture shape in the scene file.
+The dof effect is very noisy, unless used in conjunction with super sampling, I recommend a super sampling value larger than 25
+
+
+-Known bugs
+
+Lights have no fall-off (intentional)
+The interior of a sphere is not rendered :(
+colours display differently to blender, bug?. it appears to be an issue with drawPixel(RGBColour)
+
+NOTE: If some of your tests recursive rays exhibit floating point errors, alter the EPSILON value in main.c

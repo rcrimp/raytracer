@@ -1,11 +1,6 @@
-
-
 /* ----- INCLUDES ---------------------------------------------------------- */
-
 #include "colour_ops.h"
 #include <stdio.h>
-
-
 /* ----- TYPE DECLARATIONS ------------------------------------------------- */
 
 /* this a record structure for storing colour info. */
@@ -15,12 +10,10 @@ typedef struct RGBColour {
 } RGBColour;
 */
 
-
 /* ----- CONSTANTS --------------------------------------------------------- */
 
 /* a constant black colour */
 const RGBColour colour_black = {0.0f, 0.0f, 0.0f};
-
 
 /* ---- FUNCTIONS ---------------------------------------------------------- */
 

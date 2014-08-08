@@ -8,7 +8,6 @@
 #ifndef _TYPEDEFS_H_
 #define _TYPEDEFS_H_
 
-
 /* ----- INCLUDES ---------------------------------------------------------- */
 
 /* ANSI-standard includes */
@@ -30,9 +29,10 @@
 #define true  1
 #define false 0
 
-#define MAX_NUM_LIGHTS     16
-#define MAX_NUM_OBJS      64
+#define MAX_NUM_LIGHTS    128
+#define MAX_NUM_OBJS      128
 
+/* an arbitrarily small positive quantity, used for rounding errors on rays */
 /* ----- TYPE DECLARATIONS ------------------------------------------------- */
 
 /* ray is defined by a point and a direction */
@@ -66,8 +66,6 @@ typedef struct ObjectDef {
    Matrix transform;
 } ObjectDef;
 
-
-
 /*
  * We provide viewing geometry details here
  */
@@ -89,7 +87,6 @@ typedef struct CameraDef {
 #define min(x,y)     (((x) < (y)) ? (x) : (y))
 
 
-
 /* ---- GLOBAL VARIABLES ----------------------------------------------------*/
 
 extern int             MAX_RECURSE_DEPTH;
@@ -105,7 +102,5 @@ extern LightSourceDef  light_source[MAX_NUM_LIGHTS];
 
 extern int             num_objs;
 extern ObjectDef       object[MAX_NUM_OBJS];
-
-
 
 #endif  /* _TYPEDEFS_H_ */

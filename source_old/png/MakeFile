@@ -1,0 +1,5 @@
+XLIBS =  -L/usr/X11R6/lib #-lXext -lXmu -lXt -lXi -lSM -lICE -lpthread
+COPTS =   #-Wall -Werror
+
+default:
+	gcc -o test test.c -lm -lpng -L/usr/X11R6/lib -g3 -I/usr/include

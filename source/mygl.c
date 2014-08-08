@@ -44,7 +44,7 @@ void setPenSize(GLdouble newsize) {
 /* ----- Basic drawing function -------------------------------------------- */
 void drawPixel(GLdouble x, GLdouble y, RGBColour colour) {
   glBegin(GL_POINTS);
-    glColor3d(colour.red, colour.green, colour.blue);
+    glColor3f(colour.red, colour.green, colour.blue);
     glVertex2d(x, y);
   glEnd();
 }

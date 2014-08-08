@@ -20,7 +20,7 @@
 /* ---- Global Variables ----------------------------------------------------*/
 /* Must match declarations in typedefs.h
  * Values are loaded in fileio.c */
-#define         EPSILON 0.00000000000001 /* an arbitrarily small positive quantity, used for rounding errors on rays */
+#define         EPSILON 0.000001f
 
 int             MAX_RECURSE_DEPTH;
 
@@ -88,33 +88,52 @@ RGBColour texture_diffuse(RGBColour diffuse_colour, int texture, Vector surface_
    return diffuse_colour;
 }
 
-/* returns 1 if shadow, overkill will simplify */
-int shadow_ray(Vector start, Vector end) {
-   int cur_obj, closest_obj;
-   RayDef ray;
-   double A, B, C, det, t1, t2;
-   for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
-      ray.start = vector_transform(start, object[cur_obj].transform);
-      ray.direction = vector_transform( vector_subtract( end, start)  , object[cur_obj].transform);  
+/* quadratic solver
+   returns the smallest positive solution to
+   At^2 + Bt + C = 0
+   if such a solution exist
+*/
+double quadratic(double A, double B, double C){
+   double t1, t2, det;
+   if ( B*B > 4*A*C ) {
+      det = (B*B) - (4*A*C);
+      if ( B > 0 )
+         t1 = (-B - sqrt(det)) / 2*A;
+      else
+         t1 = (-B + sqrt(det)) / 2*A;
+      t2 = C / (A*t1);
+      
+      if(t1 < t2){
+         if (t1 > EPSILON) return t1;
+         if (t2 > EPSILON) return t2;
+      } else {
+         if (t2 > EPSILON) return t2;
+         if (t1 > EPSILON) return t1;
+      }
+   } 
+   return -1; /* anything negative */
+}
 
-      double ray_length = vector_length(ray.direction);
+/* returns 1 if in shadow; is overkill, should simplify */
+int shadow_ray(Vector start, Vector light) {
+   int cur_obj;
+   RayDef ray;
+   Vector end;
+   double t;
+   for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
+      end = vector_transform(light, object[cur_obj].transform);
+      ray.start = vector_transform(start, object[cur_obj].transform);
+      //ray.direction = vector_transform( vector_subtract( end, start)  , object[cur_obj].transform);
+      ray.direction = vector_subtract(end, ray.start);
+
+      double len = vector_length(ray.direction);
       ray.direction = vector_normalise(ray.direction);
       
-      A =     vector_dot(ray.direction, ray.direction);  /* v.v */
-      B = 2 * vector_dot(ray.direction, ray.start);      /* 2 * u.v */
-      C =     vector_dot(ray.start,     ray.start) - 1;  /* u.u -r */
-      det = (B*B) - (4*A*C); /* determinant */
-      if (det > 0) { /* if ray collides with the sphere, find the distance (t) to the object */
-         if ( B > 0 )
-            t1 = (-B - sqrt(det)) / 2*A;
-         else
-            t1 = (-B + sqrt(det)) / 2*A;
-         t2 = C / (A*t1);
-
-         t1 = min(t1,t2);
-         if(EPSILON < t1 && t1 < ray_length){
-            return 1;
-         }
+      t = quadratic(vector_dot(ray.direction, ray.direction),
+                    2 * vector_dot(ray.direction, ray.start),
+                    vector_dot(ray.start,     ray.start) - 1);
+      if ( EPSILON < t && t < len ){
+         return 1; /* in shadow */
       }
    }
    return 0; /* not in shadow */
@@ -122,18 +141,17 @@ int shadow_ray(Vector start, Vector end) {
 
 /* the main ray tracing procedure */
 RGBColour ray_trace(RayDef ray, int recurse_depth) {
-   int cur_obj, closest_obj, cur_light, i;   
-   RGBColour colour = background_colour;
-   double A, B, C, det, t1, t2, closest_t, ray_length, temp;
+   int cur_obj, closest_obj, cur_light, reflective;   
+   double t, closest_t, ray_length, reflective_factor = 0.0f; 
    Vector intersection, surface_normal, ToLight, ToCamera;
    RayDef obj_ray;
-
-   if(recurse_depth == 0)
-      return background_colour;
+   RGBColour colour = background_colour;
    
    /* setup */
    closest_t = DBL_MAX;
    closest_obj = -1;
+
+   ray.direction = vector_normalise(ray.direction);
 
    /* for the current ray, find the closest object */
    for(cur_obj = 0; cur_obj < num_objs; cur_obj++){
@@ -144,22 +162,13 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       ray_length = vector_length(obj_ray.direction);
       obj_ray.direction = vector_normalise(obj_ray.direction);
 
-      A =     vector_dot(obj_ray.direction, obj_ray.direction);  /* v.v */
-      B = 2 * vector_dot(obj_ray.direction, obj_ray.start);  /* 2 * u.v */
-      C =     vector_dot(obj_ray.start,     obj_ray.start) - 1;  /* u.u -r */
-      det = (B*B) - (4*A*C);
-
-      if (det > 0) { /* if ray collides with the sphere, find the distance (t) to the object */
-         if ( B > 0 )
-            t1 = (-B - sqrt(det)) / 2*A;
-         else
-            t1 = (-B + sqrt(det)) / 2*A;
-         t2 = C / (A*t1);
-         t1 = min(t1,t2) / ray_length;
-         if(EPSILON < t1 && t1 < closest_t){
-            closest_t = t1;
-            closest_obj = cur_obj;
-         }
+      t = quadratic(vector_dot(obj_ray.direction, obj_ray.direction),
+                    2 * vector_dot(obj_ray.direction, obj_ray.start),
+                    vector_dot(obj_ray.start, obj_ray.start) - 1) / ray_length;
+      /* check bounds of t */
+      if ( EPSILON < t && t < closest_t ){
+         closest_t = t;
+         closest_obj = cur_obj;
       }
    }
 
@@ -168,31 +177,44 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
       /* ambient light */
       colour = colour_multiply(object[closest_obj].material.ambient_colour, ambient_light);
 
-      surface_normal = vector_normalise( vector_transform( vector_add( vector_transform( ray.start, object[closest_obj].transform), vector_scale( vector_transform( vector_normalise( ray.direction), object[closest_obj].transform), closest_t)), matrix_transpose(object[closest_obj].transform)));
+      /* transform the ray into object space */
+      obj_ray.start = vector_transform(ray.start, object[closest_obj].transform);
+      obj_ray.direction = vector_transform(ray.direction, object[closest_obj].transform);
 
+      /* n = (u + vt) . T^(T) */
+      surface_normal = vector_normalise(vector_transform( vector_add(obj_ray.start,vector_scale(obj_ray.direction,closest_t)),
+                                                          matrix_transpose(object[closest_obj].transform)));
       
-      /* Lighting calculations */      
-      intersection = vector_add(ray.start, vector_scale(vector_normalise(ray.direction), closest_t));
+      intersection = vector_add(ray.start, vector_scale(ray.direction, closest_t));
+
+      /* move the intersection point slightly above the surface */
+      /* intersection = vector_add(intersection, vector_scale(surface_normal, EPSILON)); */
       
-      ToCamera = vector_normalise(vector_scale(ray.direction, -1.0f));
+      ToCamera = vector_scale(ray.direction, -1);
       //ToCamera = vector_normalise(vector_subtract(ray.start, intersection));
       
-      if (object[closest_obj].material.mirror_colour.red > 0 & recurse_depth > 0) {
-         RayDef rayc;
+#define obj_ref object[closest_obj].material.mirror_colour
 
-         rayc.start = intersection;
-         rayc.direction = vector_subtract( ray.direction, vector_scale( surface_normal, 2*vector_dot( ray.direction, surface_normal)));
+      reflective = obj_ref.red > 0.0f || obj_ref.blue > 0.0f || obj_ref.green > 0.0f;
+      if (reflective && recurse_depth > 0) { /* if reflective */
+         reflective_factor = obj_ref.red * obj_ref.blue * obj_ref.green; /* hack value since the python script doesn't get the actual value */
 
-         RGBColour reflective_colour = ray_trace(rayc, recurse_depth-1);
-         colour_add_to(&colour, colour_multiply(object[closest_obj].material.mirror_colour, reflective_colour));
+#undef obj_ref
+         
+         /*make reflection ray */
+         RayDef rec_ray;
+         rec_ray.start = intersection;
+         rec_ray.direction = vector_subtract( ray.direction, vector_scale( surface_normal, 2*vector_dot( ray.direction, surface_normal)));
+         rec_ray.direction.w = 0;
+         /* recursively trace the reflection ray, and add it to the colour */
+         colour_add_to(&colour, colour_multiply(object[closest_obj].material.mirror_colour, ray_trace(rec_ray, recurse_depth-1)));
       }
-
+      
       for(cur_light = 0; cur_light < num_lights; cur_light++) {
          /* if not in shadow then do lighting */
          if (!shadow_ray(intersection, light_source[cur_light].position)){
-            ToLight = vector_normalise(vector_subtract(light_source[cur_light].position, intersection));
-            
-            /* max(0, val) is for attached shadows, but shadow rays */
+            ToLight = vector_normalise(vector_subtract(light_source[cur_light].position, intersection));       
+            /* max(0, val) is for attached shadows */
             double lambert = max(0, vector_dot(surface_normal, ToLight));
             Vector r = vector_normalise(vector_subtract(vector_scale(surface_normal, 2*lambert), ToLight));
             double phong = pow(max(0, vector_dot(r, ToCamera)), object[closest_obj].material.phong);
@@ -201,15 +223,14 @@ RGBColour ray_trace(RayDef ray, int recurse_depth) {
 #define obj_spec object[closest_obj].material.specular_colour
 #define obj_text object[closest_obj].material.texture
 #define light_col light_source[cur_light].colour
-#define text_diff texture_diffuse(obj_diff, obj_text, surface_normal)
-
-            colour_add_to(&colour, colour_multiply(light_col, colour_add(colour_scale(lambert, text_diff), colour_scale(phong, obj_spec))));
-            
+#define text_diff texture_diffuse(obj_diff, obj_text, vector_transform(intersection, object[closest_obj].transform))
+            /*#define text_diff texture_diffuse(obj_diff, obj_text, surface_normal)*/
+               colour_add_to(&colour,colour_scale(1-reflective_factor,colour_multiply(light_col,colour_add(colour_scale(lambert, text_diff),colour_scale(phong, obj_spec)))));    
 #undef obj_diff
 #undef obj_spec
 #undef obj_text
 #undef light_col
-#undef text_diff            
+#undef text_diff
          }
       }
    }
@@ -248,11 +269,11 @@ void renderImage(void) {
    super_samples = max(1, super_samples);
    grid_size = sqrt(super_samples);
    dof1 = dof2 = 0;
-   
+
    for (row = 0; row < image_size; row++) {
       for (col = 0; col < image_size; col++) {
+         /* reset the colour */
          pixelColour = colour_black;
-         
          /* super sampling */
          for(i = 0; i < grid_size; i++){
             for(j = 0; j < grid_size; j++){
@@ -263,22 +284,20 @@ void renderImage(void) {
                   vector_set(&ray.start, dof1, dof2, 0, 1);
                   ray.start = vector_transform(ray.start, camera.transform);
                }
-               
+               /*primary ray direction */
                vector_set(&ray.direction,
                           -camera.view_size/2 + pixel_size*(col + (double)i/grid_size) - dof1,
                           camera.view_size/2 - pixel_size*(row + (double)j/grid_size) - dof2,
                           -camera.lens, 0);
-               ray.direction = vector_normalise(vector_transform(ray.direction, camera.transform));
-               
-               colour_add_to(&pixelColour, colour_scale((double)1/super_samples, ray_trace(ray,10)));
+               ray.direction = vector_transform(ray.direction, camera.transform);
+               /* cast rays, and blend supersample colours */
+               colour_add_to(&pixelColour, colour_scale((double)1/super_samples, ray_trace(ray, MAX_RECURSE_DEPTH)));
             }
          }
-         drawPixel(col+1, image_size-row-1, pixelColour);
+         drawPixel(col, image_size-row-1, pixelColour);
          writePPM(pixelColour, picfile);
       }
-      //showScreen();
    }
-
    showScreen();
    fclose(picfile);
    printf("\nDone\n");

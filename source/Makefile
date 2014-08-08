@@ -4,24 +4,24 @@
 
 # Paths for libraries and includes for linking (don't change!)
 
-XLIBS =  -L/usr/X11R6/lib #-lXext -lXmu -lXt -lXi -lSM -lICE -lpthread
-COPTS =  -g3 -I/usr/include #-Wall -Werror
-LOPTS =  -g3 -L/usr/lib -lglut -lGLU -lGL -lm $(XLIBS) #-fullwarn
+XLIBS =  -L/usr/X11R6/lib -lXext -lXmu -lXt -lXi -lSM -lICE -lpthread
+COPTS =  -g3 -Wall  -Werror  -I/usr/include 
+LOPTS =  -g3 -Wall -L/usr/lib -lglut -lGLU -lGL -lm $(XLIBS)
 
 # override some of the above variables if we're running on MacOS
 UNAME := $(shell uname)
 ifeq ($(UNAME),Darwin)
 XLIBS =  -L/usr/X11R6/lib
-COPTS =  -g3 -I/usr/include #-Wall -ansi -pedantic
+COPTS =  -g3 -Wall -ansi -pedantic -I/usr/include
 LOPTS = -framework Carbon -framework OpenGL -framework GLUT
 endif
 
 # The list of code files, object files, and the compiler to use
 
 # Define our source code (change)
-CFILES = colour_ops.c matrix_ops.c vector_ops.c polygon_ops.c \
-         mygl.c ppm.c \
-         fileio.c main.c
+CFILES = colour_ops.c matrix_ops.c vector_ops.c \
+	 mygl.c ppm.c \
+	 fileio.c main.c
 
 # Define the .o files to correspond with the .c files
 OFILES = $(CFILES:.c=.o)
@@ -37,10 +37,6 @@ TARGET = raytracer
 
 default: clean go
 
-git:
-	git add -A
-	git commit -m "compiled build"
-
 .c.o: $(CFILES) 
 	$(CC) -c $< $(COPTS)
 
@@ -52,5 +48,3 @@ clean:
 
 cleanall:
 	rm -f $(OFILES) out.ppm *~ $(TARGET) core
-
-

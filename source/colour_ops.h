@@ -1,4 +1,3 @@
-
 /*
  * File: colour_ops.h
  *
@@ -8,14 +7,12 @@
 #ifndef _COLOUR_OPS_H_
 #define _COLOUR_OPS_H_
 
-
 /* ----- TYPE DECLARATIONS ------------------------------------------------- */
 
 /* this a record structure for storing colour info. */
 typedef struct RGBColour {
   double red, green, blue;
 } RGBColour;
-
 
 /* ----- CONSTANTS --------------------------------------------------------- */
 
