@@ -1,2 +1,0 @@
-default:
-	gcc -lm -lpng -o test test.c
